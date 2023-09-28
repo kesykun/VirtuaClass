@@ -1,10 +1,15 @@
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
+const dotenv = require('dotenv');
 const assert = require('assert');
 
 const { format } = require('date-fns');
 const { v4: uuid } = require('uuid');
+dotenv.config();
+
+const ENVIRONMENT = process.env.NODE_ENV;
+const PRODUCTION_ENVIRONMENT = 'development';
 
 const padString = (argString, defaultEmptySpaceLength) => {
     const argStringLength = argString.length;
@@ -29,22 +34,25 @@ const handleFormatString = (argString, defaultPadSpaceLength) => {
 
 const handleLogEvent = async (message) => {
     const dateTime = `${format(new Date(), 'yyyy-MM-dd\tHH:mm:ss')}`;
-    const logItem = `${dateTime}\t${uuid()}\t${message}`;
-    console.log(logItem);
+    const logItem = `[${ENVIRONMENT}] ->  ${dateTime}  ${uuid()}\t${message}`;
+    
 
-    try {
-        const logDir = 'logs';
-        const logDirPath = path.join(__dirname, '..', logDir);
-        if (!fs.existsSync(logDirPath)) {
-            await fsPromises.mkdir(logDirPath, (err) => {
-                if (err) throw err;
-                console.log(`"${logDir}" directory created...`);
-            });
+    console.log(logItem);
+    if ( ENVIRONMENT === PRODUCTION_ENVIRONMENT ) {
+        try {
+            const logDir = 'logs';
+            const logDirPath = path.join(__dirname, '..', logDir);
+            if (!fs.existsSync(logDirPath)) {
+                await fsPromises.mkdir(logDirPath, (err) => {
+                    if (err) throw err;
+                    console.log(`"${logDir}" directory created...`);
+                });
+            }
+            const logFilePath = path.join(logDirPath, 'eventsLog.txt');
+            await fsPromises.appendFile(logFilePath, `${logItem}\n`);
+        } catch (err) {
+            console.error(err);
         }
-        const logFilePath = path.join(logDirPath, 'eventsLog.txt');
-        await fsPromises.appendFile(logFilePath, `${logItem}\n`);
-    } catch (err) {
-        console.error(err);
     }
 };
 

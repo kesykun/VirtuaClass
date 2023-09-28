@@ -40,6 +40,10 @@ app.get('/enrollment', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+app.get('/paymentlinks', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 app.get('/login', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

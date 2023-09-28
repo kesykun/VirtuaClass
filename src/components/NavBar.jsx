@@ -11,6 +11,7 @@ const NavBar = () => {
                     <p><Link to={"/faq"}>FAQ</Link></p>
                     <p><Link to={"/calendar"}>Calendar</Link></p>
                     <p><Link to={"/enrollment"}>Enrollment</Link></p>
+                    <p><Link to={"/paymentlinks"}>Payment Links</Link></p>
                 </div>
                 <Link to={"/login"}>
                 <p>

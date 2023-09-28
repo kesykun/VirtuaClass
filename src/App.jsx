@@ -6,6 +6,8 @@ import CourseListPage from "./pages/CourseListPage/CourseListPage";
 import EnrollmentForm from "./pages/EnrollmentForm/EnrollmentForm";
 import Faq from "./pages/FAQ/Faq";
 import Calendar from "./pages/Calendar/Calendar";
+import GeneralSchoolInformation from "./pages/GeneralSchoolInfo/GeneralSchoolInfo";
+import PaymentLink from "./pages/PaymentLink/PaymentLink";
 
 const App = () => {
     const [coursesExpanded, setCoursesExpanded] = useState(false);
@@ -177,7 +179,7 @@ const App = () => {
             <BrowserRouter>
                 <NavBar />
                 <Routes>
-                    <Route path='/' element={<h1>Para sa Home Page</h1>} />
+                    <Route path='/' element={<GeneralSchoolInformation/>} />
                     <Route path='/courses' element={<CourseListPage 
                                                     courses={ courses }
                                                     setCourses={ setCourses }
@@ -194,6 +196,7 @@ const App = () => {
                                                     selectedCourses={ selectedCourses }
                                                     setSelectedCourses={ setSelectedCourses }
                                                     />} />
+                    <Route path='/paymentlinks' element={<PaymentLink />} />
                     <Route path='/login' element={<h1>Para Login</h1>} />
                 </Routes>
             </BrowserRouter>

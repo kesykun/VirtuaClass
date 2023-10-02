@@ -5,7 +5,7 @@ const CourseController = require(path.join(__dirname, '..', '..', 'controllers',
 const router = express.Router();
 
 
-router.route('/Courses')
+router.route('/courses')
     .get(CourseController.getAllCourses)
     .post(CourseController.createNewCourse)
     .put(CourseController.updateCourse)

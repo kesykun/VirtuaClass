@@ -1,27 +1,27 @@
 const fs = require('fs');
 const fsPromises = require('fs').promises;
 const path = require('path');
-const dotenv = require('dotenv');
 const assert = require('assert');
 
 const { format } = require('date-fns');
 const { v4: uuid } = require('uuid');
+const dotenv = require('dotenv');
+
 dotenv.config();
 
-const ENVIRONMENT = process.env.NODE_ENV;
-const PRODUCTION_ENVIRONMENT = 'development';
+const NODE_ENV = process.env.NODE_ENV;
 
-const padString = (argString, defaultEmptySpaceLength) => {
+const padString = (argString, defaultPadLength) => {
     const argStringLength = argString.length;
-    assert(argStringLength < defaultEmptySpaceLength, 'defaultEmptySpaceLength must be greater than argString length.');
-    let padLength = defaultEmptySpaceLength - argStringLength;
+    assert(argStringLength < defaultPadLength, 'defaultPadLength must be greater than argString length.');
+    let padLength = defaultPadLength - argStringLength;
     for (let i=0; i<padLength; i++) {
         argString += ' ';
     }
     return argString;
 }
 
-const handleFormatString = (argString, defaultPadSpaceLength) => {
+const formatString = (argString, defaultPadSpaceLength) => {
     let separatedArgString = argString.split('&');
     let separatedArgStringLength = separatedArgString.length;
     let result = '';
@@ -32,23 +32,22 @@ const handleFormatString = (argString, defaultPadSpaceLength) => {
 }
 
 
-const handleLogEvent = async (message) => {
+const logEvents = async (location, message) => {
     const dateTime = `${format(new Date(), 'yyyy-MM-dd\tHH:mm:ss')}`;
-    const logItem = `[${ENVIRONMENT}] ->  ${dateTime}  ${uuid()}\t${message}`;
-    
-
+    const logItem = `[${NODE_ENV}] -> ${dateTime}\t${uuid()}\t${message}`;
     console.log(logItem);
-    if ( ENVIRONMENT === PRODUCTION_ENVIRONMENT ) {
+
+    if ( NODE_ENV === 'development' ) {
         try {
             const logDir = 'logs';
-            const logDirPath = path.join(__dirname, '..', logDir);
+            const logDirPath = path.join(location, logDir);
             if (!fs.existsSync(logDirPath)) {
                 await fsPromises.mkdir(logDirPath, (err) => {
                     if (err) throw err;
-                    console.log(`"${logDir}" directory created...`);
+                    console.log('Directory created...');
                 });
             }
-            const logFilePath = path.join(logDirPath, 'eventsLog.txt');
+            const logFilePath = path.join(logDirPath, 'eventLog.txt');
             await fsPromises.appendFile(logFilePath, `${logItem}\n`);
         } catch (err) {
             console.error(err);
@@ -57,6 +56,6 @@ const handleLogEvent = async (message) => {
 };
 
 module.exports = {
-    handleFormatString,
-    handleLogEvent
+    formatString,
+    logEvents
 };

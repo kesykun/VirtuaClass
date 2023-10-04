@@ -1,16 +1,17 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 const StudentModel = require(path.join(__dirname, '..', 'models', 'Student.js'));
+const AccountController = require(path.join(__dirname, 'accountController.js'));
+const accountTypes = require(path.join(__dirname, 'constants', 'accountTypes.js'));
 
 
 const getAllStudents = async (req, res) => {
-    StudentModel.find().then(result => {
-        res.json( result );
-    }).catch(err => {
+    try {
+        const students = await StudentModel.find({}).sort({ createdAt: -1 });
+        res.json( students );
+    } catch (err) {
         res.json({ message: 'Error retrieving students' });
-        console.error(err);
-    });
-    
+    }
 };
 
 const createNewStudent = async (req, res) => {
@@ -31,10 +32,11 @@ const createNewStudent = async (req, res) => {
             password: hashedPassword,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            age: req.body.age,
+            account_type: accountTypes.student,
             courses_taken_id: req.body.courses_taken_id
         }
     );
+    await AccountController.createNewAccount( newStudent );
     res.json( newStudent );
 };
 

@@ -1,7 +1,8 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 const AdminModel = require(path.join(__dirname, '..', 'models', 'Admin.js'));
-
+const AccountController = require(path.join(__dirname, 'accountController.js'));
+const accountTypes = require(path.join(__dirname, 'constants', 'accountTypes.js'));
 
 const getAllAdmins = async (req, res) => {
     try {
@@ -31,9 +32,10 @@ const createNewAdmin = async (req, res) => {
             password: hashedPassword,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            account_type: req.body.account_type
+            account_type: accountTypes.admin
         }
     );
+    await AccountController.createNewAccount( newAdmin );
     res.json( newAdmin );
 };
 

@@ -3,24 +3,24 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const schoolSchema = new Schema(
+const accountSchema = new Schema(
     {
         email: {
             type: String,
             required: true
         },
-        name: {
+        password: {
             type: String,
             required: true
         },
-        mission: {
+        account_type: {
             type: String,
             required: true
         },
-        vision: {
-            type: String,
+        user_id: {
+            type: mongoose.SchemaTypes.ObjectId,
             required: true
-        },
+        }
     },
     {
         timestamps: true
@@ -28,4 +28,5 @@ const schoolSchema = new Schema(
 );
 
 
-module.exports = mongoose.model('schools', schoolSchema);
+
+module.exports = mongoose.model('accounts', accountSchema);

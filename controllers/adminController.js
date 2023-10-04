@@ -28,7 +28,7 @@ const createNewAdmin = async (req, res) => {
             password: hashedPassword,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            age: req.body.age
+            account_type: req.body.account_type
         }
     );
     res.json( result );

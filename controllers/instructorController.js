@@ -9,26 +9,29 @@ const InstructorModel = require(path.join(__dirname, '..', 'models', 'Instructor
 
 
 
-const getAllInstructors = (req, res) => {
+const getAllInstructors = async (req, res) => {
     InstructorModel.find().then(result => {
         res.json( result );
     }).catch(err => {
-        res.json({ message: 'Error retrieving data' });
+        res.json({ message: 'Error retrieving instructors' });
         console.error(err);
     });
     
 };
 
 const createNewInstructor = async (req, res) => {
-    const duplicate = await InstructorModel.findOne({ firstname: req.body.firstname, lastname: req.body.lastname }).exec();
-    if (duplicate) {
+    const conflict = await InstructorModel.findOne({ email: req.body.email }).exec();
+    if (conflict) {
         res.status(409);
-        res.json({ message: 'Duplicate firstname or lastname' });
+        res.json({
+            message: 'Email conflict',
+            conflict: true
+        });
         return;
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const result = await InstructorModel.create(
+    const newInstructor = await InstructorModel.create(
         {
             email: req.body.email,
             password: hashedPassword,
@@ -39,9 +42,9 @@ const createNewInstructor = async (req, res) => {
             age: req.body.age
         }
     );
-    const svgQR = qr.imageSync(result.gcash_account_id, { type: 'svg' });
-    await fsPromise.writeFile(path.join(__dirname, '..', 'public', 'svg', result.qr_code), svgQR);
-    res.json( result );
+    const svgQR = qr.imageSync(newInstructor.gcash_account_id, { type: 'svg' });
+    await fsPromise.writeFile(path.join(__dirname, '..', 'public', 'svg', newInstructor.qr_code), svgQR);
+    res.json( newInstructor );
 };
 
 const updateInstructor = async (req, res) => {
@@ -49,15 +52,15 @@ const updateInstructor = async (req, res) => {
     res.json( result );
 };
 
-const deleteInstructor = (req, res) => {
+const deleteInstructor = async (req, res) => {
 
 };
 
-const getInstructor = (req, res) => {
+const getInstructor = async (req, res) => {
     InstructorModel.findById(req.params.id).then(result => {
         res.json( result );
     }).catch(err => {
-        res.json({ message: 'Error retrieving data' });
+        res.json({ message: 'Error retrieving instructor' });
         console.err( err );
     });
 }

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const adminSchema = new Schema(
+const accountSchema = new Schema(
     {
         email: {
             type: String,
@@ -14,16 +14,12 @@ const adminSchema = new Schema(
             type: String,
             required: true
         },
-        firstname: {
-            type: String,
-            required: true
-        },
-        lastname: {
-            type: String,
-            required: true
-        },
         account_type: {
             type: String,
+            required: true
+        },
+        user_id: {
+            type: mongoose.SchemaTypes.ObjectId,
             required: true
         }
     },
@@ -34,4 +30,4 @@ const adminSchema = new Schema(
 
 
 
-module.exports = mongoose.model('admins', adminSchema);
+module.exports = mongoose.model('accounts', accountSchema);

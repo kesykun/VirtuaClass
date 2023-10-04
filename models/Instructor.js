@@ -14,14 +14,6 @@ const instructorSchema = new Schema(
             type: String,
             required: true
         },
-        gcash_account_id: {
-            type: String,
-            required: true
-        },
-        qr_code: {
-            type: String,
-            required: true
-        },
         firstname: {
             type: String,
             required: true
@@ -30,7 +22,7 @@ const instructorSchema = new Schema(
             type: String,
             required: true
         },
-        age: {
+        account_type: {
             type: String,
             required: true
         }

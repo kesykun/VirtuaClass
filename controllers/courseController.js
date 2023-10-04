@@ -4,13 +4,12 @@ const CourseModel = require(path.join(__dirname, '..', 'models', 'Course.js'));
 
 
 const getAllCourses = async (req, res) => {
-    CourseModel.find().then(result => {
-        res.json( result );
-    }).catch(err => {
+    try {
+        const courses = await CourseModel.find().sort({ createdAt: -1 });
+        res.json( courses );
+    } catch (err) {
         res.json({ message: 'Error retrieving courses' });
-        console.error(err);
-    });
-    
+    }
 };
 
 const createNewCourse = async (req, res) => {

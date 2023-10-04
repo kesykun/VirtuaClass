@@ -10,7 +10,7 @@ const { logEvents } = require(path.join(__dirname, 'middlewares', 'logger.js'));
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 8700;
+const PORT = process.env.NODE_PORT || 8700;
 const DATABASE_URI = process.env.DATABASE_URI;
 
 
@@ -56,8 +56,8 @@ mongoose.connect(
         useNewUrlParser: true,
         useUnifiedTopology: true
     }
-).then(output => {
-    logEvents(__dirname, `Connected: [${DATABASE_URI.split(':')[0]}][${DATABASE_URI.split('@')[1].split('/')[0]}][${DATABASE_URI.split('@')[1].split('/')[1].split('?')[0]}]`);
+).then(() => {
+    logEvents(__dirname, `Connected: [${DATABASE_URI.split(':')[0]}][${DATABASE_URI.split('@')[1].split('/')[0]}]${DATABASE_URI.split('@')[1].split('/')[1].split('?')[0]}`);
     app.listen(PORT, () => {
         logEvents(__dirname, `Listening on PORT: ${PORT}`);
     });

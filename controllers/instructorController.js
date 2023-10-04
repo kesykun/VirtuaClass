@@ -1,22 +1,22 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 const fsPromise = require('fs').promises;
-const qr = require('qr-image');
-const { v4: uuid } = require('uuid');
+// const qr = require('qr-image');
+// const { v4: uuid } = require('uuid');
 const InstructorModel = require(path.join(__dirname, '..', 'models', 'Instructor.js'));
-
+const AccountController = require(path.join(__dirname, 'accountController.js'));
+const accountTypes = require(path.join(__dirname, 'constants', 'accountTypes.js'));
 
 
 
 
 const getAllInstructors = async (req, res) => {
-    InstructorModel.find().then(result => {
-        res.json( result );
-    }).catch(err => {
-        res.json({ message: 'Error retrieving instructors' });
-        console.error(err);
-    });
-    
+    try {
+        const instructors = await InstructorModel.find({}).sort({ createdAt: -1 });
+        res.json( instructors );
+    } catch (err) {
+        res.json({ message: 'Error retrieving isntructors' });
+    }
 };
 
 const createNewInstructor = async (req, res) => {
@@ -35,21 +35,19 @@ const createNewInstructor = async (req, res) => {
         {
             email: req.body.email,
             password: hashedPassword,
-            gcash_account_id: req.body.gcash_account_id,
-            qr_code: `___${uuid()}.svg`,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
-            age: req.body.age
+            account_type: accountTypes.instructor
         }
     );
-    const svgQR = qr.imageSync(newInstructor.gcash_account_id, { type: 'svg' });
-    await fsPromise.writeFile(path.join(__dirname, '..', 'public', 'svg', newInstructor.qr_code), svgQR);
+    await AccountController.createNewAccount( newInstructor );
+    // const svgQR = qr.imageSync(newInstructor.gcash_account_id, { type: 'svg' });
+    // await fsPromise.writeFile(path.join(__dirname, '..', 'public', 'svg', newInstructor.qr_code), svgQR);
     res.json( newInstructor );
 };
 
 const updateInstructor = async (req, res) => {
-    const result = await InstructorModel.updateOne({ _id: req.body._id }, { $set: { age: req.body.age } });
-    res.json( result );
+
 };
 
 const deleteInstructor = async (req, res) => {

@@ -22,7 +22,7 @@ const studentSchema = new Schema(
             type: String,
             required: true
         },
-        age: {
+        account_type: {
             type: String,
             required: true
         },

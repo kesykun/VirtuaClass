@@ -3,7 +3,7 @@ const path = require('path');
 const SchoolModel = require(path.join(__dirname, '..', 'models', 'School.js'));
 
 
-const getAllSchoolInfo = (req, res) => {
+const getAllSchoolInfo = async (req, res) => {
     SchoolModel.find().then(result => {
         res.json( result[0] );
     }).catch(err => {
@@ -25,7 +25,7 @@ const createNewSchoolInfo = async (req, res) => {
     res.json( result );
 };
 
-const updateSchoolInfo = (req, res) => {
+const updateSchoolInfo = async (req, res) => {
 
 };
 

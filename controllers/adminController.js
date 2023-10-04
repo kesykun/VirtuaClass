@@ -3,26 +3,29 @@ const bcrypt = require('bcrypt');
 const AdminModel = require(path.join(__dirname, '..', 'models', 'Admin.js'));
 
 
-const getAllAdmins = (req, res) => {
-    AdminModel.find().then(result => {
-        res.json( result );
-    }).catch(err => {
-        res.json({ message: 'Error retrieving data' });
+const getAllAdmins = async (req, res) => {
+    try {
+        const admins = await AdminModel.find({}).sort({ createdAt: -1 });
+        res.json( admins );
+    } catch (err) {
+        res.json({ message: 'Error retrieving admins' });
         console.error(err);
-    });
-    
+    }
 };
 
 const createNewAdmin = async (req, res) => {
-    const duplicate = await AdminModel.findOne({ firstname: req.body.firstname, lastname: req.body.lastname }).exec();
-    if (duplicate) {
+    const conflict = await AdminModel.findOne({ email: req.body.email }).exec();
+    if (conflict) {
         res.status(409);
-        res.json({ message: 'Duplicate firstname or lastname' });
+        res.json({
+            message: 'Email conflict',
+            conflict: true
+        });
         return;
     }
 
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const result = await AdminModel.create(
+    const newAdmin = await AdminModel.create(
         {
             email: req.body.email,
             password: hashedPassword,
@@ -31,24 +34,27 @@ const createNewAdmin = async (req, res) => {
             account_type: req.body.account_type
         }
     );
-    res.json( result );
+    res.json( newAdmin );
 };
 
-const updateAdmin = (req, res) => {
-
-};
-
-const deleteAdmin = (req, res) => {
+const updateAdmin = async (req, res) => {
 
 };
 
-const getAdmin = (req, res) => {
-    AdminModel.findById(req.params.id).then(result => {
-        res.json( result );
-    }).catch(err => {
-        res.json({ message: 'Error retrieving data' });
+const deleteAdmin = async (req, res) => {
+
+};
+
+
+
+const getAdmin = async (req, res) => {
+    try {
+        const admin = await AdminModel.findById(req.params.id);
+        console.err( err );console.err( err );
+    } catch (err) {
+        res.json({ message: 'Error retrieving admin' });
         console.err( err );
-    });
+    }
 }
 
 module.exports = {

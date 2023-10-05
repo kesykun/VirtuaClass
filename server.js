@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json()); // middleware2: enables to accept json data from requests
-app.use(express.static(path.join(__dirname, 'build'))); // middleware3: gives public access of files in a specified directory
+app.use(express.static(path.join(__dirname, 'build'))); // middleware3: gives public access of files in the build directory
 
 
 //  API routes
@@ -34,6 +34,8 @@ app.use('/api', require(path.join(__dirname, 'routes', 'api', 'course.js')));
 app.use('/api', require(path.join(__dirname, 'routes', 'api', 'instructor.js')));
 app.use('/api', require(path.join(__dirname, 'routes', 'api', 'student.js')));
 app.use('/api', require(path.join(__dirname, 'routes', 'api', 'admin.js')));
+app.use('/api', require(path.join(__dirname, 'routes', 'api', 'account.js')));
+app.use('/api', require(path.join(__dirname, 'routes', 'api', 'enrollment.js')));
 
 
 //  Views routes

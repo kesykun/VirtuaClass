@@ -19,18 +19,38 @@ const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpand
     });
 
     // Handle form submission
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Form Data: ", formData);
+        // console.log(formData);
+        const response = await fetch('http://localhost:9600/api/enrollments',
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        firstname: formData.StudentFirstName,
+                        middlename: formData.StudentMiddleName,
+                        lastname: formData.StudentLastName,
+                        email: formData.StudentEmailAddress,
+                        
+                        guardianFirstname: formData.GuardianFirstName,
+                        guardianMiddlename: formData.GuardianMiddleName,
+                        guardianLastname: formData.GuardianLastName,
+                        guardianContactNumber: formData.GuardianContactNumber
+                    }
+                ),
+                redirect: 'follow'
+            }
+        );
+        console.log(await response.json());
     }
 
     // Handle input field changes and update the state
     const handleInputChange = (e) => {
         const { name, value } = e.target;
-        setFormData({
-        ...formData,
-        [name]: value,
-        });
+        setFormData({...formData, [name]: value});
     }
 
     return (

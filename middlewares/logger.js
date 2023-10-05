@@ -33,8 +33,8 @@ const formatString = (argString, defaultPadSpaceLength) => {
 
 
 const logEvents = async (location, message) => {
-    const dateTime = `${format(new Date(), 'yyyy-MM-dd\tHH:mm:ss')}`;
-    const logItem = `[${NODE_ENV}] -> ${dateTime}\t${uuid()}\t${message}`;
+    const dateTime = `${format(new Date(), 'yyyy-MM-dd HH:mm:ss')}`;
+    const logItem = `[${NODE_ENV}] ->  ${dateTime}   ${uuid()}\t${message}`;
     console.log(logItem);
 
     if ( NODE_ENV === 'development' ) {

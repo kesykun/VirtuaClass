@@ -47,7 +47,7 @@ const logEvents = async (location, message) => {
                     console.log('Directory created...');
                 });
             }
-            const logFilePath = path.join(logDirPath, 'eventLog.txt');
+            const logFilePath = path.join(logDirPath, 'eventsLog.txt');
             await fsPromises.appendFile(logFilePath, `${logItem}\n`);
         } catch (err) {
             console.error(err);

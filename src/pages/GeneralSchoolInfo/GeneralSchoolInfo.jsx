@@ -1,6 +1,7 @@
 // src/GeneralSchoolInformation.jsx
 import './GeneralSchoolInfo.css';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const GeneralSchoolInformation = () => {
     return (
@@ -19,6 +20,7 @@ const GeneralSchoolInformation = () => {
             <p>Email: info@abcschool.com</p>
             <p>Established: 2023</p>
             <p>Principal: Mr. Knowledge Seeker</p>
+            <p><Link to={"/enrollmentapplications"}>Enrollment Applications</Link></p>
         </div>
     );
 }

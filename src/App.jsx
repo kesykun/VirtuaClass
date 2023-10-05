@@ -8,6 +8,8 @@ import Faq from "./pages/FAQ/Faq";
 import Calendar from "./pages/Calendar/Calendar";
 import GeneralSchoolInformation from "./pages/GeneralSchoolInfo/GeneralSchoolInfo";
 import PaymentLink from "./pages/PaymentLink/PaymentLink";
+import EnrollmentApplications from "./pages/EnrollmentApplications/EnrollmentApplications";
+
 
 const App = () => {
     const [coursesExpanded, setCoursesExpanded] = useState(false);
@@ -198,6 +200,7 @@ const App = () => {
                                                     />} />
                     <Route path='/paymentlinks' element={<PaymentLink />} />
                     <Route path='/login' element={<h1>Para Login</h1>} />
+                    <Route path="/enrollmentapplications" element={<EnrollmentApplications />} />
                 </Routes>
             </BrowserRouter>
         </>

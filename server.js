@@ -45,6 +45,7 @@ app.use('/', require(path.join(__dirname, 'routes', 'Enrollment.js')));
 app.use('/', require(path.join(__dirname, 'routes', 'PaymentLinks.js')));
 app.use('/', require(path.join(__dirname, 'routes', 'Calendar.js')));
 app.use('/', require(path.join(__dirname, 'routes', 'Login.js')));
+app.use('/', require(path.join(__dirname, 'routes', 'EnrollmentApplications.js')));
 
 app.use('/', require(path.join(__dirname, 'routes', 'Root.js')));
 

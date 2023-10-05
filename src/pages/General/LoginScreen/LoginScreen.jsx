@@ -1,34 +1,32 @@
 import { useState } from "react";
 import './css/LoginScreen.css';
-import { useNavigate } from "react-router-dom";
 
 const LoginScreen = () => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        const response = await fetch('http://localhost:9600/api/accounts')
+        const response = await fetch('http://localhost:9600/api/accounts');
+        const json = await response.json();
 
-        const json = await response.json()
-
-        const matchedAccount = json.filter(item=>item.email===email)
-
-        const navigate = useNavigate();
-        const navigateToAdminDash = () => {
-            navigate('/admin');
-        }
+        const matchedAccount = json.filter(item=>item.email===email);
 
         if (matchedAccount){
-            if (matchedAccount.password===password){
-                navigate('/admin');
+            if (matchedAccount.password === password) {
+                console.log(`You are routed to the ${matchedAccount.account_type}'s dashboard`);
+                // Routing code
+            } else {
+                console.log('Incorrect password.');
             }
+        } else {
+            console.log('That account does not exist.');
         }
 
-        console.log(json)
-        console.log([email, password])
-        console.log()
+        console.log(json);
+        console.log([email, password]);
+        console.log(matchedAccount);
     }
 
     return (

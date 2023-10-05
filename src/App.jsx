@@ -200,7 +200,7 @@ const App = () => {
                                                     />} />
                     <Route path='/paymentlinks' element={<PaymentLink />} />
                     <Route path='/login' element={<h1>Para Login</h1>} />
-                    <Route path="/enrollmentapplications" element={<EnrollmentApplications />} />
+                    <Route path="/enrollment_applications" element={<EnrollmentApplications />} />
                 </Routes>
             </BrowserRouter>
         </>

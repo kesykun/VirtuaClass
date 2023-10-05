@@ -8,14 +8,16 @@ const LoginScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('http://localhost:9600/api/accounts');
+        const response = await fetch('/api/accounts');
         const json = await response.json();
 
-        const matchedAccount = json.filter(item=>item.email===email);
+        const matchedAccount = json.filter(item => item.email === email)[0];
 
         if (matchedAccount){
+            console.log(matchedAccount);
             if (matchedAccount.password === password) {
                 console.log(`You are routed to the ${matchedAccount.account_type}'s dashboard`);
+                console.log(matchedAccount);
                 // Routing code
             } else {
                 console.log('Incorrect password.');
@@ -23,10 +25,12 @@ const LoginScreen = () => {
         } else {
             console.log('That account does not exist.');
         }
+        document.getElementById('loginEmailInput').value = '';
+        document.getElementById('loginPasswordInput').value = '';
 
-        console.log(json);
-        console.log([email, password]);
-        console.log(matchedAccount);
+        // console.log(json);
+        // console.log([email, password]);
+        // console.log(matchedAccount);
     }
 
     return (
@@ -35,15 +39,19 @@ const LoginScreen = () => {
             
             <label>Email</label>
             <input 
+                id="loginEmailInput"
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                required
             />
             <label>Password</label>
             <input 
+                id="loginPasswordInput"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                required
             />
 
             <button>Login</button>

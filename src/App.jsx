@@ -10,6 +10,7 @@ import Faq from "./pages/General/FAQ/Faq";
 import Calendar from "./pages/General/Calendar/Calendar";
 import GeneralSchoolInformation from "./pages/General/GeneralSchoolInfo/GeneralSchoolInfo";
 import PaymentLink from "./pages/General/PaymentLink/PaymentLink";
+import LoginScreen from "./pages/General/LoginScreen/LoginScreen";
 
 import EnrollmentApplications from "./pages/Admin/EnrollmentApplications/EnrollmentApplications";
 import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
@@ -76,7 +77,7 @@ const App = () => {
                                                     setSelectedCourses={ setSelectedCourses }
                                                     />} />
                     <Route path='/paymentlinks' element={<PaymentLink />} />
-                    <Route path='/login' element={<h1>Para Login</h1>} />
+                    <Route path='/login' element={<LoginScreen />} />
 
                     <Route path="/admin" element={<AdminDashboard />} />
                     <Route path="/admin/enrollment_applications" element={<EnrollmentApplications />} />

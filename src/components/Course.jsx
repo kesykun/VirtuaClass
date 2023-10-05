@@ -4,21 +4,21 @@ import AccordionForCourse from "./AccordionForCourse";
 const Course = ({ key, courseObj, allExpanded, checkBox='' }) => {
     return (
         <AccordionForCourse key={ key } 
-        title={ [courseObj.title, <hr/>, checkBox] } 
+        title={ [courseObj.name, <hr/>, checkBox] } 
         body={ 
           [
             <div className="courseDescription">
               { courseObj.description }
             </div>,
             <div className="coursePrice">
-              { `₱${ courseObj.price }` }
+              { `₱${ courseObj.fee }` }
             </div>,
             <AccordionForCourse key={ key }
             title={ `Instructor: ${courseObj.instructor}` } 
             body={ 
               [
                 <div className="instructorContact">
-                  Contact No.: { courseObj.instructor_contact_no }
+                  Email.: { courseObj.email }
                 </div>
               ]
              }

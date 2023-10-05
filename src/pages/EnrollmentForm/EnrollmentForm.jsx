@@ -22,7 +22,7 @@ const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpand
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(formData);
-        const response = await fetch('http://localhost:9600/api/enrollments',
+        const response = await fetch('/api/enrollments',
             {
                 method: 'POST',
                 headers: {

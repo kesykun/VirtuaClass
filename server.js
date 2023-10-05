@@ -75,7 +75,7 @@ mongoose.connect(
         useUnifiedTopology: true
     }
 ).then(() => {
-    logEvents(__dirname, `Connected: [${DATABASE_URI.split(':')[0]}][${DATABASE_URI.split('@')[1].split('/')[0]}]${DATABASE_URI.split('@')[1].split('/')[1].split('?')[0]}`);
+    logEvents(__dirname, `Connected: ${DATABASE_URI.split('@')[1].split('/')[0]} [${DATABASE_URI.split('@')[1].split('/')[1].split('?')[0]}]`);
     app.listen(PORT, () => {
         logEvents(__dirname, `Listening on PORT: ${PORT}`);
     });

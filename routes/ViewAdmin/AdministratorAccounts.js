@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/administrator_accounts', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', '..', 'build', 'index.html'));
 });
 
 module.exports = router;

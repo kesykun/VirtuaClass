@@ -12,6 +12,7 @@ const EnrollmentApplications = () => {
         return json.map(enrollment => {
             return (
                 <tr>
+                    <td>{ enrollment._id }</td>
                     <td>{ enrollment.firstname }</td>
                     <td>{ enrollment.lastname }</td>
                     <td>{ enrollment.email }</td>
@@ -32,6 +33,7 @@ const EnrollmentApplications = () => {
         <div>
             <table>
                 <tr>
+                    <th>ID</th>
                     <th>Firstname</th>
                     <th>Lastname</th>
                     <th>Email</th>

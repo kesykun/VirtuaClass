@@ -38,14 +38,29 @@ app.use('/api', require(path.join(__dirname, 'routes', 'api', 'account.js')));
 app.use('/api', require(path.join(__dirname, 'routes', 'api', 'enrollment.js')));
 
 
-//  Views routes
+//  General view routes
 app.use('/', require(path.join(__dirname, 'routes', 'Courses.js')));
 app.use('/', require(path.join(__dirname, 'routes', 'Faq.js')));
 app.use('/', require(path.join(__dirname, 'routes', 'Enrollment.js')));
 app.use('/', require(path.join(__dirname, 'routes', 'PaymentLinks.js')));
 app.use('/', require(path.join(__dirname, 'routes', 'Calendar.js')));
 app.use('/', require(path.join(__dirname, 'routes', 'Login.js')));
-app.use('/', require(path.join(__dirname, 'routes', 'EnrollmentApplications.js')));
+
+// Admin view routes
+app.use('/admin', require(path.join(__dirname, 'routes', 'ViewAdmin', 'AdminDashboard.js')));
+app.use('/admin', require(path.join(__dirname, 'routes', 'ViewAdmin', 'EnrollmentApplications.js')));
+app.use('/admin', require(path.join(__dirname, 'routes', 'ViewAdmin', 'StudentAccounts.js')));
+app.use('/admin', require(path.join(__dirname, 'routes', 'ViewAdmin', 'InstructorAccounts.js')));
+app.use('/admin', require(path.join(__dirname, 'routes', 'ViewAdmin', 'AdministratorAccounts.js')));
+app.use('/admin', require(path.join(__dirname, 'routes', 'ViewAdmin', 'SiteSettings.js')));
+
+
+// Instructor view routes
+
+
+// Student view routes
+
+
 
 app.use('/', require(path.join(__dirname, 'routes', 'Root.js')));
 

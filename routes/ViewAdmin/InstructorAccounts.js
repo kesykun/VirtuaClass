@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 
-router.get('/enrollment_applications(.html)?', (req, res) => {
+router.get('/instructor_accounts', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'build', 'index.html'));
 });
 

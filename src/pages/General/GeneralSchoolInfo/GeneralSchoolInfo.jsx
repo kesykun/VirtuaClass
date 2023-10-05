@@ -20,7 +20,7 @@ const GeneralSchoolInformation = () => {
             <p>Email: info@abcschool.com</p>
             <p>Established: 2023</p>
             <p>Principal: Mr. Knowledge Seeker</p>
-            <p><Link to={"/enrollment_applications"}>Enrollment Applications</Link></p>
+            <p><Link to={"/admin"}>Admin Dashboard</Link></p>
         </div>
     );
 }

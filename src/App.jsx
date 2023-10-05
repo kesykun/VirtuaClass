@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
 
-import CourseListPage from "./pages/CourseListPage/CourseListPage";
-import EnrollmentForm from "./pages/EnrollmentForm/EnrollmentForm";
-import Faq from "./pages/FAQ/Faq";
-import Calendar from "./pages/Calendar/Calendar";
-import GeneralSchoolInformation from "./pages/GeneralSchoolInfo/GeneralSchoolInfo";
-import PaymentLink from "./pages/PaymentLink/PaymentLink";
-import EnrollmentApplications from "./pages/EnrollmentApplications/EnrollmentApplications";
+import CourseListPage from "./pages/General/CourseListPage/CourseListPage";
+import EnrollmentForm from "./pages/General/EnrollmentForm/EnrollmentForm";
+import Faq from "./pages/General/FAQ/Faq";
+import Calendar from "./pages/General/Calendar/Calendar";
+import GeneralSchoolInformation from "./pages/General/GeneralSchoolInfo/GeneralSchoolInfo";
+import PaymentLink from "./pages/General/PaymentLink/PaymentLink";
+
+import EnrollmentApplications from "./pages/Admin/EnrollmentApplications/EnrollmentApplications";
+import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
 
 
 const App = () => {
@@ -200,7 +202,13 @@ const App = () => {
                                                     />} />
                     <Route path='/paymentlinks' element={<PaymentLink />} />
                     <Route path='/login' element={<h1>Para Login</h1>} />
-                    <Route path="/enrollment_applications" element={<EnrollmentApplications />} />
+
+                    <Route path="/admin" element={<AdminDashboard />} />
+                    <Route path="/admin/enrollment_applications" element={<EnrollmentApplications />} />
+                    <Route path="/admin/student_accounts" element={<h1>Para StudentAccounts</h1>} />
+                    <Route path="/admin/instructor_accounts" element={<h1>Para InstructorAccounts</h1>} />
+                    <Route path="/admin/administrator_accounts" element={<h1>Para AdministratorAccounts</h1>} />
+                    <Route path="/admin/site_settings" element={<h1>Para SiteSettings</h1>} />
                 </Routes>
             </BrowserRouter>
         </>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const LoginScreen = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -15,9 +16,9 @@ const LoginScreen = () => {
 
         const matchedAccount = json.filter(item=>item.email===email)
 
-        const navigate = useNavigate();
+        
         const navigateToAdminDash = () => {
-            navigate('/admin');
+            navigate('/redirect');
         }
 
         if (matchedAccount){
@@ -28,7 +29,7 @@ const LoginScreen = () => {
 
         console.log(json)
         console.log([email, password])
-        console.log()
+        console.log(matchedAccount)
     }
 
     return (

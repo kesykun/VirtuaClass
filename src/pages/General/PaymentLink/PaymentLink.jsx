@@ -9,7 +9,7 @@ const PaymentLink = () => {
         <div className= "PaymentLink">
             <h1>Welcome to ABC School!</h1>
             <h2>Scan to Pay</h2>
-            <img src="/qrcode.png" alt="Description of Image"/>
+            <img src="/img/qrcode.png" alt="Description of Image"/>
         </div>
     );
 }

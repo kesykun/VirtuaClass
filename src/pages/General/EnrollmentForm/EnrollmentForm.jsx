@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import FormInput from "../../components/FormInput";
-import CourseListWithSelection from "../../components/CourseListWithSelection";
-import SelectedCourses from "../../components/SelectedCourses";
+import FormInput from "../../../components/FormInput";
+import CourseListWithSelection from "../../../components/CourseListWithSelection";
+import SelectedCourses from "../../../components/SelectedCourses";
 import "./css/EnrollmentForm.css";
 
 const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpanded, selectedCourses, setSelectedCourses }) => {

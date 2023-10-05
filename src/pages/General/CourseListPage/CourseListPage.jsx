@@ -1,6 +1,5 @@
 import { useEffect } from "react"; 
-import CourseList from "../../components/CourseList";
-import SelectedCourses from "../../components/SelectedCourses";
+import CourseList from "../../../components/CourseList";
 import "./css/CourseListPage.css";
 
 

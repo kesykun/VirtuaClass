@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import NavBar from './components/NavBar';
 
+import Calendar from "./pages/Calendar/Calendar";
 import CourseListPage from "./pages/CourseListPage/CourseListPage";
 import EnrollmentForm from "./pages/EnrollmentForm/EnrollmentForm";
 import Faq from "./pages/FAQ/Faq";
-import Calendar from "./pages/Calendar/Calendar";
 import GeneralSchoolInformation from "./pages/GeneralSchoolInfo/GeneralSchoolInfo";
 import PaymentLink from "./pages/PaymentLink/PaymentLink";
 

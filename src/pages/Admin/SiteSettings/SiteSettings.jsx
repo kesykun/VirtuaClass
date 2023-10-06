@@ -12,12 +12,29 @@ const SiteSettings = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
         
+        await fetch('http://localhost:9600/api/school', {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(
+                {
+                    id: "65201c32f271aa89b0be02c8",
+                    schoolName: schoolName,
+                    mission: mission,
+                    vision: vision,
+                    objectives: objectives,
+                    faq: faq,
+                    contactInformation: contactInformation
+                }
+            ),
+            redirect: "follow"
+        })
     }
 
     return (
-        <form className="siteSettingsForm">
+        <form className="siteSettingsForm" onSubmit={handleSubmit}>
             <h3>Site Settings</h3>
 
             <label>School Name</label>
@@ -53,8 +70,8 @@ const SiteSettings = () => {
             <label>Contact Information</label>
             <input
                 type="text"
-                onChange={(e) => setFaq(e.target.value)}
-                value={faq}
+                onChange={(e) => setContactInformation(e.target.value)}
+                value={contactInformation}
             />
             <button>Save</button>
         </form>

@@ -37,6 +37,24 @@ const App = () => {
       lastname: ''
     }
     );
+    const [schoolInfo, setSchoolInfo] = useState(
+      {
+        schoolName: '',
+        mission: '',
+        vision: '',
+        objectives: '',
+        faq: '',
+        contactInformation: ''
+      }
+    );
+    useEffect(
+      () => {
+        fetch('http://localhost:9600/api/school')
+        .then(result =>{return result.json()})
+        .then(value =>{setSchoolInfo(value)});
+      }, []
+    )
+
     const [coursesExpanded, setCoursesExpanded] = useState(false);
     const [courses, setCourses] = useState([]);
     const [selectedCourses, setSelectedCourses] = useState([]);
@@ -69,9 +87,9 @@ const App = () => {
     return (
         <>
             <BrowserRouter>
-                <NavBar />
+                <NavBar  schoolInfo={schoolInfo}/>
                 <Routes>
-                    <Route path='/' element={<GeneralSchoolInformation/>} />
+                    <Route path='/' element={<GeneralSchoolInformation schoolInfo={schoolInfo}/>} />
                     <Route path='/courses' element={<CourseListPage 
                                                     courses={ courses }
                                                     setCourses={ setCourses }

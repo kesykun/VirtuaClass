@@ -2,7 +2,7 @@ import { useState } from "react";
 import './css/LoginScreen.css';
 import { useNavigate } from "react-router-dom";
 
-const LoginScreen = ({currentUser, setCurrentUser}) => {
+const LoginScreen = ({setCurrentUser}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();

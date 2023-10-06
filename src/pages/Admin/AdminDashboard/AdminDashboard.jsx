@@ -15,7 +15,7 @@ const AdminDashboard = ({ currentUser, setCurrentUser }) => {
             <button className="adminDashButton" onClick={() => navigate('/admin/student_accounts')}>Student Accounts</button><br/>
             <button className="adminDashButton" onClick={() => navigate('/admin/instructor_accounts')}>Instructor Accounts</button><br/>
             <button className="adminDashButton" onClick={() => navigate('/admin/administrator_accounts')}>Administrator Accounts</button><br/>
-            <button className="adminDashButton" onClick={() => navigate('/admin/site_settings')}>Student Accounts</button><br/>
+            <button className="adminDashButton" onClick={() => navigate('/admin/site_settings')}>Site Settings</button><br/>
         </div>
     );
 };

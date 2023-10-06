@@ -25,6 +25,12 @@ const LoginScreen = () => {
             if (matchedAccount.password === password) {
                 navigate('/redirect');
             }
+            else if (matchedAccount.password === password){
+                console.log("Incorrect password.")
+            }
+        }
+        else if (!matchedAccount){
+            console.log("Email does not exist.")
         }
 
         console.log(json)

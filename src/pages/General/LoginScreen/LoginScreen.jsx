@@ -10,11 +10,10 @@ const LoginScreen = ({setCurrentUser}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const response = await fetch('http://localhost:9600/api/accounts')
+        const response = await fetch('/api/accounts');
+        const json = await response.json();
 
-        const json = await response.json()
-
-        const matchedAccount = json.filter(item=>item.email === email)[0]
+        const matchedAccount = json.filter(item=>item.email === email)[0];
 
         
         // const navigateToAdminDash = () => {
@@ -23,20 +22,25 @@ const LoginScreen = ({setCurrentUser}) => {
 
         if (matchedAccount) {
             if (matchedAccount.password === password) {
-                fetch(`http://localhost:9600/api/${matchedAccount.account_type}/${matchedAccount.user_id}`)
-                    .then(result =>{return result.json()}).then(value =>{setCurrentUser(value); console.log(value); navigate('/redirect')})
+                fetch(`/api/${matchedAccount.account_type}/${matchedAccount.user_id}`).then(result => {
+                    return result.json();
+                }).then(value =>{
+                    setCurrentUser(value);
+                    console.log(value);
+                    navigate('/redirect');
+                });
             }
             else if (matchedAccount.password === password){
-                console.log("Incorrect password.")
+                console.log("Incorrect password.");
             }
         }
         else if (!matchedAccount){
-            console.log("Email does not exist.")
+            console.log("Email does not exist.");
         }
 
-        console.log(json)
-        console.log([email, password])
-        console.log(matchedAccount)
+        console.log(json);
+        console.log([email, password]);
+        console.log(matchedAccount);
     }
 
     return (

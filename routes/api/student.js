@@ -5,12 +5,12 @@ const StudentController = require(path.join(__dirname, '..', '..', 'controllers'
 const router = express.Router();
 
 
-router.route('/students')
+router.route('/student')
     .get(StudentController.getAllStudents)
     .post(StudentController.createNewStudent)
     .put(StudentController.updateStudent)
     .delete(StudentController.deleteStudent);
 
-router.route('/students/:id').get(StudentController.getStudent);
+router.route('/student/:id').get(StudentController.getStudent);
 
 module.exports = router;

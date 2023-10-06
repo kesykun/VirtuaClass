@@ -5,12 +5,12 @@ const InstructorController = require(path.join(__dirname, '..', '..', 'controlle
 const router = express.Router();
 
 
-router.route('/instructors')
+router.route('/instructor')
     .get(InstructorController.getAllInstructors)
     .post(InstructorController.createNewInstructor)
     .put(InstructorController.updateInstructor)
     .delete(InstructorController.deleteInstructor);
 
-router.route('/instructors/:id').get(InstructorController.getInstructor);
+router.route('/instructor/:id').get(InstructorController.getInstructor);
 
 module.exports = router;

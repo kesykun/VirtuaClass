@@ -2,7 +2,7 @@ import { useState } from "react";
 import './css/LoginScreen.css';
 import { useNavigate } from "react-router-dom";
 
-const LoginScreen = () => {
+const LoginScreen = ({currentUser, setCurrentUser}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
@@ -23,7 +23,8 @@ const LoginScreen = () => {
 
         if (matchedAccount) {
             if (matchedAccount.password === password) {
-                navigate('/redirect');
+                fetch(`http://localhost:9600/api/${matchedAccount.account_type}/${matchedAccount.user_id}`)
+                    .then(result =>{return result.json()}).then(value =>{setCurrentUser(value); console.log(value); navigate('/redirect')})
             }
             else if (matchedAccount.password === password){
                 console.log("Incorrect password.")

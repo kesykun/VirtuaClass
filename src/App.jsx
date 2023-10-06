@@ -14,6 +14,7 @@ import LoginScreen from "./pages/General/LoginScreen/LoginScreen";
 
 import EnrollmentApplications from "./pages/Admin/EnrollmentApplications/EnrollmentApplications";
 import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
+import SiteSettings from "./pages/Admin/SiteSettings/SiteSettings";
 
 
 const getAllCourses = async () => {
@@ -98,7 +99,7 @@ const App = () => {
                     <Route path="/admin/student_accounts" element={<h1>Para StudentAccounts</h1>} />
                     <Route path="/admin/instructor_accounts" element={<h1>Para InstructorAccounts</h1>} />
                     <Route path="/admin/administrator_accounts" element={<h1>Para AdministratorAccounts</h1>} />
-                    <Route path="/admin/site_settings" element={<h1>Para SiteSettings</h1>} />
+                    <Route path="/admin/site_settings" element={<SiteSettings/>} />
 
                     <Route path="/redirect" element={ <Navigate to="/admin"/> } />
                 </Routes>

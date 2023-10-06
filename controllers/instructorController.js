@@ -1,5 +1,5 @@
 const path = require('path');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const fsPromise = require('fs').promises;
 // const qr = require('qr-image');
 // const { v4: uuid } = require('uuid');
@@ -30,11 +30,11 @@ const createNewInstructor = async (req, res) => {
         return;
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    // const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newInstructor = await InstructorModel.create(
         {
             email: req.body.email,
-            password: hashedPassword,
+            password: req.body.password,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             account_type: accountTypes.instructor

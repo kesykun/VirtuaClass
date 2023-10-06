@@ -6,7 +6,10 @@ const router = express.Router();
 
 
 router.route('/accounts')
-    .get(accountController.getAccount);
+    .get(accountController.getAccount)
+
+// router.route('/accounts/:id')
+//     .put(accountController.comparePassword);
 
 
 module.exports = router;

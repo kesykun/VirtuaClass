@@ -85,6 +85,7 @@ const App = () => {
                     <Route path="/admin/instructor_accounts" element={<h1>Para InstructorAccounts</h1>} />
                     <Route path="/admin/administrator_accounts" element={<h1>Para AdministratorAccounts</h1>} />
                     <Route path="/admin/site_settings" element={<h1>Para SiteSettings</h1>} />
+                    
                     <Route path="/redirect" element={ <Navigate to="/admin"/> } />
                 </Routes>
             </BrowserRouter>

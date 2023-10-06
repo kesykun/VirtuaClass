@@ -14,16 +14,16 @@ const LoginScreen = () => {
 
         const json = await response.json()
 
-        const matchedAccount = json.filter(item=>item.email===email)
+        const matchedAccount = json.filter(item=>item.email === email)[0]
 
         
-        const navigateToAdminDash = () => {
-            navigate('/redirect');
-        }
+        // const navigateToAdminDash = () => {
+        //     navigate('/redirect');
+        // }
 
-        if (matchedAccount){
-            if (matchedAccount.password===password){
-                navigate('/admin');
+        if (matchedAccount) {
+            if (matchedAccount.password === password) {
+                navigate('/redirect');
             }
         }
 

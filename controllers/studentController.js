@@ -1,5 +1,5 @@
 const path = require('path');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const StudentModel = require(path.join(__dirname, '..', 'models', 'Student.js'));
 const AccountController = require(path.join(__dirname, 'accountController.js'));
 const accountTypes = require(path.join(__dirname, 'constants', 'accountTypes.js'));
@@ -25,11 +25,11 @@ const createNewStudent = async (req, res) => {
         return;
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    // const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newStudent = await StudentModel.create(
         {
             email: req.body.email,
-            password: hashedPassword,
+            password: req.body.password,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             account_type: accountTypes.student,

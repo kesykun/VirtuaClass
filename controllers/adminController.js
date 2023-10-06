@@ -1,5 +1,5 @@
 const path = require('path');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const AdminModel = require(path.join(__dirname, '..', 'models', 'Admin.js'));
 const AccountController = require(path.join(__dirname, 'accountController.js'));
 const accountTypes = require(path.join(__dirname, 'constants', 'accountTypes.js'));
@@ -25,11 +25,11 @@ const createNewAdmin = async (req, res) => {
         return;
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    // const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newAdmin = await AdminModel.create(
         {
             email: req.body.email,
-            password: hashedPassword,
+            password: req.body.password,
             firstname: req.body.firstname,
             lastname: req.body.lastname,
             account_type: accountTypes.admin
@@ -52,7 +52,7 @@ const deleteAdmin = async (req, res) => {
 const getAdmin = async (req, res) => {
     try {
         const admin = await AdminModel.findById(req.params.id);
-        console.err( err );console.err( err );
+        res.json( admin );
     } catch (err) {
         res.json({ message: 'Error retrieving admin' });
         console.err( err );

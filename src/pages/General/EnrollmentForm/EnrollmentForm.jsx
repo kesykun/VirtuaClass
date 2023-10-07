@@ -4,8 +4,7 @@ import CourseListWithSelection from "../../../components/CourseListWithSelection
 import SelectedCourses from "../../../components/SelectedCourses";
 import "./css/EnrollmentForm.css";
 
-const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpanded, selectedCourses, setSelectedCourses }) => {
-    
+const EnrollmentForm = ({ courses, setCourses }) => {
     // Initialize state variables for form data
     const [formData, setFormData] = useState({
         StudentFirstName: "",
@@ -17,6 +16,10 @@ const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpand
         GuardianLastName: "",
         GuardianContactNumber: "",
     });
+
+    const [coursesExpanded, setCoursesExpanded] = useState(false);
+    const [selectedCourses, setSelectedCourses] = useState([]);
+    
 
     // Handle form submission
     const handleSubmit = async (e) => {

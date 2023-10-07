@@ -6,15 +6,18 @@ import { useNavigate } from "react-router-dom";
 const AdminDashboard = ({ currentUser, setCurrentUser }) => {
     const navigate = useNavigate();
     useEffect(() => {
-        const sessionData = JSON.parse(sessionStorage.getItem('currentUser'));
-        console.table(sessionData);
-        setCurrentUser(sessionData);
+        if (sessionStorage.getItem('currentUser')) {
+            const sessionData = JSON.parse(sessionStorage.getItem('currentUser'));
+            console.table(sessionData);
+            setCurrentUser(sessionData);
+        }
+        if (currentUser.password === '') {
+            navigate('/');
+        }
     }, []);
     
     // setCurrentUser(JSON.parse(sessionStorage.getItem('currentUser')));
-    if (currentUser.password === '') {
-        navigate('/');
-    }
+    
     return (
         <div>
             <div>

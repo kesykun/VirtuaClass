@@ -18,6 +18,7 @@ const Calendar = () => {
 
   // Function to handle date selection
   const handleDateChange = (date) => {
+    console.log(date);
     setSelectedDate(date);
     for (let i=0; i<events.length; i++) {
       if (events[i].date === date.toDateString()){

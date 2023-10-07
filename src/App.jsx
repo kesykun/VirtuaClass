@@ -58,9 +58,8 @@ const App = () => {
       }, []
     )
 
-    const [coursesExpanded, setCoursesExpanded] = useState(false);
+    
     const [courses, setCourses] = useState([]);
-    const [selectedCourses, setSelectedCourses] = useState([]);
 
     useEffect(() => {
       (async () => {
@@ -95,20 +94,12 @@ const App = () => {
                     <Route path='/' element={<GeneralSchoolInformation schoolInfo={schoolInfo}/>} />
                     <Route path='/courses' element={<CourseListPage 
                                                     courses={ courses }
-                                                    setCourses={ setCourses }
-                                                    coursesExpanded={ coursesExpanded }
-                                                    setCoursesExpanded={ setCoursesExpanded }/>
-                                                } />
+                                                    setCourses={ setCourses } />} />
                     <Route path='/faq' element={<Faq />} />
                     <Route path='/calendar' element={<Calendar />} />
                     <Route path='/enrollment' element={<EnrollmentForm 
                                                     courses={ courses }
-                                                    setCourses={ setCourses }
-                                                    coursesExpanded={ coursesExpanded }
-                                                    setCoursesExpanded={ setCoursesExpanded }
-                                                    selectedCourses={ selectedCourses }
-                                                    setSelectedCourses={ setSelectedCourses }
-                                                    />} />
+                                                    setCourses={ setCourses }/>} />
                     <Route path='/paymentlinks' element={<PaymentLink />} />
                     <Route path='/login' element={<LoginScreen currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
 
@@ -125,7 +116,7 @@ const App = () => {
                     <Route path="/admin/administrator_accounts" element={<h1>Para AdministratorAccounts</h1>} />
                     <Route path="/admin/site_settings" element={<SiteSettings 
                                                                     currentUser={currentUser}
-                                                                    setCurrentUser={setCurrentUser} />} />
+                                                                    setCurrentUser={setCurrentUser}/>} />
                 </Routes>
             </BrowserRouter>
         </>

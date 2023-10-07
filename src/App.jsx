@@ -120,7 +120,7 @@ const App = () => {
                     <Route path="/admin/student_accounts" element={<h1>Para StudentAccounts</h1>} />
                     <Route path="/admin/instructor_accounts" element={<h1>Para InstructorAccounts</h1>} />
                     <Route path="/admin/administrator_accounts" element={<h1>Para AdministratorAccounts</h1>} />
-                    <Route path="/admin/site_settings" element={<SiteSettings/>} />
+                    <Route path="/admin/site_settings" element={<SiteSettings currentUser={currentUser}/>} />
                 </Routes>
             </BrowserRouter>
         </>

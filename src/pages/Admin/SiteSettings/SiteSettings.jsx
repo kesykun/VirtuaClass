@@ -2,7 +2,16 @@ import { useState } from "react";
 import './css/SiteSettings.css';
 import { useNavigate } from "react-router-dom";
 
-const SiteSettings = () => {
+const SiteSettings = (currentUser) => {
+    const navigate = useNavigate();
+
+    if (currentUser.password===''){
+        console.log(currentUser.password)
+        navigate('/');
+    }
+
+    console.log(currentUser.password)
+
     const [schoolName, setSchoolName] = useState("")
     const [mission, setMission] = useState("")
     const [vision, setVision] = useState("")

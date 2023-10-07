@@ -30,6 +30,7 @@ const LoginScreen = ({setCurrentUser}) => {
                 }).then(value =>{
                     setCurrentUser(value);
                     console.log(value);
+                    sessionStorage.setItem("currentUser", JSON.stringify(value));
                     navigate('/admin');
                 });
             }

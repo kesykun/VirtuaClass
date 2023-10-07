@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = ({ currentUser, setCurrentUser }) => {
     const navigate = useNavigate();
+    setCurrentUser(JSON.parse(sessionStorage.getItem("currentUser")));
     if (currentUser.password === '') {
         navigate('/');
     }

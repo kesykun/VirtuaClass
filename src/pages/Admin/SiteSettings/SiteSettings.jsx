@@ -2,11 +2,9 @@ import { useState } from "react";
 import './css/SiteSettings.css';
 import { useNavigate } from "react-router-dom";
 
-const SiteSettings = (currentUser) => {
+const SiteSettings = ({ currentUser }) => {
     const navigate = useNavigate();
-
     if (currentUser.password===''){
-        console.log(currentUser.password)
         navigate('/');
     }
 

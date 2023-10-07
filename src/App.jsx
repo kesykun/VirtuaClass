@@ -37,6 +37,9 @@ const App = () => {
       lastname: ''
     }
     );
+
+    sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
+
     const [schoolInfo, setSchoolInfo] = useState(
       {
         schoolName: '',

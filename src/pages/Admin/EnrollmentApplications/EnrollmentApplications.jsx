@@ -12,9 +12,16 @@ const getEnrollmentApplications = async () => {
 
 const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
     const navigate = useNavigate();
-    if (currentUser.password === '') {
-        navigate('/');
-    }
+    useEffect(() => {
+        if (sessionStorage.getItem('currentUser')) {
+            const sessionData = JSON.parse(sessionStorage.getItem('currentUser'));
+            console.table(sessionData);
+            setCurrentUser(sessionData);
+        }
+        if (currentUser.password === '') {
+            navigate('/');
+        }
+    }, []);
 
     const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(null);
     const [selectedEnrollment, setSelectedEnrollment] = useState({

@@ -9,6 +9,7 @@ const Calendar = () => {
 
   // Function to handle date selection
   const handleDateChange = (date) => {
+    console.log(date);
     setSelectedDate(date);
     // You can add additional logic here, such as fetching events for the selected date.
   };

@@ -10,6 +10,7 @@ const AdminDashboard = ({ currentUser, setCurrentUser }) => {
             const sessionData = JSON.parse(sessionStorage.getItem('currentUser'));
             console.table(sessionData);
             setCurrentUser(sessionData);
+            return;
         }
         if (currentUser.password === '') {
             navigate('/');

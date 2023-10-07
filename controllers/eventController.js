@@ -48,7 +48,7 @@ const updateEvent = async (req, res) => {
     res.json( result );
 };
 
-const deleteEvent = async () => {
+const deleteEvent = async (req, res) => {
     const result = await EventModel.deleteOne(
         {
             _id: req.body.id,

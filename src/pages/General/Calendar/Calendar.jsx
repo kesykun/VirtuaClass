@@ -23,10 +23,12 @@ const Calendar = () => {
     for (let i=0; i<events.length; i++) {
       if (events[i].date === date.toDateString()){
         setEvent(events[i]);
+        break;
+      }
+      else {
+        setEvent(null);
       }
     }
-    console.log(typeof events[0].date);
-    console.log(typeof date.toDateString());
     
     // You can add additional logic here, such as fetching events for the selected date.
   };
@@ -39,8 +41,10 @@ const Calendar = () => {
           {selectedDate && (
             <p>Selected Date: {selectedDate.toDateString()}</p>
           )}
-            <h1>Event: {event !== null ? event.date : ''}</h1>
-            <button onClick={() => console.log(event !== null ? event.date : event)}>Event lol</button>
+          {
+            <p>{event !== null ? `Event: ${event.event}` : ''}</p>
+          }
+            
         </div>
       </div>
     </div>

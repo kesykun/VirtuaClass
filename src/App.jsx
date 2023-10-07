@@ -38,7 +38,7 @@ const App = () => {
     }
     );
 
-    sessionStorage.setItem("currentUser", JSON.stringify(currentUser));
+    // sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
 
     const [schoolInfo, setSchoolInfo] = useState(
       {
@@ -79,7 +79,7 @@ const App = () => {
             email: instructorData.email
           });
         }
-        console.log(temp);
+        // console.log(temp);
         setCourses(temp);
       })();
       

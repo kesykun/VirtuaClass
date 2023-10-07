@@ -1,10 +1,17 @@
+import { useEffect } from 'react';
 import './css/AdminDashboard.css';
 import { useNavigate } from "react-router-dom";
 
 
 const AdminDashboard = ({ currentUser, setCurrentUser }) => {
     const navigate = useNavigate();
-    setCurrentUser(JSON.parse(sessionStorage.getItem("currentUser")));
+    useEffect(() => {
+        const sessionData = JSON.parse(sessionStorage.getItem('currentUser'));
+        console.table(sessionData);
+        setCurrentUser(sessionData);
+    }, []);
+    
+    // setCurrentUser(JSON.parse(sessionStorage.getItem('currentUser')));
     if (currentUser.password === '') {
         navigate('/');
     }

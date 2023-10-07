@@ -16,21 +16,18 @@ const LoginScreen = ({setCurrentUser}) => {
         const matchedAccount = json.filter(item=>item.email === email)[0];
 
         
-        // const navigateToAdminDash = () => {
-        //     navigate('/redirect');
-        // }
 
         if (matchedAccount) {
-            console.log(matchedAccount.user_id);
+            // console.log(matchedAccount.user_id);
             if (matchedAccount.password === password) {
                 const path = `/api/${matchedAccount.account_type}/${matchedAccount.user_id}`;
-                console.log(`Fetching ${path}`);
+                // console.log(`Fetching ${path}`);
                 fetch(path).then(result => {
                     return result.json();
                 }).then(value =>{
                     setCurrentUser(value);
                     console.log(value);
-                    sessionStorage.setItem("currentUser", JSON.stringify(value));
+                    sessionStorage.setItem('currentUser', JSON.stringify(value));
                     navigate('/admin');
                 });
             }

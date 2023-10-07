@@ -27,7 +27,7 @@ th {
 .decisionButtons {
     position: absolute;
     left: 45%;
-    top: 30%;
+    top: 40%;
     width: fit-content;
 }
 .decisionButton {
@@ -57,6 +57,6 @@ th {
 
 .enrollmentDetails {
     position: absolute;
-    top: 25%;
+    top: 35%;
     left: 60%;
 }

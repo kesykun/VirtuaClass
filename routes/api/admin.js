@@ -11,6 +11,6 @@ router.route('/admins')
     .put(AdminController.updateAdmin)
     .delete(AdminController.deleteAdmin);
 
-router.route('/admin/:id').get(AdminController.getAdmin);
+router.route('/admins/:id').get(AdminController.getAdmin);
 
 module.exports = router;

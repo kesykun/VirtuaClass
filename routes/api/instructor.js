@@ -11,6 +11,6 @@ router.route('/instructors')
     .put(InstructorController.updateInstructor)
     .delete(InstructorController.deleteInstructor);
 
-router.route('/instructor/:id').get(InstructorController.getInstructor);
+router.route('/instructors/:id').get(InstructorController.getInstructor);
 
 module.exports = router;

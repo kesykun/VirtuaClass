@@ -113,13 +113,14 @@ const App = () => {
                                                     currentUser={currentUser}
                                                     setCurrentUser={setCurrentUser} 
                                                   />} />
-                    <Route path="/admin/enrollment_applications" element={<EnrollmentApplications />} />
+                    <Route path="/admin/enrollment_applications" element={<EnrollmentApplications 
+                                                                              currentUser={currentUser}
+                                                                              setCurrentUser={setCurrentUser} 
+                                                                          />} />
                     <Route path="/admin/student_accounts" element={<h1>Para StudentAccounts</h1>} />
                     <Route path="/admin/instructor_accounts" element={<h1>Para InstructorAccounts</h1>} />
                     <Route path="/admin/administrator_accounts" element={<h1>Para AdministratorAccounts</h1>} />
                     <Route path="/admin/site_settings" element={<SiteSettings/>} />
-
-                    <Route path="/redirect" element={ <Navigate to="/admin"/> } />
                 </Routes>
             </BrowserRouter>
         </>

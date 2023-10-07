@@ -21,13 +21,16 @@ const LoginScreen = ({setCurrentUser}) => {
         // }
 
         if (matchedAccount) {
+            console.log(matchedAccount.user_id);
             if (matchedAccount.password === password) {
-                fetch(`/api/${matchedAccount.account_type}/${matchedAccount.user_id}`).then(result => {
+                const path = `/api/${matchedAccount.account_type}/${matchedAccount.user_id}`;
+                console.log(`Fetching ${path}`);
+                fetch(path).then(result => {
                     return result.json();
                 }).then(value =>{
                     setCurrentUser(value);
                     console.log(value);
-                    navigate('/redirect');
+                    navigate('/admin');
                 });
             }
             else if (matchedAccount.password === password){
@@ -38,9 +41,9 @@ const LoginScreen = ({setCurrentUser}) => {
             console.log("Email does not exist.");
         }
 
-        console.log(json);
-        console.log([email, password]);
-        console.log(matchedAccount);
+        // console.log(json);
+        // console.log([email, password]);
+        // console.log(matchedAccount);
     }
 
     return (

@@ -9,7 +9,7 @@ const getEnrollmentApplications = async () => {
 
 
 
-const EnrollmentApplications = () => {
+const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
 
     const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(null);
     const [selectedEnrollment, setSelectedEnrollment] = useState({
@@ -59,6 +59,11 @@ const EnrollmentApplications = () => {
 
     return (
         <div>
+            <div>
+                <h1>Firstname: { currentUser.firstname }</h1>
+                <h1>Lastname: { currentUser.lastname }</h1>
+                <h1>Email: { currentUser.email }</h1>
+            </div>
             <div className="decisionButtons">
                 <button 
                     className="decisionButton acceptButton"
@@ -69,7 +74,10 @@ const EnrollmentApplications = () => {
                                 headers: {
                                     'Content-Type': 'application/json'
                                 },
-                                body: JSON.stringify({ id: selectedEnrollment._id }),
+                                body: JSON.stringify({
+                                    id: selectedEnrollment._id,
+                                    accept: true
+                                }),
                                 redirect: 'follow'
                             }).then(result => {
                                 return result.json();
@@ -82,7 +90,26 @@ const EnrollmentApplications = () => {
                 <br/>
                 <button 
                     className="decisionButton discardButton"
-                    onClick={() => console.log(`Discard: ${selectedEnrollment.email}`)}>Discard</button>
+                    onClick={() => {
+                        if (selectedEnrollmentId) {
+                            fetch('/api/enrollments', {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    id: selectedEnrollment._id,
+                                    accept: false
+                                }),
+                                redirect: 'follow'
+                            }).then(result => {
+                                return result.json();
+                            }).then(value => {
+                                console.log(value);
+                            });
+                            // console.log(`Discard: ${selectedEnrollment.email}`);
+                        }
+                    }}>Discard</button>
             </div>
             <table>
                 <tr>

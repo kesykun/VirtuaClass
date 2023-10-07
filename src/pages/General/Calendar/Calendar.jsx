@@ -39,8 +39,8 @@ const Calendar = () => {
           {selectedDate && (
             <p>Selected Date: {selectedDate.toDateString()}</p>
           )}
-            <p>Event: {event.date === undefined? event.date:''}</p>
-            <button onClick={() => console.log(typeof event.date)}>Event lol</button>
+            <h1>Event: {event !== null ? event.date : ''}</h1>
+            <button onClick={() => console.log(event !== null ? event.date : event)}>Event lol</button>
         </div>
       </div>
     </div>

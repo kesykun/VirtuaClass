@@ -1,7 +1,7 @@
 const path = require('path');
 const EnrollmentModel = require(path.join(__dirname, '..', 'models', 'Enrollment.js'));
-
-
+const studentController = require(path.join(__dirname, 'studentController.js'));
+const AccountController = require(path.join(__dirname, 'accountController.js'));
 
 const getAllEnrollments = async (req, res) => {
     try {
@@ -44,6 +44,21 @@ const updateEnrollment = async (req, res) => {
 };
 
 const deleteEnrollment = async (req, res) => {
+    if (req.body.accept) {
+        const acceptedEnrollment = await EnrollmentModel.findById( req.body.id );
+        const newStudent = await studentController.insertNewStudent(
+            {
+                email: acceptedEnrollment.email,
+                password: 'Heloo Haha',
+                firstname: acceptedEnrollment.firstname,
+                lastname: acceptedEnrollment.lastname,
+                courses_taken_id: []
+            }
+        );
+        const result = await EnrollmentModel.deleteOne({ _id: req.body.id });
+        res.json({ newStudent: newStudent, result: result });
+        return;
+    }
     const result = await EnrollmentModel.deleteOne({ _id: req.body.id });
     res.json( result );
 };

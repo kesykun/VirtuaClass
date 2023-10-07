@@ -3,14 +3,10 @@ import Course from "./Course";
 
 const SelectCourse = ({ key, courseObj, courseExpanded, selectedCourses, setSelectedCourses }) => {
     const [checkBoxStatus, setCheckBoxStatus] = useState(false);
-    const addToSelectedCourses = ( ) => {
-        let tempSelectedCourses = selectedCourses;
-        tempSelectedCourses.push( courseObj );
-        setSelectedCourses(tempSelectedCourses);
-    }
+
     useEffect(() => {
         if (checkBoxStatus === true) {
-            addToSelectedCourses();
+            setSelectedCourses([ ]);
         } else {
             setSelectedCourses(selectedCourses.filter((item) => item.id === courseObj.id));
         }
@@ -19,16 +15,16 @@ const SelectCourse = ({ key, courseObj, courseExpanded, selectedCourses, setSele
     }, [checkBoxStatus]);
     return (
             <Course 
-            key={ key } 
-            courseObj={ courseObj } 
-            allExpanded={ courseExpanded } 
-            checkBox={
-                <input 
-                    type="checkbox" 
-                    checked={ checkBoxStatus }
-                    onChange={ () => setCheckBoxStatus(!checkBoxStatus) }
-                />
-            }/>
+                key={ key } 
+                courseObj={ courseObj } 
+                allExpanded={ courseExpanded } 
+                checkBox={
+                    <button 
+                        className="addCourseButton"
+                        onClick={() => console.log(key)}
+                        >Add Course</button>
+                }
+            />
     );
 }
 

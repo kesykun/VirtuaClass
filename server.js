@@ -36,6 +36,7 @@ app.use('/api', require(path.join(__dirname, 'routes', 'api', 'student.js')));
 app.use('/api', require(path.join(__dirname, 'routes', 'api', 'admin.js')));
 app.use('/api', require(path.join(__dirname, 'routes', 'api', 'account.js')));
 app.use('/api', require(path.join(__dirname, 'routes', 'api', 'enrollment.js')));
+app.use('/api', require(path.join(__dirname, 'routes', 'api', 'event.js')));
 
 
 //  General view routes

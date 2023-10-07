@@ -1,6 +1,7 @@
 
 import "./css/EnrollmentApplications.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const getEnrollmentApplications = async () => {
     const response = await fetch('/api/enrollments');
@@ -10,6 +11,10 @@ const getEnrollmentApplications = async () => {
 
 
 const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
+    const navigate = useNavigate();
+    if (currentUser.password === '') {
+        navigate('/');
+    }
 
     const [selectedEnrollmentId, setSelectedEnrollmentId] = useState(null);
     const [selectedEnrollment, setSelectedEnrollment] = useState({

@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 const AdminDashboard = ({ currentUser, setCurrentUser }) => {
     const navigate = useNavigate();
+    if (currentUser.password === '') {
+        navigate('/');
+    }
     return (
         <div>
             <div>

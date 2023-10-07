@@ -1,7 +1,14 @@
 const path = require('path');
+
+const bcrypt = require('bcrypt');
+const { v4: uuid } = require('uuid');
+
 const EnrollmentModel = require(path.join(__dirname, '..', 'models', 'Enrollment.js'));
 const studentController = require(path.join(__dirname, 'studentController.js'));
 const AccountController = require(path.join(__dirname, 'accountController.js'));
+
+
+
 
 const getAllEnrollments = async (req, res) => {
     try {
@@ -33,7 +40,8 @@ const createNewEnrollment = async (req, res) => {
             guardianFirstname: req.body.guardianFirstname,
             guardianMiddleInitial: req.body.guardianMiddleInitial,
             guardianLastname: req.body.guardianLastname,
-            guardianContactNumber: req.body.guardianContactNumber
+            guardianContactNumber: req.body.guardianContactNumber,
+            coursesTakenIds: req.body.coursesTakenIds
         }
     );
     res.json( newEnrollment );
@@ -46,13 +54,15 @@ const updateEnrollment = async (req, res) => {
 const deleteEnrollment = async (req, res) => {
     if (req.body.accept) {
         const acceptedEnrollment = await EnrollmentModel.findById( req.body.id );
+
+        const systemGeneratedPassword = await bcrypt.hash(uuid(), 5);
         const newStudent = await studentController.insertNewStudent(
             {
                 email: acceptedEnrollment.email,
-                password: 'Heloo Haha',
+                password: systemGeneratedPassword,
                 firstname: acceptedEnrollment.firstname,
                 lastname: acceptedEnrollment.lastname,
-                courses_taken_id: []
+                courses_taken_id: acceptedEnrollment.coursesTakenIds
             }
         );
         const result = await EnrollmentModel.deleteOne({ _id: req.body.id });
@@ -67,11 +77,11 @@ const deleteEnrollment = async (req, res) => {
 
 const getEnrollment = async (req, res) => {
     try {
-        const Enrollment = await EnrollmentModel.findById(req.params.id);
-        console.err( err );console.err( err );
+        const enrollment = await EnrollmentModel.findById(req.params.id);
+        res.json(  enrollment );
     } catch (err) {
         res.json({ message: 'Error retrieving enrollment' });
-        console.err( err );
+        console.error( err );
     }
 }
 

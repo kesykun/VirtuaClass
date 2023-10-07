@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FormInput from "../../../components/FormInput";
 import CourseListWithSelection from "../../../components/CourseListWithSelection";
 import SelectedCourses from "../../../components/SelectedCourses";
@@ -6,6 +6,10 @@ import "./css/EnrollmentForm.css";
 
 const EnrollmentForm = ({ courses, setCourses }) => {
     // Initialize state variables for form data
+    const [coursesExpanded, setCoursesExpanded] = useState(false);
+    const [selectedCourses, setSelectedCourses] = useState([]);
+    const [courseChoices, setCourseChoices] = useState([]);
+    const [selectedCoursesIds, setSelectedCoursesIds] = useState([]);
     const [formData, setFormData] = useState({
         StudentFirstName: "",
         StudentMiddleInitial: "",
@@ -14,11 +18,14 @@ const EnrollmentForm = ({ courses, setCourses }) => {
         GuardianFirstName: "",
         GuardianMiddleInitial: "",
         GuardianLastName: "",
-        GuardianContactNumber: "",
+        GuardianContactNumber: ""
     });
+    useEffect(() => {
+        // console.log(courses);
+        setCourseChoices(courses);
+    }, []);
 
-    const [coursesExpanded, setCoursesExpanded] = useState(false);
-    const [selectedCourses, setSelectedCourses] = useState([]);
+    
     
 
     // Handle form submission
@@ -41,7 +48,8 @@ const EnrollmentForm = ({ courses, setCourses }) => {
                         guardianFirstname: formData.GuardianFirstName,
                         guardianMiddleInitial: formData.GuardianMiddleInitial,
                         guardianLastname: formData.GuardianLastName,
-                        guardianContactNumber: formData.GuardianContactNumber
+                        guardianContactNumber: formData.GuardianContactNumber,
+                        coursesTakenIds: selectedCoursesIds
                     }
                 ),
                 redirect: 'follow'
@@ -55,20 +63,24 @@ const EnrollmentForm = ({ courses, setCourses }) => {
         const { name, value } = e.target;
         setFormData({...formData, [name]: value});
     }
-    console.log(courses);
 
     return (
         <>
             <section className="enrollment__section">
-                <SelectedCourses selectedCourses={ selectedCourses } />
+                <SelectedCourses 
+                            setCourses={setCourseChoices} 
+                            setSelectedCoursesIds={setSelectedCoursesIds} 
+                            selectedCourses={ selectedCourses } 
+                            setSelectedCourses={setSelectedCourses} />
                 <div className="courseListWithSelection_Cont">
                     <CourseListWithSelection  
-                        courses={ courses } 
-                        coursesExpanded={ coursesExpanded }
+                        courses={ courseChoices } 
+                        setCourses={ setCourseChoices } 
+                        setSelectedCoursesIds={setSelectedCoursesIds} 
+                        coursesExpanded={ coursesExpanded } 
                         setCoursesExpanded={ setCoursesExpanded } 
                         selectedCourses={ selectedCourses } 
-                        setSelectedCourses={ setSelectedCourses } 
-                    />
+                        setSelectedCourses={ setSelectedCourses } />
                 </div>
                 <div className="form_cont">
                     <div className="enrollment__heading">
@@ -128,6 +140,10 @@ const EnrollmentForm = ({ courses, setCourses }) => {
                     </form>
                 </div>
             </section>
+            <button onClick={() => {
+                console.log(courses);
+                console.log(selectedCoursesIds);
+                }}>Show Courses</button>
         </>
     );
 };

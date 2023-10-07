@@ -36,6 +36,10 @@ const enrollmentSchema = new Schema(
         guardianContactNumber: {
             type: String,
             required: true
+        },
+        coursesTakenIds: {
+            type: [mongoose.SchemaTypes.ObjectId],
+            required: true
         }
     },
     {

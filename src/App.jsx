@@ -71,6 +71,7 @@ const App = () => {
           // console.log(instructorData);
           let instructorData = allInstructors.filter(instructor => instructor._id === allCourses[i].instructor_id)[0];
           temp.push({
+            id: allCourses[i]._id,
             name: allCourses[i].name,
             fee: allCourses[i].fee,
             description: allCourses[i].description,

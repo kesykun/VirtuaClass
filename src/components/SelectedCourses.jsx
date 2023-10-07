@@ -1,16 +1,23 @@
-const createCourse = ( key, course ) => {
+const createCourse = ( key, course, setCourses, setSelectedCoursesIds, selectedCourses, setSelectedCourses ) => {
     return (
         <tr className="tableRow" key={ key } >
-            <td>{ course.title }</td>
+            <td>{ course.name }</td>
             <td>{ course.description }</td>
+            <td>
+                <button onClick={() => {
+                    setSelectedCourses([...selectedCourses.filter(item => item.id !== course.id)]);
+                    setSelectedCoursesIds(prev => [...prev.filter(item => item !== course.id )]);
+                    setCourses(prev => [...prev, course]);
+                }}>Remove</button>
+            </td>
         </tr>
     );
 };
 
-const SelectedCourses = ({ selectedCourses }) => {
+const SelectedCourses = ({ setCourses, setSelectedCoursesIds, selectedCourses, setSelectedCourses }) => {
     let selectedCoursesInJsx = [];
     for(let i=0; i<selectedCourses.length; i++) {
-        selectedCoursesInJsx.push(createCourse(i+1, selectedCourses[i]));
+        selectedCoursesInJsx.push(createCourse(i+1, selectedCourses[i], setCourses, setSelectedCoursesIds, selectedCourses, setSelectedCourses ));
     }
     return (
         <section className="ubox">
@@ -20,16 +27,13 @@ const SelectedCourses = ({ selectedCourses }) => {
                 <div className="ubox_body">
                     <table>
                         <tr>
-                            <th style={
-                                {
+                            <th style={{
                                     width: "300px"
-                                }
-                            }>Course Name</th>
-                            <th style={
-                                {
+                                }}>Course Name</th>
+                            <th style={{
                                     width: "500px"
-                                }
-                            }>Description</th>
+                                }}>Description</th>
+                            <th>Remove Button</th>
                         </tr>
                         { selectedCoursesInJsx }
                     </table>

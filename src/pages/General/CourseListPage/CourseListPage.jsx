@@ -7,7 +7,7 @@ const CourseListPage = ({ courses, setCourses }) => {
     const [coursesExpanded, setCoursesExpanded] = useState(false);
     
     // console.log(coursesExpanded);
-    useEffect(() => console.log(coursesExpanded), [coursesExpanded]);
+    // useEffect(() => console.log(coursesExpanded), [coursesExpanded]);
     return (
         <>
             <CourseList

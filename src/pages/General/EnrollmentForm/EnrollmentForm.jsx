@@ -3,8 +3,9 @@ import FormInput from "../../../components/FormInput";
 import CourseListWithSelection from "../../../components/CourseListWithSelection";
 import SelectedCourses from "../../../components/SelectedCourses";
 import "./css/EnrollmentForm.css";
+import { te } from 'date-fns/locale';
 
-const EnrollmentForm = ({ courses, setCourses }) => {
+const EnrollmentForm = ({ courses, setCourses, getAllCourses, getAllInstructors  }) => {
     // Initialize state variables for form data
     const [coursesExpanded, setCoursesExpanded] = useState(false);
     const [selectedCourses, setSelectedCourses] = useState([]);
@@ -20,10 +21,36 @@ const EnrollmentForm = ({ courses, setCourses }) => {
         GuardianLastName: "",
         GuardianContactNumber: ""
     });
+
     useEffect(() => {
-        // console.log(courses);
-        setCourseChoices(courses);
+        ((async () => {
+          const allCourses = await getAllCourses();
+          const allInstructors = await getAllInstructors();
+          let temp = [];
+          for (let i=0; i<allCourses.length; i++) {
+            
+            // console.log(instructorData);
+            let instructorData = allInstructors.filter(instructor => instructor._id === allCourses[i].instructor_id)[0];
+            temp.push({
+              id: allCourses[i]._id,
+              name: allCourses[i].name,
+              fee: allCourses[i].fee,
+              description: allCourses[i].description,
+              instructor: `${instructorData.firstname} ${instructorData.lastname}`,
+              email: instructorData.email
+            });
+          }
+          // console.log(temp);
+          setCourses(temp);
+          return temp;
+        })()).then(result => setCourseChoices(result));
+        
     }, []);
+        
+    // useEffect(() => {
+    //     // console.log(courses);
+        
+    // }, []);
 
     
     
@@ -56,6 +83,7 @@ const EnrollmentForm = ({ courses, setCourses }) => {
             }
         );
         console.log(await response.json());
+        window.location.reload();
     }
 
     // Handle input field changes and update the state

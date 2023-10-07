@@ -35,6 +35,7 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
 
     const [enrollmentApplications, setEnrollmentApplications] = useState([]);
     const [htmlEnrollmentApplications, setHtmlEnrollmentApplications] = useState([]);
+    const [updateEnrollmentData, setUpdateEnrollmentData] = useState(false);
 
 
     useEffect(() => {
@@ -52,10 +53,10 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                                 </tr>
                             );
                         }
-                )
+                    )
             );
         }).catch(err => console.error(err));
-    }, []);
+    }, [updateEnrollmentData]);
 
 
 
@@ -98,6 +99,8 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                                 console.log(value);
                             });
                             // console.log(`Accept: ${selectedEnrollment.email}`);
+                            // window.location.reload();
+                            setUpdateEnrollmentData(prev => !prev);
                         }
                     }}>Accept</button>
                 <br/>
@@ -121,6 +124,9 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                                 console.log(value);
                             });
                             // console.log(`Discard: ${selectedEnrollment.email}`);
+                            // setEnrollmentApplications(prev => [...prev.filter(item => item.id !== selectedEnrollment._id)]);
+                            // window.location.reload();
+                            setUpdateEnrollmentData(prev => !prev);
                         }
                     }}>Discard</button>
             </div>

@@ -52,7 +52,7 @@ const App = () => {
     );
     useEffect(
       () => {
-        fetch('http://localhost:9600/api/school')
+        fetch('/api/school')
         .then(result =>{return result.json()})
         .then(value =>{setSchoolInfo(value)});
       }, []
@@ -100,7 +100,9 @@ const App = () => {
                     <Route path='/calendar' element={<Calendar />} />
                     <Route path='/enrollment' element={<EnrollmentForm 
                                                     courses={ courses }
-                                                    setCourses={ setCourses }/>} />
+                                                    setCourses={ setCourses } 
+                                                    getAllCourses={getAllCourses} 
+                                                    getAllInstructors={getAllInstructors} />} />
                     <Route path='/paymentlinks' element={<PaymentLink />} />
                     <Route path='/login' element={<LoginScreen currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
 

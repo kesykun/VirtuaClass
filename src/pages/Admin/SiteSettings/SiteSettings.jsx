@@ -1,14 +1,18 @@
+import { useEffect } from 'react';
 import { useState } from "react";
 import './css/SiteSettings.css';
 import { useNavigate } from "react-router-dom";
 
-const SiteSettings = ({ currentUser }) => {
+const SiteSettings = ({ currentUser, setCurrentUser }) => {
     const navigate = useNavigate();
+    useEffect(() => {
+        const sessionData = JSON.parse(sessionStorage.getItem('currentUser'));
+        console.table(sessionData);
+        setCurrentUser(sessionData);
+    }, []);
     if (currentUser.password===''){
         navigate('/');
     }
-
-    console.log(currentUser.password)
 
     const [schoolName, setSchoolName] = useState("")
     const [mission, setMission] = useState("")

@@ -5,7 +5,7 @@ const InstructorController = require(path.join(__dirname, '..', '..', 'controlle
 const router = express.Router();
 
 
-router.route('/instructor')
+router.route('/instructors')
     .get(InstructorController.getAllInstructors)
     .post(InstructorController.createNewInstructor)
     .put(InstructorController.updateInstructor)

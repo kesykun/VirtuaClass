@@ -13,7 +13,7 @@ const SiteSettings = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         
-        await fetch('http://localhost:9600/api/school', {
+        await fetch('/api/school', {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

@@ -9,11 +9,11 @@ const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpand
     // Initialize state variables for form data
     const [formData, setFormData] = useState({
         StudentFirstName: "",
-        StudentMiddleName: "",
+        StudentMiddleInitial: "",
         StudentLastName: "",
         StudentEmailAddress: "",
         GuardianFirstName: "",
-        GuardianMiddleName: "",
+        GuardianMiddleInitial: "",
         GuardianLastName: "",
         GuardianContactNumber: "",
     });
@@ -31,12 +31,12 @@ const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpand
                 body: JSON.stringify(
                     {
                         firstname: formData.StudentFirstName,
-                        middlename: formData.StudentMiddleName,
+                        middleInitial: formData.StudentMiddleInitial,
                         lastname: formData.StudentLastName,
                         email: formData.StudentEmailAddress,
                         
                         guardianFirstname: formData.GuardianFirstName,
-                        guardianMiddlename: formData.GuardianMiddleName,
+                        guardianMiddleInitial: formData.GuardianMiddleInitial,
                         guardianLastname: formData.GuardianLastName,
                         guardianContactNumber: formData.GuardianContactNumber
                     }
@@ -79,9 +79,9 @@ const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpand
                             onChange={handleInputChange}
                         />
                         <FormInput 
-                            name="StudentMiddleName" 
-                            placeholder="Student's middle name"
-                            value={formData.StudentMiddleName}
+                            name="StudentMiddleInitial" 
+                            placeholder="Student's middle initial"
+                            value={formData.StudentMiddleInitial}
                             onChange={handleInputChange}
                         />
                         <FormInput 
@@ -103,9 +103,9 @@ const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpand
                             onChange={handleInputChange}
                         />
                         <FormInput 
-                            name="GuardianMiddleName" 
-                            placeholder="Guardian's middle name"
-                            value={formData.GuardianMiddleName}
+                            name="GuardianMiddleInitial" 
+                            placeholder="Guardian's middle initial"
+                            value={formData.GuardianMiddleInitial}
                             onChange={handleInputChange}
                         />
                         <FormInput 

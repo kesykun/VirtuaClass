@@ -26,12 +26,12 @@ const createNewEnrollment = async (req, res) => {
     const newEnrollment = await EnrollmentModel.create(
         {
             firstname: req.body.firstname,
-            middlename: req.body.middlename,
+            middleInitial: req.body.middleInitial,
             lastname: req.body.lastname,
             email: req.body.email,
             
             guardianFirstname: req.body.guardianFirstname,
-            guardianMiddlename: req.body.guardianMiddlename,
+            guardianMiddleInitial: req.body.guardianMiddleInitial,
             guardianLastname: req.body.guardianLastname,
             guardianContactNumber: req.body.guardianContactNumber
         }
@@ -44,7 +44,8 @@ const updateEnrollment = async (req, res) => {
 };
 
 const deleteEnrollment = async (req, res) => {
-
+    const result = await EnrollmentModel.deleteOne({ _id: req.body.id });
+    res.json( result );
 };
 
 

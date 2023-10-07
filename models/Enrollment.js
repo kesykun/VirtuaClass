@@ -9,7 +9,7 @@ const enrollmentSchema = new Schema(
             type: String,
             required: true
         },
-        middlename: {
+        middleInitial: {
             type: String,
             required: true
         },
@@ -25,7 +25,7 @@ const enrollmentSchema = new Schema(
             type: String,
             required: true
         },
-        guardianMiddlename: {
+        guardianMiddleInitial: {
             type: String,
             required: true
         },

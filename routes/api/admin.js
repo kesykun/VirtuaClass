@@ -5,7 +5,7 @@ const AdminController = require(path.join(__dirname, '..', '..', 'controllers', 
 const router = express.Router();
 
 
-router.route('/admin')
+router.route('/admins')
     .get(AdminController.getAllAdmins)
     .post(AdminController.createNewAdmin)
     .put(AdminController.updateAdmin)

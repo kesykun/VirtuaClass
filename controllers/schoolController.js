@@ -1,4 +1,9 @@
 
+
+const qr = require('qr-image');
+const { v4: uuid } = require('uuid');
+const fsPromise = require('fs').promises;
+
 const path = require('path');
 const SchoolModel = require(path.join(__dirname, '..', 'models', 'School.js'));
 
@@ -48,6 +53,8 @@ const updateSchoolInfo = async (req, res) => {
             }
         );
         console.log("update ran!");
+        const svgQR = qr.imageSync(result.paymentLink, { type: 'svg' });
+        await fsPromise.writeFile(path.join(__dirname, '..', 'public', 'svg', 'paymentQR.svg'), svgQR);
         res.json( result );
         return;
     }

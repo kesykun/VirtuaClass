@@ -1,6 +1,5 @@
 import { useState } from "react";
 import './css/LoginScreen.css';
-import { useNavigate } from "react-router-dom";
 
 const LoginScreen = ({setCurrentUser}) => {
     const [email, setEmail] = useState("")
@@ -8,7 +7,7 @@ const LoginScreen = ({setCurrentUser}) => {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         const response = await fetch('/api/accounts');
         const json = await response.json();
@@ -38,6 +37,8 @@ const LoginScreen = ({setCurrentUser}) => {
         else if (!matchedAccount){
             console.log("Email does not exist.");
         }
+        document.getElementById('loginEmailInput').value = '';
+        document.getElementById('loginPasswordInput').value = '';
 
         // console.log(json);
         // console.log([email, password]);
@@ -50,15 +51,19 @@ const LoginScreen = ({setCurrentUser}) => {
             
             <label>Email</label>
             <input 
+                id="loginEmailInput"
                 type="email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
+                required
             />
             <label>Password</label>
             <input 
+                id="loginPasswordInput"
                 type="password"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
+                required
             />
 
             <button>Login</button>

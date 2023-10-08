@@ -24,6 +24,53 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     const [paymentLink, setPaymentLink] = useState("")
     const [contactInformation, setContactInformation] = useState("")
 
+    const [faqData, setFaqData] = useState(null)
+    const [htmlFaqData, setHtmlFaqData] = useState(null)
+
+    useEffect( () => {
+        fetch('/api/school')
+        .then(result =>{return result.json()})
+        .then( value =>
+            {
+                setSchoolName(value.schoolName);
+                setMission(value.mission);
+                setVision(value.vision);
+                setObjectives(value.objectives);
+                setPaymentLink(value.paymentLink);
+                setContactInformation(value.contactInformation);
+            }
+        )
+    }, []
+    )
+
+    useEffect( () => {
+        fetch('/api/faqs')
+        .then(result =>{return result.json()})
+        .then( value =>
+            {
+                setFaqData(value);
+            }
+        )
+    }, []
+    )
+
+    useEffect( () => {
+        if (faqData !== null) {
+            setHtmlFaqData(
+                faqData.map(item => {
+                    return (
+                        <tr>
+                            <td>{item.question}</td>
+                            <td>{item.answer}</td>
+                        </tr>
+                    )
+                })
+            )
+        }
+
+    }, []
+    )
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         
@@ -94,45 +141,59 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     return (
         <div>
             <form className="siteSettingsForm" onSubmit={handleSubmit}>
-                <h3>Site Settings</h3>
+                <div>
+                    <h3>Site Settings</h3>
 
-                <label>School Name</label>
-                <input
-                    type="text"
-                    onChange={(e) => setSchoolName(e.target.value)}
-                    value={schoolName}
-                />
-                <label>Mission</label>
-                <input
-                    type="text"
-                    onChange={(e) => setMission(e.target.value)}
-                    value={mission}
-                />
-                <label>Vision</label>
-                <input
-                    type="text"
-                    onChange={(e) => setVision(e.target.value)}
-                    value={vision}
-                />
-                <label>Objectives</label>
-                <input
-                    type="text"
-                    onChange={(e) => setObjectives(e.target.value)}
-                    value={objectives}
-                />
-                <label>Payment Link</label>
-                <input
-                    type="text"
-                    onChange={(e) => setPaymentLink(e.target.value)}
-                    value={paymentLink}
-                />
-                <label>Contact Information</label>
-                <input
-                    type="text"
-                    onChange={(e) => setContactInformation(e.target.value)}
-                    value={contactInformation}
-                />
-                <button>Save</button>
+                    <label>School Name</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setSchoolName(e.target.value)}
+                        value={schoolName}
+                    />
+                    <label>Mission</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setMission(e.target.value)}
+                        value={mission}
+                    />
+                    <label>Vision</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setVision(e.target.value)}
+                        value={vision}
+                    />
+                    <label>Objectives</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setObjectives(e.target.value)}
+                        value={objectives}
+                    />
+                    <label>Payment Link</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setPaymentLink(e.target.value)}
+                        value={paymentLink}
+                    />
+                    <label>Contact Information</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setContactInformation(e.target.value)}
+                        value={contactInformation}
+                    />
+                    <button>Save</button>
+                </div>
+                <div>
+                    <table>
+                        <tr>
+                            <th>Question</th>
+                            <th>Answer</th>
+
+                        </tr>
+                        {
+                            htmlFaqData !== null ? htmlFaqData : ''
+                        }
+                    </table>
+                </div>
             </form>
             <div className="calendar-container">
                 <div className="centered-content">

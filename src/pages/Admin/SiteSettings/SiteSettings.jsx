@@ -27,7 +27,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     const [faqData, setFaqData] = useState(null)
     const [htmlFaqData, setHtmlFaqData] = useState(null)
 
-    useEffect( () => {
+    useEffect(() => {
         fetch('/api/school')
         .then(result =>{return result.json()})
         .then( value =>
@@ -49,27 +49,45 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
         .then( value =>
             {
                 setFaqData(value);
+                setHtmlFaqData(
+                    value.map(item => {
+                        return (
+                            <tr>
+                                <td>
+                                    <input type='text' value={ item.question }  />
+                                </td>
+                                <td>
+                                    <input type='text' value={ item.answer }  />
+                                </td>
+                                <td>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                        )
+                    })
+                )
+                console.log(value);
             }
         )
     }, []
     )
 
-    useEffect( () => {
-        if (faqData !== null) {
-            setHtmlFaqData(
-                faqData.map(item => {
-                    return (
-                        <tr>
-                            <td>{item.question}</td>
-                            <td>{item.answer}</td>
-                        </tr>
-                    )
-                })
-            )
-        }
+    // useEffect(() => {
+    //     if (faqData !== null) {
+    //         setHtmlFaqData(
+    //             faqData.map(item => {
+    //                 return (
+    //                     <tr>
+    //                         <td>{item.question}</td>
+    //                         <td>{item.answer}</td>
+    //                     </tr>
+    //                 )
+    //             })
+    //         )
+    //     }
 
-    }, []
-    )
+    // }, []
+    // )
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -182,19 +200,18 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                     />
                     <button>Save</button>
                 </div>
-                <div>
-                    <table>
-                        <tr>
-                            <th>Question</th>
-                            <th>Answer</th>
-
-                        </tr>
-                        {
-                            htmlFaqData !== null ? htmlFaqData : ''
-                        }
-                    </table>
-                </div>
+                
             </form>
+            <div>
+                <table>
+                    <tr>
+                        <th>Question</th>
+                        <th>Answer</th>
+                        <th>Delete</th>
+                    </tr>
+                    { htmlFaqData !== null ? htmlFaqData : '' }
+                </table>
+            </div>
             <div className="calendar-container">
                 <div className="centered-content">
                     <ReactCalendar onChange={handleDateChange} value={selectedDate} />

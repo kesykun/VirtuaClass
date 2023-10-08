@@ -56,7 +56,7 @@ const deleteStudent = async (req, res) => {
 };
 
 const getStudent = async (req, res) => {
-    AdminModel.findById(req.params.id).then(result => {
+    StudentModel.findById(req.params.id).then(result => {
         res.json( result );
     }).catch(err => {
         res.json({ message: 'Error retrieving student' });

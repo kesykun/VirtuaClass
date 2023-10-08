@@ -21,7 +21,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     const [mission, setMission] = useState("")
     const [vision, setVision] = useState("")
     const [objectives, setObjectives] = useState("")
-    const [faq, setFaq] = useState("")
+    const [paymentLink, setPaymentLink] = useState("")
     const [contactInformation, setContactInformation] = useState("")
 
     const handleSubmit = async (e) => {
@@ -34,17 +34,19 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
             },
             body: JSON.stringify(
                 {
-                    id: "65201c32f271aa89b0be02c8",
+                    id: "6522a9f6d6ccb019a109d58b",
                     schoolName: schoolName,
                     mission: mission,
                     vision: vision,
                     objectives: objectives,
-                    faq: faq,
+                    paymentLink: paymentLink,
                     contactInformation: contactInformation
                 }
             ),
             redirect: "follow"
         })
+        window.location.reload();
+        alert("School Information Updated!");
     }
 
 
@@ -118,11 +120,11 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                     onChange={(e) => setObjectives(e.target.value)}
                     value={objectives}
                 />
-                <label>Frequently Asked Questions</label>
+                <label>Payment Link</label>
                 <input
                     type="text"
-                    onChange={(e) => setFaq(e.target.value)}
-                    value={faq}
+                    onChange={(e) => setPaymentLink(e.target.value)}
+                    value={paymentLink}
                 />
                 <label>Contact Information</label>
                 <input
@@ -167,6 +169,9 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                                     }
                                                 ),
                                                 redirect: "follow"
+                                            }).then(result => {
+                                                console.log(result);
+                                                window.location.reload();
                                             })
                                         }
                                     }                                    
@@ -185,6 +190,9 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                                     }
                                                 ),
                                                 redirect: "follow"
+                                            }).then(result => {
+                                                console.log(result);
+                                                window.location.reload();
                                             })
                                         }
                                     }                                    

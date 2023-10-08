@@ -97,10 +97,10 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                                 return result.json();
                             }).then(value => {
                                 console.log(value);
+                                setUpdateEnrollmentData(prev => !prev);
                             });
                             // console.log(`Accept: ${selectedEnrollment.email}`);
                             // window.location.reload();
-                            setUpdateEnrollmentData(prev => !prev);
                         }
                     }}>Accept</button>
                 <br/>
@@ -122,11 +122,11 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                                 return result.json();
                             }).then(value => {
                                 console.log(value);
+                                setUpdateEnrollmentData(prev => !prev);
                             });
                             // console.log(`Discard: ${selectedEnrollment.email}`);
                             // setEnrollmentApplications(prev => [...prev.filter(item => item.id !== selectedEnrollment._id)]);
                             // window.location.reload();
-                            setUpdateEnrollmentData(prev => !prev);
                         }
                     }}>Discard</button>
             </div>

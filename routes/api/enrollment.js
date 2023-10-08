@@ -11,6 +11,6 @@ router.route('/enrollments')
     .delete(enrollmentController.deleteEnrollment);
 
 router.route('/enrollments/:id')
-    .get(enrollmentController.getEnrollment)
+    .get(enrollmentController.getEnrollment);
 
 module.exports = router;

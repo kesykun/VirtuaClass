@@ -16,17 +16,34 @@ const getAllSchoolInfo = async (req, res) => {
 const createNewSchoolInfo = async (req, res) => {
     const result = await SchoolModel.create(
         {
-            email: req.body.email,
-            name: req.body.name,
+            schoolName: req.body.schoolName,
             mission: req.body.mission,
-            vision: req.body.vision
+            vision: req.body.vision,
+            objectives: req.body.objectives,
+            faq: req.body.faq,
+            contactInformation: req.body.contactInformation
         }
     );
     res.json( result );
 };
 
 const updateSchoolInfo = async (req, res) => {
-
+    const result = await SchoolModel.updateOne(
+        {
+            _id: req.body.id,
+        },
+        {
+            $set: {
+                schoolName: req.body.schoolName,
+                mission: req.body.mission,
+                vision: req.body.vision,
+                objectives: req.body.objectives,
+                faq: req.body.faq,
+                contactInformation: req.body.contactInformation
+            }
+        }
+    );
+    res.json( result );
 };
 
 module.exports = {

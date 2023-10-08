@@ -1,9 +1,26 @@
 const path = require('path');
-const bcrypt = require('bcrypt');
+const { async } = require('q');
+// const bcrypt = require('bcrypt');
 const StudentModel = require(path.join(__dirname, '..', 'models', 'Student.js'));
 const AccountController = require(path.join(__dirname, 'accountController.js'));
 const accountTypes = require(path.join(__dirname, 'constants', 'accountTypes.js'));
 
+
+const insertNewStudent = async (stundentData) => {
+    // const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const newStudent = await StudentModel.create(
+        {
+            email: stundentData.email,
+            password: stundentData.password,
+            firstname: stundentData.firstname,
+            lastname: stundentData.lastname,
+            account_type: accountTypes.student,
+            courses_taken_id: stundentData.courses_taken_id
+        }
+    );
+    await AccountController.createNewAccount( newStudent );
+    return newStudent;
+};
 
 const getAllStudents = async (req, res) => {
     try {
@@ -13,6 +30,7 @@ const getAllStudents = async (req, res) => {
         res.json({ message: 'Error retrieving students' });
     }
 };
+
 
 const createNewStudent = async (req, res) => {
     const conflict = await StudentModel.findOne({ firstname: req.body.firstname, lastname: req.body.lastname }).exec();
@@ -25,18 +43,7 @@ const createNewStudent = async (req, res) => {
         return;
     }
 
-    const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const newStudent = await StudentModel.create(
-        {
-            email: req.body.email,
-            password: hashedPassword,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname,
-            account_type: accountTypes.student,
-            courses_taken_id: req.body.courses_taken_id
-        }
-    );
-    await AccountController.createNewAccount( newStudent );
+    const newStudent = await insertNewStudent(req.body);
     res.json( newStudent );
 };
 
@@ -62,5 +69,7 @@ module.exports = {
     createNewStudent,
     updateStudent,
     deleteStudent,
-    getStudent
+    getStudent,
+
+    insertNewStudent
 };

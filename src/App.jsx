@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 
 import NavBar from './components/NavBar';
@@ -14,6 +14,7 @@ import LoginScreen from "./pages/General/LoginScreen/LoginScreen";
 
 import EnrollmentApplications from "./pages/Admin/EnrollmentApplications/EnrollmentApplications";
 import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
+import SiteSettings from "./pages/Admin/SiteSettings/SiteSettings";
 
 
 const getAllCourses = async () => {
@@ -28,28 +29,60 @@ const getAllInstructors = async () => {
 };
 
 const App = () => {
-    const [coursesExpanded, setCoursesExpanded] = useState(false);
-    const [courses, setCourses] = useState([]);
-    const [selectedCourses, setSelectedCourses] = useState([]);
+    const [currentUser, setCurrentUser] = useState(
+    {
+      email: '',
+      password: '',
+      firstname: '',
+      lastname: ''
+    }
+    );
 
-    useEffect(async () => {
-      const allCourses = await getAllCourses();
-      const allInstructors = await getAllInstructors();
-      let temp = [];
-      for (let i=0; i<allCourses.length; i++) {
-        
-        // console.log(instructorData);
-        let instructorData = allInstructors.filter(instructor => instructor._id === allCourses[i].instructor_id)[0];
-        temp.push({
-          name: allCourses[i].name,
-          fee: allCourses[i].fee,
-          description: allCourses[i].description,
-          instructor: `${instructorData.firstname} ${instructorData.lastname}`,
-          email: instructorData.email
-        });
+    // sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+    const [schoolInfo, setSchoolInfo] = useState(
+      {
+        schoolName: '',
+        mission: '',
+        vision: '',
+        objectives: '',
+        faq: '',
+        contactInformation: ''
       }
-      console.log(temp);
-      setCourses(temp);
+    );
+    useEffect(
+      () => {
+        fetch('/api/school')
+        .then(result =>{return result.json()})
+        .then(value =>{setSchoolInfo(value)});
+      }, []
+    )
+
+    
+    const [courses, setCourses] = useState([]);
+
+    useEffect(() => {
+      (async () => {
+        const allCourses = await getAllCourses();
+        const allInstructors = await getAllInstructors();
+        let temp = [];
+        for (let i=0; i<allCourses.length; i++) {
+          
+          // console.log(instructorData);
+          let instructorData = allInstructors.filter(instructor => instructor._id === allCourses[i].instructor_id)[0];
+          temp.push({
+            id: allCourses[i]._id,
+            name: allCourses[i].name,
+            fee: allCourses[i].fee,
+            description: allCourses[i].description,
+            instructor: `${instructorData.firstname} ${instructorData.lastname}`,
+            email: instructorData.email
+          });
+        }
+        // console.log(temp);
+        setCourses(temp);
+      })();
+      
     }, []);
 
 
@@ -57,34 +90,36 @@ const App = () => {
     return (
         <>
             <BrowserRouter>
-                <NavBar />
+                <NavBar  schoolInfo={schoolInfo}/>
                 <Routes>
-                    <Route path='/' element={<GeneralSchoolInformation/>} />
+                    <Route path='/' element={<GeneralSchoolInformation schoolInfo={schoolInfo}/>} />
                     <Route path='/courses' element={<CourseListPage 
                                                     courses={ courses }
-                                                    setCourses={ setCourses }
-                                                    coursesExpanded={ coursesExpanded }
-                                                    setCoursesExpanded={ setCoursesExpanded }/>
-                                                } />
+                                                    setCourses={ setCourses } />} />
                     <Route path='/faq' element={<Faq />} />
                     <Route path='/calendar' element={<Calendar />} />
                     <Route path='/enrollment' element={<EnrollmentForm 
                                                     courses={ courses }
-                                                    setCourses={ setCourses }
-                                                    coursesExpanded={ coursesExpanded }
-                                                    setCoursesExpanded={ setCoursesExpanded }
-                                                    selectedCourses={ selectedCourses }
-                                                    setSelectedCourses={ setSelectedCourses }
-                                                    />} />
+                                                    setCourses={ setCourses } 
+                                                    getAllCourses={getAllCourses} 
+                                                    getAllInstructors={getAllInstructors} />} />
                     <Route path='/paymentlinks' element={<PaymentLink />} />
-                    <Route path='/login' element={<LoginScreen />} />
+                    <Route path='/login' element={<LoginScreen currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
 
-                    <Route path="/admin" element={<AdminDashboard />} />
-                    <Route path="/admin/enrollment_applications" element={<EnrollmentApplications />} />
+                    <Route path="/admin" element={<AdminDashboard 
+                                                    currentUser={currentUser}
+                                                    setCurrentUser={setCurrentUser} 
+                                                  />} />
+                    <Route path="/admin/enrollment_applications" element={<EnrollmentApplications 
+                                                                              currentUser={currentUser}
+                                                                              setCurrentUser={setCurrentUser} 
+                                                                          />} />
                     <Route path="/admin/student_accounts" element={<h1>Para StudentAccounts</h1>} />
                     <Route path="/admin/instructor_accounts" element={<h1>Para InstructorAccounts</h1>} />
                     <Route path="/admin/administrator_accounts" element={<h1>Para AdministratorAccounts</h1>} />
-                    <Route path="/admin/site_settings" element={<h1>Para SiteSettings</h1>} />
+                    <Route path="/admin/site_settings" element={<SiteSettings 
+                                                                    currentUser={currentUser}
+                                                                    setCurrentUser={setCurrentUser}/>} />
                 </Routes>
             </BrowserRouter>
         </>

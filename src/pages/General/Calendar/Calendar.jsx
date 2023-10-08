@@ -1,15 +1,35 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactCalendar from 'react-calendar';
 import './css/Calendar.css';
 
 const Calendar = () => {
   // Define state variables for the selected date and events
   const [selectedDate, setSelectedDate] = useState(null);
-  const [events, setEvents] = useState([]);
+  const [event, setEvent] = useState(null);
+  const [events, setEvents] = useState(null);
+
+  useEffect( 
+    () => {
+      fetch('/api/events')
+        .then(result =>{return result.json()})
+        .then(value =>{setEvents(value)});
+    }, []
+  )
 
   // Function to handle date selection
   const handleDateChange = (date) => {
+    console.log(date);
     setSelectedDate(date);
+    for (let i=0; i<events.length; i++) {
+      if (events[i].date === date.toDateString()){
+        setEvent(events[i]);
+        break;
+      }
+      else {
+        setEvent(null);
+      }
+    }
+    
     // You can add additional logic here, such as fetching events for the selected date.
   };
 
@@ -21,7 +41,10 @@ const Calendar = () => {
           {selectedDate && (
             <p>Selected Date: {selectedDate.toDateString()}</p>
           )}
-          {/* You can render events or other calendar-related content here */}
+          {
+            <p>{event !== null ? `Event: ${event.event}` : ''}</p>
+          }
+            
         </div>
       </div>
     </div>

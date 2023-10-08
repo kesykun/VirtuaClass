@@ -1,4 +1,5 @@
 const path = require('path');
+const bcrypt = require('bcrypt');
 const AccountModel = require(path.join(__dirname, '..', 'models', 'Account.js'));
 
 
@@ -39,9 +40,25 @@ const deleteAccount = async () => {
 };
 
 
+const comparePassword = async (req, res) => {
+    try {
+        const account = await AccountModel.findById(req.params.id);
+        // if ( account.password === req.body. ) {
+
+        // }
+        res.json( account );
+    } catch (err) {
+        res.json({ message: 'Error retrieving account' });
+        console.error( err );
+    }
+}
+
+
 module.exports = {
     getAccount,
     createNewAccount,
     updateAccount,
-    deleteAccount
+    deleteAccount,
+
+    comparePassword
 };

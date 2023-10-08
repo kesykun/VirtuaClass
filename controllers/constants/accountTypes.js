@@ -1,8 +1,8 @@
 
 const accountTypes = {
-    student: 'student',
-    instructor: 'instructor',
-    admin: 'admin'
+    student: 'students',
+    instructor: 'instructors',
+    admin: 'admins'
 };
 
 module.exports = accountTypes;

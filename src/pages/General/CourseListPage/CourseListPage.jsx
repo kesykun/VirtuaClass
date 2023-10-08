@@ -1,12 +1,13 @@
-import { useEffect } from "react"; 
+import { useState, useEffect } from "react"; 
 import CourseList from "../../../components/CourseList";
 import "./css/CourseListPage.css";
 
 
-const CourseListPage = ({ courses, setCourses, coursesExpanded, setCoursesExpanded }) => {
+const CourseListPage = ({ courses, setCourses }) => {
+    const [coursesExpanded, setCoursesExpanded] = useState(false);
     
     // console.log(coursesExpanded);
-    useEffect(() => console.log(coursesExpanded), [coursesExpanded]);
+    // useEffect(() => console.log(coursesExpanded), [coursesExpanded]);
     return (
         <>
             <CourseList

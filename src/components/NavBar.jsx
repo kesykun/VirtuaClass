@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AiOutlineLock } from "react-icons/ai";
 
-const NavBar = () => {
+const NavBar = ({schoolInfo}) => {
     return (
         <nav className="Navbar">
             <div className="Navbar__container">
-                <h1><Link to={"/"}>Virtua</Link></h1>
+                <h1><Link to={"/"}>{schoolInfo.schoolName}</Link></h1>
                 <div>
                     <p><Link to={"/courses"}>Course List</Link></p>
                     <p><Link to={"/faq"}>FAQ</Link></p>

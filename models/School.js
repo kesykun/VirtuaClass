@@ -5,11 +5,7 @@ const Schema = mongoose.Schema;
 
 const schoolSchema = new Schema(
     {
-        email: {
-            type: String,
-            required: true
-        },
-        name: {
+        schoolName: {
             type: String,
             required: true
         },
@@ -18,6 +14,18 @@ const schoolSchema = new Schema(
             required: true
         },
         vision: {
+            type: String,
+            required: true
+        },
+        objectives: {
+            type: String,
+            required: true
+        },
+        faq: {
+            type: String,
+            required: true
+        },
+        contactInformation: {
             type: String,
             required: true
         },

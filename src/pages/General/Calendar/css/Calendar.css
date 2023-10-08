@@ -46,5 +46,6 @@
 
 /* Add spacing for elements within centered-content */
 .centered-content p {
+  color:black;
   margin: 10px 0;
 }

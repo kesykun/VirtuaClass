@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NavBar from './components/NavBar';
 
+import Application from "./pages/Application/Application";
 import Calendar from "./pages/Calendar/Calendar";
 import CourseListPage from "./pages/CourseListPage/CourseListPage";
 import EnrollmentForm from "./pages/EnrollmentForm/EnrollmentForm";
@@ -177,7 +177,6 @@ const App = () => {
     return (
         <>
             <BrowserRouter>
-                <NavBar />
                 <Routes>
                     <Route path='/' element={<GeneralSchoolInformation/>} />
                     <Route path='/courses' element={<CourseListPage 
@@ -198,6 +197,7 @@ const App = () => {
                                                     />} />
                     <Route path='/paymentlinks' element={<PaymentLink />} />
                     <Route path='/login' element={<h1>Para Login</h1>} />
+                    <Route path='/application-list' element={<Application />} />
                 </Routes>
             </BrowserRouter>
         </>

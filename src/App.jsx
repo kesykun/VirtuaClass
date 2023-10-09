@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 
-import NavBar from './components/NavBar';
+
 
 import CourseListPage from "./pages/General/CourseListPage/CourseListPage";
 import EnrollmentForm from "./pages/General/EnrollmentForm/EnrollmentForm";
@@ -90,21 +90,23 @@ const App = () => {
     return (
         <>
             <BrowserRouter>
-                <NavBar  schoolInfo={schoolInfo}/>
+                
                 <Routes>
                     <Route path='/' element={<GeneralSchoolInformation schoolInfo={schoolInfo}/>} />
                     <Route path='/courses' element={<CourseListPage 
+                                                    schoolInfo={schoolInfo}
                                                     courses={ courses }
                                                     setCourses={ setCourses } />} />
-                    <Route path='/faq' element={<Faq />} />
-                    <Route path='/calendar' element={<Calendar />} />
+                    <Route path='/faq' element={<Faq schoolInfo={schoolInfo} />} />
+                    <Route path='/calendar' element={<Calendar schoolInfo={schoolInfo} />} />
                     <Route path='/enrollment' element={<EnrollmentForm 
+                                                    schoolInfo={schoolInfo}
                                                     courses={ courses }
                                                     setCourses={ setCourses } 
                                                     getAllCourses={getAllCourses} 
                                                     getAllInstructors={getAllInstructors} />} />
-                    <Route path='/paymentlinks' element={<PaymentLink />} />
-                    <Route path='/login' element={<LoginScreen currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
+                    <Route path='/paymentlinks' element={<PaymentLink schoolInfo={schoolInfo} />} />
+                    <Route path='/login' element={<LoginScreen schoolInfo={schoolInfo} currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
 
                     <Route path="/admin" element={<AdminDashboard 
                                                     currentUser={currentUser}

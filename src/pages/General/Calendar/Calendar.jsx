@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactCalendar from 'react-calendar';
+import NavBar from '../../../components/NavBar';
 import './css/Calendar.css';
 
-const Calendar = () => {
+const Calendar = ({schoolInfo}) => {
   // Define state variables for the selected date and events
   const [selectedDate, setSelectedDate] = useState(null);
   const [event, setEvent] = useState(null);
@@ -34,20 +35,23 @@ const Calendar = () => {
   };
 
   return (
-    <div className="calendar-container">
-      <div className="centered-content">
-        <ReactCalendar onChange={handleDateChange} value={selectedDate} />
-        <div>
-          {selectedDate && (
-            <p>Selected Date: {selectedDate.toDateString()}</p>
-          )}
-          {
-            <p>{event !== null ? `Event: ${event.event}` : ''}</p>
-          }
-            
+    <>
+      <NavBar  schoolInfo={schoolInfo}/>
+      <div className="calendar-container">
+        <div className="centered-content">
+          <ReactCalendar onChange={handleDateChange} value={selectedDate} />
+          <div>
+            {selectedDate && (
+              <p>Selected Date: {selectedDate.toDateString()}</p>
+            )}
+            {
+              <p>{event !== null ? `Event: ${event.event}` : ''}</p>
+            }
+              
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

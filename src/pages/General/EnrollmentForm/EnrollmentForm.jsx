@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import FormInput from "../../../components/FormInput";
 import CourseListWithSelection from "../../../components/CourseListWithSelection";
 import SelectedCourses from "../../../components/SelectedCourses";
+import NavBar from '../../../components/NavBar';
 import "./css/EnrollmentForm.css";
-import { te } from 'date-fns/locale';
 
-const EnrollmentForm = ({ courses, setCourses, getAllCourses, getAllInstructors  }) => {
+const EnrollmentForm = ({ schoolInfo, courses, setCourses, getAllCourses, getAllInstructors  }) => {
     // Initialize state variables for form data
     const [coursesExpanded, setCoursesExpanded] = useState(false);
     const [selectedCourses, setSelectedCourses] = useState([]);
@@ -94,6 +94,7 @@ const EnrollmentForm = ({ courses, setCourses, getAllCourses, getAllInstructors 
 
     return (
         <>
+            <NavBar  schoolInfo={schoolInfo}/>
             <section className="enrollment__section">
                 <SelectedCourses 
                             setCourses={setCourseChoices} 

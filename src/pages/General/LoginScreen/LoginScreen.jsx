@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './css/LoginScreen.css';
+import NavBar from '../../../components/NavBar';
 
-const LoginScreen = ({setCurrentUser}) => {
+const LoginScreen = ({schoolInfo, setCurrentUser}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const navigate = useNavigate();
@@ -47,28 +48,31 @@ const LoginScreen = ({setCurrentUser}) => {
     }
 
     return (
-        <form className="loginScreenForm" onSubmit={handleSubmit}>
-            <h3>Enter your Login details</h3>
-            
-            <label>Email</label>
-            <input 
-                id="loginEmailInput"
-                type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                required
-            />
-            <label>Password</label>
-            <input 
-                id="loginPasswordInput"
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                required
-            />
+        <>
+            <NavBar  schoolInfo={schoolInfo}/>
+            <form className="loginScreenForm" onSubmit={handleSubmit}>
+                <h3>Enter your Login details</h3>
+                
+                <label>Email</label>
+                <input 
+                    id="loginEmailInput"
+                    type="email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                    required
+                />
+                <label>Password</label>
+                <input 
+                    id="loginPasswordInput"
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    required
+                />
 
-            <button>Login</button>
-        </form>
+                <button>Login</button>
+            </form>
+        </>
     )
 }
 

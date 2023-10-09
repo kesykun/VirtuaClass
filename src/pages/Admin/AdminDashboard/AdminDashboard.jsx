@@ -9,7 +9,7 @@ const AdminDashboard = ({ currentUser, setCurrentUser }) => {
     useEffect(() => {
         if (sessionStorage.getItem('currentUser')) {
             const sessionData = JSON.parse(sessionStorage.getItem('currentUser'));
-            console.table(sessionData);
+            // console.table(sessionData);
             setCurrentUser(sessionData);
             return;
         }

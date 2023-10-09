@@ -21,7 +21,7 @@ const schoolSchema = new Schema(
             type: String,
             required: true
         },
-        faq: {
+        paymentLink: {
             type: String,
             required: true
         },

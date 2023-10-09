@@ -1,4 +1,4 @@
-
+const fsPromise = require('fs').promises;
 const path = require('path');
 const SchoolModel = require(path.join(__dirname, '..', 'models', 'School.js'));
 
@@ -20,7 +20,7 @@ const createNewSchoolInfo = async (req, res) => {
             mission: req.body.mission,
             vision: req.body.vision,
             objectives: req.body.objectives,
-            faq: req.body.faq,
+            paymentLink: req.body.paymentLink,
             contactInformation: req.body.contactInformation
         }
     );
@@ -28,21 +28,40 @@ const createNewSchoolInfo = async (req, res) => {
 };
 
 const updateSchoolInfo = async (req, res) => {
-    const result = await SchoolModel.updateOne(
-        {
-            _id: req.body.id,
-        },
-        {
-            $set: {
-                schoolName: req.body.schoolName,
-                mission: req.body.mission,
-                vision: req.body.vision,
-                objectives: req.body.objectives,
-                faq: req.body.faq,
-                contactInformation: req.body.contactInformation
+    const content = await SchoolModel.find({});
+    console.log(content);
+    let result = null;
+    if (content.length > 0) {
+        result = await SchoolModel.updateOne(
+            {
+                _id: req.body.id,
+            },
+            {
+                $set: {
+                    schoolName: req.body.schoolName,
+                    mission: req.body.mission,
+                    vision: req.body.vision,
+                    objectives: req.body.objectives,
+                    paymentLink: req.body.paymentLink,
+                    contactInformation: req.body.contactInformation
+                }
             }
+        );
+        console.log("update ran!");
+        res.json( result );
+        return;
+    }
+    result = await SchoolModel.create(
+        {
+            schoolName: req.body.schoolName,
+            mission: req.body.mission,
+            vision: req.body.vision,
+            objectives: req.body.objectives,
+            paymentLink: req.body.paymentLink,
+            contactInformation: req.body.contactInformation
         }
     );
+    console.log("create ran!");
     res.json( result );
 };
 

@@ -21,8 +21,200 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     const [mission, setMission] = useState("")
     const [vision, setVision] = useState("")
     const [objectives, setObjectives] = useState("")
-    const [faq, setFaq] = useState("")
+    const [paymentLink, setPaymentLink] = useState("")
     const [contactInformation, setContactInformation] = useState("")
+
+    const [flickFaq, setFlickFaq] = useState(false);
+    const [faqData, setFaqData] = useState(null);
+    const [faqLength, setFaqLength] = useState(null);
+    const [htmlFaqData, setHtmlFaqData] = useState(null);
+    // const [temporaryHtmlFaqData, setTemporaryHtmlFaqData] = useState(null);
+
+    useEffect(() => {
+        fetch('/api/school')
+        .then(result =>{return result.json()})
+        .then( value =>
+            {
+                setSchoolName(value.schoolName);
+                setMission(value.mission);
+                setVision(value.vision);
+                setObjectives(value.objectives);
+                setPaymentLink(value.paymentLink);
+                setContactInformation(value.contactInformation);
+            }
+        )
+    }, []);
+    // const [question, setQuestion] = useState('');
+    // const [answer, setAnswer] = useState('');
+    const questionStates = [
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState()
+    ];
+    const answerStates = [
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState()
+    ];
+    const faqIds = [
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState()
+    ];
+
+    useEffect(() => {
+        fetch('/api/faqs')
+        .then(result =>{ return result.json() })
+        .then( value =>
+            {
+                console.log(questionStates);
+                setFaqData(value);
+                setFaqLength(value.length);
+                for (let i=0; i<value.length; i++) {
+                    questionStates[i][1](value[i].question);
+                    answerStates[i][1](value[i].answer);
+                    faqIds[i][1](value[i]._id);
+                    console.log(questionStates[i][1]);
+                }
+                setFlickFaq(prev => !prev);
+                console.log(value);
+            }
+        )
+    }, []);
+
+    useEffect(() => {
+        // console.log(questionStates[0][0]);
+        // console.log(faqIds);
+        // console.log(`faqLength: ${faqLength}`);
+        console.log(answerStates);
+        let temporaryHtmlFaqData = [];
+        if(questionStates[0][0] && answerStates[0][0] && faqIds[0][0]) {
+            for (let i=0; i<faqLength; i++) {
+                temporaryHtmlFaqData.push(
+                    (
+                        <tr>
+                            <td>
+                                <input type='text' value={ questionStates[i][0] } onChange={(e) => questionStates[i][1](e.target.value)} />
+                            </td>
+                            <td>
+                                <input type='text' value={ answerStates[i][0] } onChange={(e) => answerStates[i][1](e.target.value)} />
+                            </td>
+                            <td>
+                                <button onClick={async () => {
+                                    await fetch('/api/faqs', {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            id: faqIds[i][0]
+                                        }),
+                                        redirect: 'follow'
+                                    }).then(result => result.json()).then(value => {
+                                        // console.log(value);
+                                        window.location.reload();
+                                    });
+                                }}>Delete</button>
+                            </td>
+                        </tr>
+                    )
+                );
+            }
+            setHtmlFaqData(temporaryHtmlFaqData);
+        }
+    }, [flickFaq, questionStates, answerStates]);
+
+    // useEffect(() => {
+    //     if (questionStates[0][0] && answerStates[0][0]) {
+    //         let tempFaqData = [];
+    //         for (let i=0; i<faqLength; i++) {
+    //             tempFaqData.push({
+    //                 id: faqIds[i][0],
+    //                 question: questionStates[i][0],
+    //                 answer: answerStates[i][0]
+    //             });
+    //         }
+    //         setFaqData(tempFaqData);
+    //     }
+    // }, [flickFaq]);
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -34,17 +226,33 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
             },
             body: JSON.stringify(
                 {
-                    id: "65201c32f271aa89b0be02c8",
+                    id: "6522a9f6d6ccb019a109d58b",
                     schoolName: schoolName,
                     mission: mission,
                     vision: vision,
                     objectives: objectives,
-                    faq: faq,
+                    paymentLink: paymentLink,
                     contactInformation: contactInformation
                 }
             ),
             redirect: "follow"
         })
+        for (let i=0; i<faqLength; i++) {
+            await fetch('/api/faqs', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: faqIds[i],
+                    question: questionStates[i][0],
+                    answer: answerStates[i][0]
+                }),
+                redirect: 'follow'
+            });
+        }
+        window.location.reload();
+        alert("School Information Updated!");
     }
 
 
@@ -62,18 +270,15 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
             .then(value =>{setEvents(value)});
         }, []
     )
-
-    useEffect(
-        () => {
-            if (event !== null) {
-                setEventInput(event);
-            }
-        }, []
-    )
+    useEffect(() => {
+        if (event !== null) {
+            setEventInput(event);
+        }
+    }, [])
 
     // Function to handle date selection
     const handleDateChange = (date) => {
-        console.log(date);
+        // console.log(date);
         setSelectedDate(date);
         for (let i=0; i<events.length; i++) {
         if (events[i].date === date.toDateString()){
@@ -92,46 +297,59 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     return (
         <div>
             <form className="siteSettingsForm" onSubmit={handleSubmit}>
-                <h3>Site Settings</h3>
+                <div>
+                    <h3>Site Settings</h3>
 
-                <label>School Name</label>
-                <input
-                    type="text"
-                    onChange={(e) => setSchoolName(e.target.value)}
-                    value={schoolName}
-                />
-                <label>Mission</label>
-                <input
-                    type="text"
-                    onChange={(e) => setMission(e.target.value)}
-                    value={mission}
-                />
-                <label>Vision</label>
-                <input
-                    type="text"
-                    onChange={(e) => setVision(e.target.value)}
-                    value={vision}
-                />
-                <label>Objectives</label>
-                <input
-                    type="text"
-                    onChange={(e) => setObjectives(e.target.value)}
-                    value={objectives}
-                />
-                <label>Frequently Asked Questions</label>
-                <input
-                    type="text"
-                    onChange={(e) => setFaq(e.target.value)}
-                    value={faq}
-                />
-                <label>Contact Information</label>
-                <input
-                    type="text"
-                    onChange={(e) => setContactInformation(e.target.value)}
-                    value={contactInformation}
-                />
-                <button>Save</button>
+                    <label>School Name</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setSchoolName(e.target.value)}
+                        value={schoolName}
+                    />
+                    <label>Mission</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setMission(e.target.value)}
+                        value={mission}
+                    />
+                    <label>Vision</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setVision(e.target.value)}
+                        value={vision}
+                    />
+                    <label>Objectives</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setObjectives(e.target.value)}
+                        value={objectives}
+                    />
+                    <label>Payment Link</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setPaymentLink(e.target.value)}
+                        value={paymentLink}
+                    />
+                    <label>Contact Information</label>
+                    <input
+                        type="text"
+                        onChange={(e) => setContactInformation(e.target.value)}
+                        value={contactInformation}
+                    />
+                    <button>Save</button>
+                </div>
+                
             </form>
+            <div>
+                <table>
+                    <tr>
+                        <th>Question</th>
+                        <th>Answer</th>
+                        <th>Delete</th>
+                    </tr>
+                    { htmlFaqData !== null ? htmlFaqData : '' }
+                </table>
+            </div>
             <div className="calendar-container">
                 <div className="centered-content">
                     <ReactCalendar onChange={handleDateChange} value={selectedDate} />
@@ -167,6 +385,9 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                                     }
                                                 ),
                                                 redirect: "follow"
+                                            }).then(result => {
+                                                // console.log(result);
+                                                window.location.reload();
                                             })
                                         }
                                     }                                    
@@ -185,6 +406,9 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                                     }
                                                 ),
                                                 redirect: "follow"
+                                            }).then(result => {
+                                                // console.log(result);
+                                                window.location.reload();
                                             })
                                         }
                                     }                                    
@@ -206,7 +430,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                         ),
                                         redirect: "follow"
                                     }).then(result => {
-                                        console.log(result);
+                                        // console.log(result);
                                         window.location.reload();
                                     })
                                 }                                    

@@ -157,7 +157,7 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                                         setUpdateEnrollmentData(prev => !prev);
                                     });
                                     // console.log(`Accept: ${selectedEnrollment.email}`);
-                                    // window.location.reload();
+                                    window.location.reload();
                                 }
                             }}>Accept</button>
                     <button className="button__discard" onClick={() => {
@@ -180,7 +180,7 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                                     });
                                     // console.log(`Discard: ${selectedEnrollment.email}`);
                                     // setEnrollmentApplications(prev => [...prev.filter(item => item.id !== selectedEnrollment._id)]);
-                                    // window.location.reload();
+                                    window.location.reload();
                                 }
                             }}>Discard</button>
                 </section>

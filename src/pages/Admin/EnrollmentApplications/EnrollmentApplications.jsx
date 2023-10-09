@@ -102,7 +102,7 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                     tempHtmlSelectedEnrollmentCourses.push(
                                     <tr>
                                         <td>{ value.name }</td>
-                                        <td>{ value.fee }</td>
+                                        <td>P{ value.fee }</td>
                                     </tr>
                     );
                 }
@@ -184,12 +184,12 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                 
                 <ApplicationPanel title="Application Details">
                     <div className="body__application">
-                        <h3>ID: { selectedEnrollment._id }</h3>
-                        <h3>Firstname: { selectedEnrollment.firstname }</h3>
-                        <h3>Lastname: { selectedEnrollment.lastname }</h3>
-                        <h3>Email: { selectedEnrollment.email }</h3>
-                        <h3>Guardian Firstname: { selectedEnrollment.guardianFirstname } { selectedEnrollment.guardianMiddleInitial } { selectedEnrollment.guardianLastname }</h3>
-                        <h3>Guardian Contact: { selectedEnrollment.guardianContactNumber }</h3>
+                        <h4>ID: { selectedEnrollment._id }</h4>
+                        <h4>Firstname: { selectedEnrollment.firstname }</h4>
+                        <h4>Lastname: { selectedEnrollment.lastname }</h4>
+                        <h4>Email: { selectedEnrollment.email }</h4>
+                        <h4>Guardian Firstname: { selectedEnrollment.guardianFirstname } { selectedEnrollment.guardianMiddleInitial } { selectedEnrollment.guardianLastname }</h4>
+                        <h4>Guardian Contact: { selectedEnrollment.guardianContactNumber }</h4>
                         <div className="enrolledCoursesContainer">
                             <h3>Enrolled Courses</h3>
                             <table className="enrolledCoursesTable">

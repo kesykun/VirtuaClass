@@ -169,10 +169,10 @@ const EnrollmentForm = ({ schoolInfo, courses, setCourses, getAllCourses, getAll
                     </form>
                 </div>
             </section>
-            <button onClick={() => {
+            {/* <button onClick={() => {
                 console.log(courses);
                 console.log(selectedCoursesIds);
-                }}>Show Courses</button>
+                }}>Show Courses</button> */}
         </>
     );
 };

@@ -69,7 +69,10 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                             return (
                                 <tr>
                                     <td>
-                                        <button className="selectEnrollmentApplication" onClick={(e) => setSelectedEnrollmentId(e.target.textContent)}>{ enrollment._id }</button>
+                                        <button className="selectEnrollmentApplication" onClick={(e) => {
+                                                setHtmlSelectedEnrollmentCourses(null);
+                                                setSelectedEnrollmentId(e.target.textContent);
+                                            }}>{ enrollment._id }</button>
                                     </td>
                                     <td>
                                         <ApplicationPanelItem title={ `${enrollment.firstname} ${enrollment.lastname}` } />

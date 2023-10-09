@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Tapestry&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@500;600&display=swap');
 
 * {
     padding : 0;
@@ -51,7 +51,7 @@
 
 .faq__heading {
     margin : 2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 1.6rem;
 }
 
 .faq__heading > h1 {
@@ -68,7 +68,7 @@
 
 .faq__section {
     width : 100vw;
-    padding : 2rem 26rem;
+    padding : 0 26rem;
 }
 
 .Navbar {
@@ -166,12 +166,131 @@ a {
     border-radius: 4px;
     cursor: pointer;
 }
-  
+
   /* Hover effect for the submit button */
 .enrollment__section .enrollButton:hover {
     background-color: #0056b3;
 }
 
+.main__application {
+    position: relative;
+    width : 100vw;
+    height : 100vh;
+    background-color : #213555;
+}
+
+.main__application > .application__navbar {
+    width : inherit;
+    height : 4rem;
+    background-color : #D9D9D9;
+    padding : .2rem 1.8rem;
+}
 
 
+.application__navbar > span > p {
+    font-family: 'Sofia Sans Condensed', sans-serif;
 
+}
+.application__navbar > span {
+    float: right;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    gap: 1rem;
+    font-size: 1.8rem;
+}
+
+.application__navbar > span > button {
+    background-color : #4F709C;
+    padding : .6rem 1.2rem;
+    border-radius : 8px;
+    font-size: 1.4rem;
+    color : white;
+    font-weight : 500;
+    font-family: 'Sofia Sans Condensed', sans-serif;
+
+}
+
+.main__application > .application__section {
+    width : 100%;
+    display : flex;
+    align-items : center;
+    justify-content: center;
+    height : calc(100% - 4rem);
+}
+
+.application__section > .section__content {
+    display : flex;
+    align-items : center;
+    justify-content: space-evenly;
+    width : inherit;
+    height : 100%;
+}
+
+.content__button {
+    display : flex;
+    flex-direction: column;
+    gap : 1.4rem;
+    margin-bottom :16rem;
+}
+
+.content__button > button {
+    padding : .8rem 1.8rem;
+    font-size : 1.2rem;
+    font-weight : bold;
+}
+
+.content__button > .button__accept {
+    background-color: #E5D283;
+}
+
+.content__button > .button__discard {
+    background-color : rgb(240, 39, 39);
+    color: white;
+}
+
+.section__content > .content__container {
+    width : 30vw;
+    overflow:visible;
+}
+
+.section__content > .content__container > .container__heading {
+    font-size: 1.4rem;
+    position:relative;
+    right : 1vw;
+    background-color : #E5D283;
+    text-align : center;
+    font-weight : bold;
+    padding : 1rem 1.6rem;
+    border-radius : 10px;
+    width : 32vw;
+    font-size : 1.8rem;
+    font-family: 'Sofia Sans Condensed', sans-serif;
+
+}
+
+.section__content > .content__container > .container__body {
+    background-color : white;
+    height : 68vh;
+    padding : 1.2rem;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.body__application {
+    display : flex;
+    flex-direction: column;
+    gap : 0.8rem;
+    padding: 1rem 1.4rem;
+}
+
+.body__application > .application__item {
+    padding : 0.8rem;
+    background-color : #4F709C;
+    border-radius : .8rem;
+    color : white;
+    text-align: center;
+    font-size : 1.4rem;
+    font-weight : 600;
+    font-family: 'Sofia Sans Condensed', sans-serif;
+}

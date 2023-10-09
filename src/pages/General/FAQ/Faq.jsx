@@ -1,8 +1,9 @@
 import Accordion from "../../../components/Accordion";
+import NavBar from '../../../components/NavBar';
 import { useState, useEffect } from "react";
 
 
-const Faq = () => {
+const Faq = ({schoolInfo}) => {
     const [faqs, setFaqs] = useState(null);
     const [htmlFaqs, setHtmlFaqs] = useState(null);
 
@@ -26,6 +27,7 @@ const Faq = () => {
 
     return (
         <>
+            <NavBar  schoolInfo={schoolInfo}/>
             <section className="faq__section">
                 <div className="faq__heading">
                     <h1>Questions? Look here.</h1>

@@ -3,6 +3,28 @@ import "./css/EnrollmentApplications.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+const ApplicationPanel = ({ title, children }) => {
+    return (
+        <section className="content__container">
+            <div className="container__heading">
+                {title}
+            </div>
+            <div className="container__body">
+                {children}
+            </div>
+        </section>
+    );
+};
+
+const ApplicationPanelItem = ({title}) => {
+    return (
+        <div className="application__item">
+            {title}
+        </div>
+    );
+};
+
+
 const getEnrollmentApplications = async () => {
     const response = await fetch('/api/enrollments');
     return await response.json();
@@ -32,6 +54,8 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
         email: '',
         guardianFirstname: ''
     });
+    const [selectedEnrollmentCourses, setSelectedEnrollmentCourses]= useState(null);
+    const [htmlSelectedEnrollmentCourses, setHtmlSelectedEnrollmentCourses] = useState(null);
 
     const [enrollmentApplications, setEnrollmentApplications] = useState([]);
     const [htmlEnrollmentApplications, setHtmlEnrollmentApplications] = useState([]);
@@ -47,10 +71,11 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                                     <td>
                                         <button className="selectEnrollmentApplication" onClick={(e) => setSelectedEnrollmentId(e.target.textContent)}>{ enrollment._id }</button>
                                     </td>
-                                    <td>{ enrollment.firstname }</td>
-                                    <td>{ enrollment.lastname }</td>
-                                    <td>{ enrollment.email }</td>
+                                    <td>
+                                        <ApplicationPanelItem title={ `${enrollment.firstname} ${enrollment.lastname}` } />
+                                    </td>
                                 </tr>
+                                
                             );
                         }
                     )
@@ -61,96 +86,131 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
 
 
     useEffect(() => {
-        if (selectedEnrollmentId) {
-            const selected = enrollmentApplications.filter(appli => appli._id === selectedEnrollmentId)[0];
-            setSelectedEnrollment(selected);
-            console.log(selected.firstname);
-        }
+        (async () => {
+            if (selectedEnrollmentId) {
+                const selected = enrollmentApplications.filter(appli => appli._id === selectedEnrollmentId)[0];
+                setSelectedEnrollment(selected);
+                console.log(selected.firstname);
+                
+                let tempHtmlSelectedEnrollmentCourses = [];
+                for(let i=0; i< selected.coursesTakenIds.length; i++) {
+                    const path = `/api/courses/${selected.coursesTakenIds[i]}`;
+                    console.log(path);
+                    // console.log(selected);
+                    const result = await fetch(path);
+                    const value = await result.json();
+                    tempHtmlSelectedEnrollmentCourses.push(
+                                    <tr>
+                                        <td>{ value.name }</td>
+                                        <td>{ value.fee }</td>
+                                    </tr>
+                    );
+                }
+                setHtmlSelectedEnrollmentCourses(tempHtmlSelectedEnrollmentCourses);
+                return;
+            }
+        })();
     }, [selectedEnrollmentId]);
     
     
     
 
     return (
-        <div>
-            <div>
-                <h1>Firstname: { currentUser.firstname }</h1>
-                <h1>Lastname: { currentUser.lastname }</h1>
-                <h1>Email: { currentUser.email }</h1>
+        <main className="main__application">
+        <nav className="application__navbar">
+            <span>
+                <p>Welcome</p>
+                <button>{ `${currentUser.firstname} ${currentUser.lastname}` }</button>
+            </span>
+        </nav>
+        <section className="application__section">
+            <div className="section__content">
+                
+                <ApplicationPanel title="Enrollment Applications">
+                    <div className="body__application">
+                        <table>
+                            { htmlEnrollmentApplications }
+                        </table>
+                    </div>
+                </ApplicationPanel>
+
+                <section className="content__button">
+                    <button className="button__accept" onClick={() => {
+                                if (selectedEnrollmentId) {
+                                    fetch('/api/enrollments', {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            id: selectedEnrollment._id,
+                                            accept: true
+                                        }),
+                                        redirect: 'follow'
+                                    }).then(result => {
+                                        return result.json();
+                                    }).then(value => {
+                                        console.log(value);
+                                        setUpdateEnrollmentData(prev => !prev);
+                                    });
+                                    // console.log(`Accept: ${selectedEnrollment.email}`);
+                                    // window.location.reload();
+                                }
+                            }}>Accept</button>
+                    <button className="button__discard" onClick={() => {
+                                if (selectedEnrollmentId) {
+                                    fetch('/api/enrollments', {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            id: selectedEnrollment._id,
+                                            accept: false
+                                        }),
+                                        redirect: 'follow'
+                                    }).then(result => {
+                                        return result.json();
+                                    }).then(value => {
+                                        console.log(value);
+                                        setUpdateEnrollmentData(prev => !prev);
+                                    });
+                                    // console.log(`Discard: ${selectedEnrollment.email}`);
+                                    // setEnrollmentApplications(prev => [...prev.filter(item => item.id !== selectedEnrollment._id)]);
+                                    // window.location.reload();
+                                }
+                            }}>Discard</button>
+                </section>
+                
+                <ApplicationPanel title="Application Details">
+                    <div className="body__application">
+                        <h3>ID: { selectedEnrollment._id }</h3>
+                        <h3>Firstname: { selectedEnrollment.firstname }</h3>
+                        <h3>Lastname: { selectedEnrollment.lastname }</h3>
+                        <h3>Email: { selectedEnrollment.email }</h3>
+                        <h3>Guardian Firstname: { selectedEnrollment.guardianFirstname } { selectedEnrollment.guardianMiddleInitial } { selectedEnrollment.guardianLastname }</h3>
+                        <h3>Guardian Contact: { selectedEnrollment.guardianContactNumber }</h3>
+                        <div className="enrolledCoursesContainer">
+                            <h3>Enrolled Courses</h3>
+                            <table className="enrolledCoursesTable">
+                                <tr>
+                                    <th>Course Title</th>
+                                    <th>Course Fee</th>
+                                </tr>
+                                { htmlSelectedEnrollmentCourses !== null ? htmlSelectedEnrollmentCourses : '' }
+                            </table>
+                        </div>
+                    </div>
+                </ApplicationPanel>
             </div>
-            <div className="decisionButtons">
-                <button 
-                    className="decisionButton acceptButton"
-                    onClick={() => {
-                        if (selectedEnrollmentId) {
-                            fetch('/api/enrollments', {
-                                method: 'DELETE',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    id: selectedEnrollment._id,
-                                    accept: true
-                                }),
-                                redirect: 'follow'
-                            }).then(result => {
-                                return result.json();
-                            }).then(value => {
-                                console.log(value);
-                                setUpdateEnrollmentData(prev => !prev);
-                            });
-                            // console.log(`Accept: ${selectedEnrollment.email}`);
-                            // window.location.reload();
-                        }
-                    }}>Accept</button>
-                <br/>
-                <button 
-                    className="decisionButton discardButton"
-                    onClick={() => {
-                        if (selectedEnrollmentId) {
-                            fetch('/api/enrollments', {
-                                method: 'DELETE',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    id: selectedEnrollment._id,
-                                    accept: false
-                                }),
-                                redirect: 'follow'
-                            }).then(result => {
-                                return result.json();
-                            }).then(value => {
-                                console.log(value);
-                                setUpdateEnrollmentData(prev => !prev);
-                            });
-                            // console.log(`Discard: ${selectedEnrollment.email}`);
-                            // setEnrollmentApplications(prev => [...prev.filter(item => item.id !== selectedEnrollment._id)]);
-                            // window.location.reload();
-                        }
-                    }}>Discard</button>
-            </div>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Email</th>
-                </tr>
-                { htmlEnrollmentApplications }
-            </table>
-            {
-                <div className="enrollmentDetails">
-                    <h2>ID: { selectedEnrollment._id }</h2>
-                    <h2>Firstname: { selectedEnrollment.firstname }</h2>
-                    <h2>Lastname: { selectedEnrollment.lastname }</h2>
-                    <h2>Email: { selectedEnrollment.email }</h2>
-                    <h2>Guardian Firstname: { selectedEnrollment.guardianFirstname } { selectedEnrollment.guardianMiddleInitial } { selectedEnrollment.guardianLastname }</h2>
-                    <h2>Guardian Contact: { selectedEnrollment.guardianContactNumber }</h2>
-                </div>
-            }
-        </div>
+        </section>
+        </main>
     );
 };
 
 export default EnrollmentApplications;
+
+
+
+
+

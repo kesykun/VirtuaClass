@@ -24,8 +24,11 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     const [paymentLink, setPaymentLink] = useState("")
     const [contactInformation, setContactInformation] = useState("")
 
-    const [faqData, setFaqData] = useState(null)
-    const [htmlFaqData, setHtmlFaqData] = useState(null)
+    const [flickFaq, setFlickFaq] = useState(false);
+    const [faqData, setFaqData] = useState(null);
+    const [faqLength, setFaqLength] = useState(null);
+    const [htmlFaqData, setHtmlFaqData] = useState(null);
+    // const [temporaryHtmlFaqData, setTemporaryHtmlFaqData] = useState(null);
 
     useEffect(() => {
         fetch('/api/school')
@@ -40,54 +43,178 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                 setContactInformation(value.contactInformation);
             }
         )
-    }, []
-    )
+    }, []);
+    // const [question, setQuestion] = useState('');
+    // const [answer, setAnswer] = useState('');
+    const questionStates = [
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState()
+    ];
+    const answerStates = [
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState()
+    ];
+    const faqIds = [
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState(),
+        useState()
+    ];
 
-    useEffect( () => {
+    useEffect(() => {
         fetch('/api/faqs')
-        .then(result =>{return result.json()})
+        .then(result =>{ return result.json() })
         .then( value =>
             {
+                console.log(questionStates);
                 setFaqData(value);
-                setHtmlFaqData(
-                    value.map(item => {
-                        return (
-                            <tr>
-                                <td>
-                                    <input type='text' value={ item.question }  />
-                                </td>
-                                <td>
-                                    <input type='text' value={ item.answer }  />
-                                </td>
-                                <td>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                        )
-                    })
-                )
+                setFaqLength(value.length);
+                for (let i=0; i<value.length; i++) {
+                    questionStates[i][1](value[i].question);
+                    answerStates[i][1](value[i].answer);
+                    faqIds[i][1](value[i]._id);
+                    console.log(questionStates[i][1]);
+                }
+                setFlickFaq(prev => !prev);
                 console.log(value);
             }
         )
-    }, []
-    )
+    }, []);
+
+    useEffect(() => {
+        // console.log(questionStates[0][0]);
+        // console.log(faqIds);
+        // console.log(`faqLength: ${faqLength}`);
+        console.log(answerStates);
+        let temporaryHtmlFaqData = [];
+        if(questionStates[0][0] && answerStates[0][0] && faqIds[0][0]) {
+            for (let i=0; i<faqLength; i++) {
+                temporaryHtmlFaqData.push(
+                    (
+                        <tr>
+                            <td>
+                                <input type='text' value={ questionStates[i][0] } onChange={(e) => questionStates[i][1](e.target.value)} />
+                            </td>
+                            <td>
+                                <input type='text' value={ answerStates[i][0] } onChange={(e) => answerStates[i][1](e.target.value)} />
+                            </td>
+                            <td>
+                                <button onClick={async () => {
+                                    await fetch('/api/faqs', {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            id: faqIds[i][0]
+                                        }),
+                                        redirect: 'follow'
+                                    }).then(result => result.json()).then(value => {
+                                        // console.log(value);
+                                        window.location.reload();
+                                    });
+                                }}>Delete</button>
+                            </td>
+                        </tr>
+                    )
+                );
+            }
+            setHtmlFaqData(temporaryHtmlFaqData);
+        }
+    }, [flickFaq, questionStates, answerStates]);
 
     // useEffect(() => {
-    //     if (faqData !== null) {
-    //         setHtmlFaqData(
-    //             faqData.map(item => {
-    //                 return (
-    //                     <tr>
-    //                         <td>{item.question}</td>
-    //                         <td>{item.answer}</td>
-    //                     </tr>
-    //                 )
-    //             })
-    //         )
+    //     if (questionStates[0][0] && answerStates[0][0]) {
+    //         let tempFaqData = [];
+    //         for (let i=0; i<faqLength; i++) {
+    //             tempFaqData.push({
+    //                 id: faqIds[i][0],
+    //                 question: questionStates[i][0],
+    //                 answer: answerStates[i][0]
+    //             });
+    //         }
+    //         setFaqData(tempFaqData);
     //     }
+    // }, [flickFaq]);
 
-    // }, []
-    // )
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -110,6 +237,20 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
             ),
             redirect: "follow"
         })
+        for (let i=0; i<faqLength; i++) {
+            await fetch('/api/faqs', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: faqIds[i],
+                    question: questionStates[i][0],
+                    answer: answerStates[i][0]
+                }),
+                redirect: 'follow'
+            });
+        }
         window.location.reload();
         alert("School Information Updated!");
     }
@@ -129,18 +270,15 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
             .then(value =>{setEvents(value)});
         }, []
     )
-
-    useEffect(
-        () => {
-            if (event !== null) {
-                setEventInput(event);
-            }
-        }, []
-    )
+    useEffect(() => {
+        if (event !== null) {
+            setEventInput(event);
+        }
+    }, [])
 
     // Function to handle date selection
     const handleDateChange = (date) => {
-        console.log(date);
+        // console.log(date);
         setSelectedDate(date);
         for (let i=0; i<events.length; i++) {
         if (events[i].date === date.toDateString()){
@@ -248,7 +386,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                                 ),
                                                 redirect: "follow"
                                             }).then(result => {
-                                                console.log(result);
+                                                // console.log(result);
                                                 window.location.reload();
                                             })
                                         }
@@ -269,7 +407,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                                 ),
                                                 redirect: "follow"
                                             }).then(result => {
-                                                console.log(result);
+                                                // console.log(result);
                                                 window.location.reload();
                                             })
                                         }
@@ -292,7 +430,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                         ),
                                         redirect: "follow"
                                     }).then(result => {
-                                        console.log(result);
+                                        // console.log(result);
                                         window.location.reload();
                                     })
                                 }                                    

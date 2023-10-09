@@ -187,7 +187,7 @@ const App = () => {
                                                 } />
                     <Route path='/faq' element={<Faq />} />
                     <Route path='/calendar' element={<Calendar />} />
-                    <Route path='/enrollment' element={<EnrollmentForm 
+                    <Route path='/enrollment' element={<EnrollmentForm
                                                     courses={ courses }
                                                     setCourses={ setCourses }
                                                     coursesExpanded={ coursesExpanded }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactCalendar from 'react-calendar';
+import NavBar from '../../components/NavBar';
 import './css/Calendar.css';
 
 const Calendar = () => {
@@ -14,17 +15,21 @@ const Calendar = () => {
   };
 
   return (
-    <div className="calendar-container">
-      <div className="centered-content">
-        <ReactCalendar onChange={handleDateChange} value={selectedDate} />
-        <div>
-          {selectedDate && (
-            <p>Selected Date: {selectedDate.toDateString()}</p>
-          )}
-          {/* You can render events or other calendar-related content here */}
+    <>
+      <NavBar />
+      <div className="calendar-container">
+        <div className="centered-content">
+          <ReactCalendar onChange={handleDateChange} value={selectedDate} />
+          <div>
+            {selectedDate && (
+              <p>Selected Date: {selectedDate.toDateString()}</p>
+            )}
+            {/* You can render events or other calendar-related content here */}
+          </div>
         </div>
       </div>
-    </div>
+    
+    </>
   );
 };
 

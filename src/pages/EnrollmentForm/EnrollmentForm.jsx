@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import FormInput from "../../components/FormInput";
 import CourseListWithSelection from "../../components/CourseListWithSelection";
+import FormInput from "../../components/FormInput";
+import NavBar from '../../components/NavBar';
 import SelectedCourses from "../../components/SelectedCourses";
 import "./css/EnrollmentForm.css";
 
@@ -35,6 +36,7 @@ const EnrollmentForm = ({ courses, setCourses, coursesExpanded, setCoursesExpand
 
     return (
         <>
+            <NavBar />
             <section className="enrollment__section">
                 <SelectedCourses selectedCourses={ selectedCourses } />
                 <div className="courseListWithSelection_Cont">

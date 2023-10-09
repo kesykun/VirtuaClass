@@ -1,6 +1,6 @@
-import { useEffect } from "react"; 
+import { useEffect } from "react";
 import CourseList from "../../components/CourseList";
-import SelectedCourses from "../../components/SelectedCourses";
+import NavBar from '../../components/NavBar';
 import "./css/CourseListPage.css";
 
 
@@ -10,6 +10,7 @@ const CourseListPage = ({ courses, setCourses, coursesExpanded, setCoursesExpand
     useEffect(() => console.log(coursesExpanded), [coursesExpanded]);
     return (
         <>
+            <NavBar />
             <CourseList
             courses={ courses } 
             coursesExpanded={ coursesExpanded }

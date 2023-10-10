@@ -28,6 +28,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     const [faqData, setFaqData] = useState(null);
     const [faqCount, setFaqCount] = useState(null);
     const [htmlFaqData, setHtmlFaqData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     // const [temporaryHtmlFaqData, setTemporaryHtmlFaqData] = useState(null);
 
     useEffect(() => {
@@ -142,17 +143,17 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
         .then(result =>{ return result.json() })
         .then( value =>
             {
-                console.log(questionStates);
+                // console.log(questionStates);
                 setFaqData(value);
                 setFaqCount(value.length);
                 for (let i=0; i<value.length; i++) {
                     questionStates[i][1](value[i].question);
                     answerStates[i][1](value[i].answer);
                     faqIds[i][1](value[i]._id);
-                    console.log(questionStates[i][1]);
+                    // console.log(questionStates[i][1]);
                 }
                 setFlickFaq(prev => !prev);
-                console.log(value);
+                // console.log(value);
             }
         )
     }, []);
@@ -161,7 +162,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
         // console.log(questionStates[0][0]);
         // console.log(faqIds);
         // console.log(`faqCount: ${faqCount}`);
-        console.log(answerStates);
+        // console.log(answerStates);
         let temporaryHtmlFaqData = [];
         if(questionStates[0][0] && answerStates[0][0]) {
             for (let i=0; i<faqCount; i++) {
@@ -215,7 +216,8 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setIsLoading(true);
         
         await fetch('/api/school', {
             method: "PUT",
@@ -249,6 +251,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                 redirect: 'follow'
             });
         }
+        setIsLoading(false);
         window.location.reload();
         alert("School Information Updated!");
     }
@@ -293,7 +296,10 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
 
     return (
         <div>
-            <form className="siteSettingsForm" onSubmit={handleSubmit}>
+            <form className="siteSettingsForm" onSubmit={(e) => {
+                    handleSubmit(e);
+                    console.log('pressed...');
+                }}>
                 <div>
                     <h3>Site Settings</h3>
 
@@ -333,7 +339,8 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                         onChange={(e) => setContactInformation(e.target.value)}
                         value={contactInformation}
                     />
-                    <button>Save</button>
+                    <button disabled={isLoading} style={isLoading ? { opacity: 0.2 }
+                         : { opacity: 1 }}>{ isLoading ? 'Saving...' : 'Save'}</button>
                 </div>
                 
             </form>

@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
 import './css/SiteSettings.css';
 import { useNavigate } from "react-router-dom";
 import ReactCalendar from 'react-calendar';
+import { useEffect, useState, useContext } from "react";
+import CurrentUserContext from "../../../contexts/currentUserContext";
 
-const SiteSettings = ({ currentUser, setCurrentUser }) => {
+const SiteSettings = () => {
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
     const navigate = useNavigate();
     useEffect(() => {
         if (sessionStorage.getItem('currentUser')) {

@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
+// Context Providers
+import { CurrentUserProvider } from "./contexts/currentUserContext";
+
+// Contexts
+import SchoolInfoContext from "./contexts/SchoolInfoContext";
 
 
-
+// General Components
 import CourseListPage from "./pages/General/CourseListPage/CourseListPage";
 import EnrollmentForm from "./pages/General/EnrollmentForm/EnrollmentForm";
 import Faq from "./pages/General/FAQ/Faq";
@@ -12,6 +17,7 @@ import GeneralSchoolInformation from "./pages/General/GeneralSchoolInfo/GeneralS
 import PaymentLink from "./pages/General/PaymentLink/PaymentLink";
 import LoginScreen from "./pages/General/LoginScreen/LoginScreen";
 
+// Admin Components
 import EnrollmentApplications from "./pages/Admin/EnrollmentApplications/EnrollmentApplications";
 import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
 import SiteSettings from "./pages/Admin/SiteSettings/SiteSettings";
@@ -21,35 +27,14 @@ const getAllCourses = async () => {
   const response = await fetch('/api/courses');
   return await response.json();
 };
-
-
 const getAllInstructors = async () => {
   const response = await fetch(`/api/instructors`);
   return await response.json();
 };
 
 const App = () => {
-    const [currentUser, setCurrentUser] = useState(
-    {
-      email: '',
-      password: '',
-      firstname: '',
-      lastname: ''
-    }
-    );
-
-    // sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-    const [schoolInfo, setSchoolInfo] = useState(
-      {
-        schoolName: '',
-        mission: '',
-        vision: '',
-        objectives: '',
-        faq: '',
-        contactInformation: ''
-      }
-    );
+    const { setSchoolInfo } = useContext(SchoolInfoContext);
+    
     useEffect(
       () => {
         fetch('/api/school')
@@ -89,41 +74,33 @@ const App = () => {
     
     return (
         <>
+          <CurrentUserProvider>
             <BrowserRouter>
                 
                 <Routes>
-                    <Route path='/' element={<GeneralSchoolInformation schoolInfo={schoolInfo}/>} />
+                    <Route path='/' element={<GeneralSchoolInformation/>} />
                     <Route path='/courses' element={<CourseListPage 
-                                                    schoolInfo={schoolInfo}
                                                     courses={ courses }
                                                     setCourses={ setCourses } />} />
-                    <Route path='/faq' element={<Faq schoolInfo={schoolInfo} />} />
-                    <Route path='/calendar' element={<Calendar schoolInfo={schoolInfo} />} />
+                    <Route path='/faq' element={<Faq />} />
+                    <Route path='/calendar' element={<Calendar/>} />
                     <Route path='/enrollment' element={<EnrollmentForm 
-                                                    schoolInfo={schoolInfo}
                                                     courses={ courses }
                                                     setCourses={ setCourses } 
                                                     getAllCourses={getAllCourses} 
                                                     getAllInstructors={getAllInstructors} />} />
-                    <Route path='/paymentlinks' element={<PaymentLink schoolInfo={schoolInfo} />} />
-                    <Route path='/login' element={<LoginScreen schoolInfo={schoolInfo} currentUser={currentUser} setCurrentUser={setCurrentUser}/>} />
+                    <Route path='/paymentlinks' element={<PaymentLink/>} />
+                    <Route path='/login' element={<LoginScreen/>} />
 
-                    <Route path="/admin" element={<AdminDashboard 
-                                                    currentUser={currentUser}
-                                                    setCurrentUser={setCurrentUser} 
-                                                  />} />
-                    <Route path="/admin/enrollment_applications" element={<EnrollmentApplications 
-                                                                              currentUser={currentUser}
-                                                                              setCurrentUser={setCurrentUser} 
-                                                                          />} />
+                    <Route path="/admin" element={<AdminDashboard/>} />
+                    <Route path="/admin/enrollment_applications" element={<EnrollmentApplications/>} />
                     <Route path="/admin/student_accounts" element={<h1>Para StudentAccounts</h1>} />
                     <Route path="/admin/instructor_accounts" element={<h1>Para InstructorAccounts</h1>} />
                     <Route path="/admin/administrator_accounts" element={<h1>Para AdministratorAccounts</h1>} />
-                    <Route path="/admin/site_settings" element={<SiteSettings 
-                                                                    currentUser={currentUser}
-                                                                    setCurrentUser={setCurrentUser}/>} />
+                    <Route path="/admin/site_settings" element={<SiteSettings/>} />
                 </Routes>
             </BrowserRouter>
+          </CurrentUserProvider>
         </>
     );
 };

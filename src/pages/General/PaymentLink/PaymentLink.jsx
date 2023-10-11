@@ -1,9 +1,11 @@
 // src/components/PaymentQRLink.jsx
 import './PaymentLink.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import NavBar from '../../../components/NavBar';
+import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
-const PaymentLink = ({schoolInfo}) => {
+const PaymentLink = () => {
+    const { schoolInfo } = useContext(SchoolInfoContext);
     const [paymentLink, setPaymentLink] = useState(''); // Replace With School's payment link
     const [schoolInfoState, setSchoolInfoState] = useState(null);
     useEffect(() => {

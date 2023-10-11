@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
 import ReactCalendar from 'react-calendar';
 import './css/AdminDashboard.css';
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import CurrentUserContext from "../../../contexts/currentUserContext";
 
 
-const AdminDashboard = ({ currentUser, setCurrentUser }) => {
+const AdminDashboard = () => {
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
     const navigate = useNavigate();
     useEffect(() => {
         if (sessionStorage.getItem('currentUser')) {

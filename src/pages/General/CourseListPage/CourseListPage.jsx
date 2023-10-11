@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react"; 
+import { useState, useContext } from "react"; 
 import CourseList from "../../../components/CourseList";
 import NavBar from '../../../components/NavBar';
 import "./css/CourseListPage.css";
+import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
 
-const CourseListPage = ({ schoolInfo, courses, setCourses }) => {
+const CourseListPage = ({ courses, setCourses }) => {
+    const { schoolInfo } = useContext(SchoolInfoContext);
     const [coursesExpanded, setCoursesExpanded] = useState(false);
     
-    // console.log(coursesExpanded);
-    // useEffect(() => console.log(coursesExpanded), [coursesExpanded]);
     return (
         <>
             <NavBar  schoolInfo={schoolInfo}/>

@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ReactCalendar from 'react-calendar';
 import NavBar from '../../../components/NavBar';
 import './css/Calendar.css';
+import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
-const Calendar = ({schoolInfo}) => {
+const Calendar = () => {
+  const { schoolInfo } = useContext(SchoolInfoContext);
   // Define state variables for the selected date and events
   const [selectedDate, setSelectedDate] = useState(null);
   const [event, setEvent] = useState(null);

@@ -77,7 +77,11 @@
 
 .section__content > .content__container {
     width : 30vw;
-    overflow:visible;
+    overflow: visible;
+}
+.section__content > .content__container::-webkit-scrollbar {
+    width: 0.1rem;
+    background-color: #fff;
 }
 
 .section__content > .content__container > .container__heading {
@@ -103,6 +107,12 @@
     border-bottom-right-radius: 10px;
 }
 
+
+.section__content > .content__container > .container__body::-webkit-scrollbar {
+    width: 0.4em;
+    background-color: #efefef;
+}
+
 .body__application {
     display : flex;
     flex-direction: column;
@@ -120,11 +130,35 @@
     font-weight : 600;
     font-family: 'Sofia Sans Condensed', sans-serif;
 }
+td {
+    padding: 1px;
+    border-radius: 5px;
+    font-family: 'Sofia Sans Condensed', sans-serif;
+    
+}
+
+.enrollmentApplicationRecord td {
+    color: #fff;
+}
+
+.enrollmentApplicationRecord td button {
+    color: #fff;
+    font-family: 'Sofia Sans Condensed', sans-serif;
+}
 
 .enrolledCoursesContainer {
     border: 1px solid #000;
+    border-radius: 4px;
+    font-family: 'Sofia Sans Condensed', sans-serif;
+    padding: 2px;
 }
 
+.enrolledCoursesContainer h4 {
+    font-family: 'Sofia Sans Condensed', sans-serif;
+}
+.enrolledCoursesContainer table tr th {
+    font-family: 'Sofia Sans Condensed', sans-serif;
+}
 
 .enrolledCoursesTable tr {
     border: 1px solid #000;
@@ -132,4 +166,13 @@
 
 .enrolledCoursesTable tr td {
     border: 1px solid #000;
+}
+
+
+.container__body {
+    font-family: 'Sofia Sans Condensed', sans-serif;
+}
+
+.detailsContainer h4 {
+    font-family: Arial, Helvetica, sans-serif;
 }

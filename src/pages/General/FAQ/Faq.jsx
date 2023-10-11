@@ -1,9 +1,11 @@
 import Accordion from "../../../components/Accordion";
 import NavBar from '../../../components/NavBar';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
 
-const Faq = ({schoolInfo}) => {
+const Faq = () => {
+    const { schoolInfo } = useContext(SchoolInfoContext);
     const [faqs, setFaqs] = useState(null);
     const [htmlFaqs, setHtmlFaqs] = useState(null);
 

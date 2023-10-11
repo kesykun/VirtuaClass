@@ -1,9 +1,11 @@
 // src/GeneralSchoolInformation.jsx
 import './GeneralSchoolInfo.css';
-import React from 'react';
+import { useContext } from 'react';
 import NavBar from '../../../components/NavBar';
+import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
-const GeneralSchoolInformation = ({schoolInfo}) => {
+const GeneralSchoolInformation = () => {
+    const { schoolInfo } = useContext(SchoolInfoContext);
     return (
         <>
             <NavBar  schoolInfo={schoolInfo}/>

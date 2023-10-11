@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
 import FormInput from "../../../components/FormInput";
 import CourseListWithSelection from "../../../components/CourseListWithSelection";
 import SelectedCourses from "../../../components/SelectedCourses";
 import NavBar from '../../../components/NavBar';
 import "./css/EnrollmentForm.css";
+import React, { useEffect, useState, useContext } from 'react';
+import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
-const EnrollmentForm = ({ schoolInfo, courses, setCourses, getAllCourses, getAllInstructors  }) => {
+const EnrollmentForm = ({ courses, setCourses, getAllCourses, getAllInstructors  }) => {
+    const { schoolInfo } = useContext(SchoolInfoContext);
+    
     // Initialize state variables for form data
     const [coursesExpanded, setCoursesExpanded] = useState(false);
     const [selectedCourses, setSelectedCourses] = useState([]);

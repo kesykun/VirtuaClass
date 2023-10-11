@@ -1,11 +1,16 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './css/LoginScreen.css';
+import { useNavigate } from 'react-router-dom';
+import { useState, useContext } from "react";
 import NavBar from '../../../components/NavBar';
+import CurrentUserContext from "../../../contexts/currentUserContext";
+import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
-const LoginScreen = ({schoolInfo, setCurrentUser}) => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
+const LoginScreen = () => {
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+    const { schoolInfo } = useContext(SchoolInfoContext);
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {

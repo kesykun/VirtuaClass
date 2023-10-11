@@ -1,7 +1,8 @@
-
 import "./css/EnrollmentApplications.css";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
+import CurrentUserContext from "../../../contexts/currentUserContext";
+
 
 const ApplicationPanel = ({ title, children }) => {
     return (
@@ -32,7 +33,8 @@ const getEnrollmentApplications = async () => {
 
 
 
-const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
+const EnrollmentApplications = () => {
+    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
     const navigate = useNavigate();
     useEffect(() => {
         if (sessionStorage.getItem('currentUser')) {
@@ -67,12 +69,15 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
             setEnrollmentApplications(result);
             setHtmlEnrollmentApplications(result.map(enrollment => {
                             return (
-                                <tr>
+                                <tr className="enrollmentApplicationRecord">
                                     <td>
-                                        <button className="selectEnrollmentApplication" onClick={(e) => {
+                                        <button 
+                                            className="selectEnrollmentApplication" 
+                                            value={ enrollment._id }
+                                            onClick={(e) => {
                                                 setHtmlSelectedEnrollmentCourses(null);
-                                                setSelectedEnrollmentId(e.target.textContent);
-                                            }}>{ enrollment._id }</button>
+                                                setSelectedEnrollmentId(e.target.value);
+                                            }} >SELECT</button>
                                     </td>
                                     <td>
                                         <ApplicationPanelItem title={ `${enrollment.firstname} ${enrollment.lastname}` } />
@@ -186,22 +191,23 @@ const EnrollmentApplications = ({ currentUser, setCurrentUser }) => {
                 </section>
                 
                 <ApplicationPanel title="Application Details">
-                    <div className="body__application">
-                        <h4>ID: { selectedEnrollment._id }</h4>
-                        <h4>Firstname: { selectedEnrollment.firstname }</h4>
-                        <h4>Lastname: { selectedEnrollment.lastname }</h4>
+                    <div className="body__application detailsContainer">
+                        <h4>Name: { selectedEnrollment.firstname } { selectedEnrollment.middleInitial }. { selectedEnrollment.lastname }</h4>
                         <h4>Email: { selectedEnrollment.email }</h4>
-                        <h4>Guardian Firstname: { selectedEnrollment.guardianFirstname } { selectedEnrollment.guardianMiddleInitial } { selectedEnrollment.guardianLastname }</h4>
+                        <h4>Guardian: { selectedEnrollment.guardianFirstname } { selectedEnrollment.guardianMiddleInitial }. { selectedEnrollment.guardianLastname }</h4>
                         <h4>Guardian Contact: { selectedEnrollment.guardianContactNumber }</h4>
                         <div className="enrolledCoursesContainer">
-                            <h3>Enrolled Courses</h3>
-                            <table className="enrolledCoursesTable">
-                                <tr>
-                                    <th>Course Title</th>
-                                    <th>Course Fee</th>
-                                </tr>
-                                { htmlSelectedEnrollmentCourses !== null ? htmlSelectedEnrollmentCourses : '' }
-                            </table>
+                            <h4>Enrolled Courses</h4>
+                            { htmlSelectedEnrollmentCourses !== null ? 
+                                <table className="enrolledCoursesTable">
+                                    <tr>
+                                        <th>Course Title</th>
+                                        <th>Course Fee</th>
+                                    </tr>
+                                    { htmlSelectedEnrollmentCourses }
+                                </table>
+                                : ''
+                            }
                         </div>
                     </div>
                 </ApplicationPanel>

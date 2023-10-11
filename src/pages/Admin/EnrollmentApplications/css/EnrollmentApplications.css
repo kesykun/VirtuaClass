@@ -146,6 +146,10 @@ td {
     font-family: 'Sofia Sans Condensed', sans-serif;
 }
 
+.enrollmentApplicationRecord td .application__item {
+    font-family: 'Sofia Sans Condensed', sans-serif;
+}
+
 .enrolledCoursesContainer {
     border: 1px solid #000;
     border-radius: 4px;

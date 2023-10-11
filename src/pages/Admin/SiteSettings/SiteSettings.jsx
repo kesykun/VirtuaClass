@@ -26,8 +26,9 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
 
     const [flickFaq, setFlickFaq] = useState(false);
     const [faqData, setFaqData] = useState(null);
-    const [faqLength, setFaqLength] = useState(null);
+    const [faqCount, setFaqCount] = useState(null);
     const [htmlFaqData, setHtmlFaqData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     // const [temporaryHtmlFaqData, setTemporaryHtmlFaqData] = useState(null);
 
     useEffect(() => {
@@ -107,34 +108,34 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
         useState()
     ];
     const faqIds = [
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState()
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0'),
+        useState('0')
     ];
 
     useEffect(() => {
@@ -142,17 +143,17 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
         .then(result =>{ return result.json() })
         .then( value =>
             {
-                console.log(questionStates);
+                // console.log(questionStates);
                 setFaqData(value);
-                setFaqLength(value.length);
+                setFaqCount(value.length);
                 for (let i=0; i<value.length; i++) {
                     questionStates[i][1](value[i].question);
                     answerStates[i][1](value[i].answer);
                     faqIds[i][1](value[i]._id);
-                    console.log(questionStates[i][1]);
+                    // console.log(questionStates[i][1]);
                 }
                 setFlickFaq(prev => !prev);
-                console.log(value);
+                // console.log(value);
             }
         )
     }, []);
@@ -160,11 +161,11 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     useEffect(() => {
         // console.log(questionStates[0][0]);
         // console.log(faqIds);
-        // console.log(`faqLength: ${faqLength}`);
-        console.log(answerStates);
+        // console.log(`faqCount: ${faqCount}`);
+        // console.log(answerStates);
         let temporaryHtmlFaqData = [];
-        if(questionStates[0][0] && answerStates[0][0] && faqIds[0][0]) {
-            for (let i=0; i<faqLength; i++) {
+        if(questionStates[0][0] && answerStates[0][0]) {
+            for (let i=0; i<faqCount; i++) {
                 temporaryHtmlFaqData.push(
                     (
                         <tr>
@@ -181,9 +182,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                         headers: {
                                             'Content-Type': 'application/json'
                                         },
-                                        body: JSON.stringify({
-                                            id: faqIds[i][0]
-                                        }),
+                                        body: JSON.stringify({ id: faqIds[i][0] }),
                                         redirect: 'follow'
                                     }).then(result => result.json()).then(value => {
                                         // console.log(value);
@@ -197,12 +196,12 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
             }
             setHtmlFaqData(temporaryHtmlFaqData);
         }
-    }, [flickFaq, questionStates, answerStates]);
+    }, [flickFaq, questionStates, answerStates, faqCount]);
 
     // useEffect(() => {
     //     if (questionStates[0][0] && answerStates[0][0]) {
     //         let tempFaqData = [];
-    //         for (let i=0; i<faqLength; i++) {
+    //         for (let i=0; i<faqCount; i++) {
     //             tempFaqData.push({
     //                 id: faqIds[i][0],
     //                 question: questionStates[i][0],
@@ -217,7 +216,8 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setIsLoading(true);
         
         await fetch('/api/school', {
             method: "PUT",
@@ -237,7 +237,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
             ),
             redirect: "follow"
         })
-        for (let i=0; i<faqLength; i++) {
+        for (let i=0; i<faqCount; i++) {
             await fetch('/api/faqs', {
                 method: 'PUT',
                 headers: {
@@ -251,6 +251,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                 redirect: 'follow'
             });
         }
+        setIsLoading(false);
         window.location.reload();
         alert("School Information Updated!");
     }
@@ -263,31 +264,30 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
     const [events, setEvents] = useState(null);
     const [eventInput, setEventInput] = useState('');
 
-    useEffect( 
-        () => {
+    useEffect(() => {
         fetch('/api/events')
             .then(result =>{return result.json()})
             .then(value =>{setEvents(value)});
-        }, []
-    )
+        }, []);
+
     useEffect(() => {
         if (event !== null) {
             setEventInput(event);
         }
-    }, [])
+    }, []);
 
     // Function to handle date selection
     const handleDateChange = (date) => {
         // console.log(date);
         setSelectedDate(date);
         for (let i=0; i<events.length; i++) {
-        if (events[i].date === date.toDateString()){
-            setEvent(events[i]);
-            break;
-        }
-        else {
-            setEvent(null);
-        }
+            if (events[i].date === date.toDateString()){
+                setEvent(events[i]);
+                break;
+            }
+            else {
+                setEvent(null);
+            }
         }
         
         // You can add additional logic here, such as fetching events for the selected date.
@@ -296,7 +296,10 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
 
     return (
         <div>
-            <form className="siteSettingsForm" onSubmit={handleSubmit}>
+            <form className="siteSettingsForm" onSubmit={(e) => {
+                    handleSubmit(e);
+                    console.log('pressed...');
+                }}>
                 <div>
                     <h3>Site Settings</h3>
 
@@ -336,7 +339,8 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                         onChange={(e) => setContactInformation(e.target.value)}
                         value={contactInformation}
                     />
-                    <button>Save</button>
+                    <button disabled={isLoading} style={isLoading ? { opacity: 0.2 }
+                         : { opacity: 1 }}>{ isLoading ? 'Saving...' : 'Save'}</button>
                 </div>
                 
             </form>
@@ -349,6 +353,9 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                     </tr>
                     { htmlFaqData !== null ? htmlFaqData : '' }
                 </table>
+                <button onClick={() => {
+                    setFaqCount(prev => prev + 1);
+                }}>Add New FAQ</button>
             </div>
             <div className="calendar-container">
                 <div className="centered-content">
@@ -378,20 +385,18 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                                 headers: {
                                                     "Content-Type": "application/json"
                                                 },
-                                                body: JSON.stringify(
-                                                    {
+                                                body: JSON.stringify({
                                                         id: event._id,
                                                         event: eventInput
-                                                    }
-                                                ),
+                                                    }),
                                                 redirect: "follow"
                                             }).then(result => {
                                                 // console.log(result);
                                                 window.location.reload();
-                                            })
+                                            });
                                         }
                                     }                                    
-                                }>Update</button>
+                                }>Update Event</button>
                                 <button onClick={
                                     () =>{
                                         if (event !== null) {
@@ -400,11 +405,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                                 headers: {
                                                     "Content-Type": "application/json"
                                                 },
-                                                body: JSON.stringify(
-                                                    {
-                                                        id: event._id,
-                                                    }
-                                                ),
+                                                body: JSON.stringify({ id: event._id }),
                                                 redirect: "follow"
                                             }).then(result => {
                                                 // console.log(result);
@@ -412,7 +413,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                             })
                                         }
                                     }                                    
-                                }>Delete</button>
+                                }>Delete Event</button>
                             </div>
                         : 
                             <button onClick={
@@ -434,7 +435,7 @@ const SiteSettings = ({ currentUser, setCurrentUser }) => {
                                         window.location.reload();
                                     })
                                 }                                    
-                            }>Add</button>
+                            }>Add Event</button>
                         }
                     </div>
                 </div>

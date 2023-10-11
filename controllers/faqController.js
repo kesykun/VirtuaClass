@@ -42,21 +42,33 @@ const createNewFaq = async (req, res) => {
 
 const updateFaq = async (req, res) => {
     try {
-        const result = await FaqModel.updateOne(
-            {
-                _id: req.body.id,
-            },
-            {
-                $set: {
-                    question: req.body.question,
-                    answer: req.body.answer
+        const conflict = await FaqModel.findOne({ _id: req.body.id }).exec();
+        console.log(conflict);
+        if (conflict) {
+            const result = await FaqModel.updateOne(
+                    { _id: req.body.id }, 
+                    { $set: {
+                        question: req.body.question,
+                        answer: req.body.answer
+                    }
                 }
-            }
-        );
-        res.json( result );
+            );
+            // console.log(result);
+            res.json( result );
+            return;
+        }
+        
         return;
     } catch(err) {
-        res.json({ message: err.message });
+        const newFaq = await FaqModel.create(
+            {
+                question: req.body.question,
+                answer: req.body.answer
+            }
+        );
+        // console.log(newFaq);
+        res.json( newFaq );
+        // res.json({ message: err.message });
         return;
     }
 };

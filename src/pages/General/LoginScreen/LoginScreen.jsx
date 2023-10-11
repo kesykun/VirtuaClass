@@ -51,18 +51,20 @@ const LoginScreen = ({schoolInfo, setCurrentUser}) => {
         <>
             <NavBar  schoolInfo={schoolInfo}/>
             <form className="loginScreenForm" onSubmit={handleSubmit}>
-                <h3>Enter your Login details</h3>
+                <h3>Enter your Login details  </h3>
                 
-                <label>Email</label>
+                <label className="loginFieldLabel" htmlFor="loginEmailInput">Email:</label>
                 <input 
+                    className="loginInput"
                     id="loginEmailInput"
                     type="email"
                     onChange={(e) => setEmail(e.target.value)}
                     value={email}
                     required
                 />
-                <label>Password</label>
+                <label className="loginFieldLabel" htmlFor="loginPasswordInput" >Password:</label>
                 <input 
+                    className="loginInput"
                     id="loginPasswordInput"
                     type="password"
                     onChange={(e) => setPassword(e.target.value)}
@@ -70,7 +72,7 @@ const LoginScreen = ({schoolInfo, setCurrentUser}) => {
                     required
                 />
 
-                <button>Login</button>
+                <button className="loginButton">Login</button>
             </form>
         </>
     )

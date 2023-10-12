@@ -51,29 +51,44 @@ const AdminDashboard = () => {
     }
     
     return (
-        <div>
+        <div className="adminDashBody">
             <div>
-                <div>
-                    <h1>Firstname: { currentUser.firstname }</h1>
-                    <h1>Lastname: { currentUser.lastname }</h1>
-                    <h1>Email: { currentUser.email }</h1>
-                </div>
-                <button className="adminDashButton" onClick={() => navigate('/admin/enrollment_applications')}>Enrollment Applications</button><br/>
-                <button className="adminDashButton" onClick={() => navigate('/admin/student_accounts')}>Student Accounts</button><br/>
-                <button className="adminDashButton" onClick={() => navigate('/admin/instructor_accounts')}>Instructor Accounts</button><br/>
-                <button className="adminDashButton" onClick={() => navigate('/admin/administrator_accounts')}>Administrator Accounts</button><br/>
-                <button className="adminDashButton" onClick={() => navigate('/admin/site_settings')}>Site Settings</button><br/>
+                <header>
+                    <div className="welcome">
+                        Welcome, <span className="admin-box">Admin</span>
+                    </div>
+                </header>
             </div>
-            <div className="centered-content">
-                <ReactCalendar onChange={handleDateChange} value={selectedDate} />
+            <div className="dashboard">
                 <div>
-                {selectedDate && (
-                    <p>Selected Date: {selectedDate.toDateString()}</p>
-                )}
-                {
-                    <p>{event !== null ? `Event: ${event.event}` : ''}</p>
-                }
-                    
+                    <div className="button-column">
+                        
+                        <button className="dashboard-button" onClick={() => navigate('/admin/enrollment_applications')}>Enrollment Applications</button><br/>
+                        <button className="dashboard-button" onClick={() => navigate('/admin/student_accounts')}>Student Accounts</button><br/>
+                        <button className="dashboard-button" onClick={() => navigate('/admin/instructor_accounts')}>Instructor Accounts</button><br/>
+                        <button className="dashboard-button" onClick={() => navigate('/admin/administrator_accounts')}>Administrator Accounts</button><br/>
+                        <button className="dashboard-button" onClick={() => navigate('/admin/site_settings')}>Site Settings</button><br/>
+                    </div>
+                </div>
+                <div>
+                    <div className="calendar-container">
+                        <div className="calendar-heading">
+                            <h2>School Calendar</h2>
+                        </div>
+                        <ReactCalendar 
+                            onChange={handleDateChange} 
+                            value={selectedDate} 
+                            className="enlarged-calendar" />
+                        <div>
+                        {selectedDate && (
+                            <p>Selected Date: {selectedDate.toDateString()}</p>
+                        )}
+                        {
+                            <p>{event !== null ? `Event: ${event.event}` : ''}</p>
+                        }
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -55,7 +55,7 @@ const AdminDashboard = () => {
             <div>
                 <header>
                     <div className="welcome">
-                        Welcome, <span className="admin-box">Admin</span>
+                        Welcome, <span className="admin-box">{ currentUser.firstname } { currentUser.lastname }</span>
                     </div>
                 </header>
             </div>

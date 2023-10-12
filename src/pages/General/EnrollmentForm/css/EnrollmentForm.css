@@ -10,6 +10,13 @@
     overflow-x: hidden;
 }
 
+.enrollment__heading h1 {
+    color: #fff;
+}
+.enrollment__heading p {
+    color: #fff;
+}
+
 .enrollment__section .courseListWithSelection_Cont {
     position: absolute;
     top: 60%;

@@ -1,39 +1,35 @@
-import React from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './GeneralSchoolInfo.css';
+import NavBar from '../../../components/NavBar';
+import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
+
 
 const GeneralSchoolInformation = () => {
+    const { schoolInfo } = useContext(SchoolInfoContext);
+
     return (
-        <div className="School-Information">
-            <h1>Welcome to ABC School</h1>
-            <h2>Mission:</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            
-            {/* Add margin-bottom to the headings */}
-            <h2 style={{ marginBottom: '10px' }}>Vision:</h2>
-            <p>Ut enim ad minim veniam</p>
+        <>
+            <NavBar  schoolInfo={schoolInfo}/>
+            <div className="School-Information">
+                <h1>Welcome to { schoolInfo.schoolName }</h1>
+                <h2>Mission:</h2>
+                <p>{ schoolInfo.mission }</p>
+                
+                {/* Add margin-bottom to the headings */}
+                <h2 style={{ marginBottom: '10px' }}>Vision:</h2>
+                <p>{ schoolInfo.vision }</p>
 
-            <h2 style={{ marginBottom: '10px' }}>Objectives:</h2>
-            <ul>
-                <li>- Duis aute irure dolor in reprehenderit in voluptate</li>
-                <li>- Duis aute irure dolor in reprehenderit in voluptate</li>
-                <li>- Duis aute irure dolor in reprehenderit in voluptate</li>
-            </ul>
+                <h2 style={{ marginBottom: '10px' }}>Objective:</h2>
+                <p>{ schoolInfo.objectives }</p>
 
-            {/* Add a space with a non-breaking space for spacing */}
-            <p>&nbsp;</p>
-
-            <p>Address: 123 Education St., Learnville</p>
-            
-            <p>Contact: (123) 456-7890</p>
-            <p>Email: info@abcschool.com</p>
-            <p>Established: 2023</p>
-            <p>Principal: Mr. Knowledge Seeker</p>
-            <p><Link to={"/admin"}>Admin Dashboard</Link></p>
-            
-            {/* Add the "Enroll Now" button here */}
-            <Link to={"/enroll"} className="enroll-button">Enroll Now</Link>
-        </div>
+                {/* Add a space with a non-breaking space for spacing */}
+                <p>&nbsp;</p>
+                
+                <p className="generalInfoContact">Contact: { schoolInfo.contactInformation }</p>
+                <Link to={"/enrollment"} className="enroll-button">Enroll Now</Link>
+            </div>
+        </>
     );
 }
 

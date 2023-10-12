@@ -32,14 +32,17 @@
     width: 100%;
     padding: 12px 15px;
     border: none;
-    background-color: #4a90e2; /* Button color matching the body background */
+    background-color: #213555; /* Button color matching the body background */
     color: #fff;
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-weight: 900;
+    transition: background-color 0.1s ease-in;
+    font-family: 'Sofia Sans Condensed', sans-serif;
 }
 
 .loginButton:hover {
-    background-color: #357ab7; /* Slightly darker blue for hover effect */
+    background-color: #E5D283; /* Change background color on hover */
+    color: #100F0F;
 }

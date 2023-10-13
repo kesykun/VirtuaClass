@@ -17,6 +17,10 @@
     margin-bottom: 20px;
 }
 
+.PaymentLink h1 span {
+    font-weight: 900;
+}
+
 .PaymentLink h2 {
     color: #333;
     border-bottom: 2px solid #e0e0e0;

@@ -55,7 +55,6 @@
     align-items: flex-start;
     height: 100vh;
     margin: 50px;
-    background-image: url('../../../../../public/img/Calendar.png'); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
     background-size: auto; /* Show the image at its original size */
     background-repeat: no-repeat; /* Prevent image repetition */
     background-attachment: fixed; /* Keep the background fixed while scrolling */

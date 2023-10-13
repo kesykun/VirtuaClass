@@ -4,6 +4,8 @@ import NavBar from '../../../components/NavBar';
 import './css/Calendar.css';
 import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
+const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
+
 const Calendar = () => {
   const { schoolInfo } = useContext(SchoolInfoContext);
   // Define state variables for the selected date and events
@@ -13,7 +15,7 @@ const Calendar = () => {
 
   useEffect( 
     () => {
-      fetch('/api/events')
+      fetch(`${DEVELOPMENT_HOST}/api/events`)
         .then(result =>{return result.json()})
         .then(value =>{setEvents(value)});
     }, []

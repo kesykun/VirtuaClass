@@ -2,8 +2,9 @@ import ReactCalendar from 'react-calendar';
 import './css/AdminDashboard.css';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import CurrentUserContext from "../../../contexts/currentUserContext";
+import CurrentUserContext from "../../../contexts/CurrentUserContext";
 
+const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
 
 const AdminDashboard = () => {
     const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -31,7 +32,7 @@ const AdminDashboard = () => {
 
     useEffect( 
         () => {
-        fetch('/api/events')
+        fetch(`${DEVELOPMENT_HOST}/api/events`)
             .then(result =>{return result.json()})
             .then(value =>{setEvents(value)});
         }, []);

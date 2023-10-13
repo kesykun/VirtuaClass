@@ -1,8 +1,9 @@
 import "./css/EnrollmentApplications.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import CurrentUserContext from "../../../contexts/currentUserContext";
+import CurrentUserContext from "../../../contexts/CurrentUserContext";
 
+const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
 
 const ApplicationPanel = ({ title, children }) => {
     return (
@@ -27,7 +28,7 @@ const ApplicationPanelItem = ({title}) => {
 
 
 const getEnrollmentApplications = async () => {
-    const response = await fetch('/api/enrollments');
+    const response = await fetch(`${DEVELOPMENT_HOST}/api/enrollments`);
     return await response.json();
 };
 
@@ -102,7 +103,7 @@ const EnrollmentApplications = () => {
                 
                 let tempHtmlSelectedEnrollmentCourses = [];
                 for(let i=0; i< selected.coursesTakenIds.length; i++) {
-                    const path = `/api/courses/${selected.coursesTakenIds[i]}`;
+                    const path = `${DEVELOPMENT_HOST}/api/courses/${selected.coursesTakenIds[i]}`;
                     console.log(path);
                     // console.log(selected);
                     const result = await fetch(path);
@@ -145,7 +146,7 @@ const EnrollmentApplications = () => {
                 <section className="content__button">
                     <button className="button__accept" onClick={() => {
                                 if (selectedEnrollmentId) {
-                                    fetch('/api/enrollments', {
+                                    fetch(`${DEVELOPMENT_HOST}/api/enrollments`, {
                                         method: 'DELETE',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -167,7 +168,7 @@ const EnrollmentApplications = () => {
                             }}>Accept</button>
                     <button className="button__discard" onClick={() => {
                                 if (selectedEnrollmentId) {
-                                    fetch('/api/enrollments', {
+                                    fetch(`${DEVELOPMENT_HOST}/api/enrollments`, {
                                         method: 'DELETE',
                                         headers: {
                                             'Content-Type': 'application/json'

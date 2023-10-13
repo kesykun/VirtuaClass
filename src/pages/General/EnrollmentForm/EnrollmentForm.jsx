@@ -6,6 +6,9 @@ import "./css/EnrollmentForm.css";
 import React, { useEffect, useState, useContext } from 'react';
 import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
+
+const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
+
 const EnrollmentForm = ({ courses, setCourses, getAllCourses, getAllInstructors  }) => {
     const { schoolInfo } = useContext(SchoolInfoContext);
     
@@ -62,7 +65,7 @@ const EnrollmentForm = ({ courses, setCourses, getAllCourses, getAllInstructors 
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(formData);
-        const response = await fetch('/api/enrollments',
+        const response = await fetch(`${DEVELOPMENT_HOST}/api/enrollments`,
             {
                 method: 'POST',
                 headers: {

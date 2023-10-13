@@ -3,6 +3,7 @@ import NavBar from '../../../components/NavBar';
 import { useState, useEffect, useContext } from "react";
 import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
+const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
 
 const Faq = () => {
     const { schoolInfo } = useContext(SchoolInfoContext);
@@ -10,7 +11,7 @@ const Faq = () => {
     const [htmlFaqs, setHtmlFaqs] = useState(null);
 
     useEffect(() => {
-        fetch('/api/faqs').then(result => {
+        fetch(`${DEVELOPMENT_HOST}/api/faqs`).then(result => {
             return result.json();
         }).then(value => {
             setFaqs(value);

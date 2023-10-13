@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 // Context Providers
-import { CurrentUserProvider } from "./contexts/currentUserContext";
+import { CurrentUserProvider } from "./contexts/CurrentUserContext";
 
 // Contexts
 import SchoolInfoContext from "./contexts/SchoolInfoContext";
@@ -23,12 +23,17 @@ import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
 import SiteSettings from "./pages/Admin/SiteSettings/SiteSettings";
 
 
+
+
+const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
+
+
 const getAllCourses = async () => {
-  const response = await fetch('/api/courses');
+  const response = await fetch(`${DEVELOPMENT_HOST}/api/courses`);
   return await response.json();
 };
 const getAllInstructors = async () => {
-  const response = await fetch(`/api/instructors`);
+  const response = await fetch(`${DEVELOPMENT_HOST}/api/instructors`);
   return await response.json();
 };
 
@@ -37,7 +42,7 @@ const App = () => {
     
     useEffect(
       () => {
-        fetch('/api/school')
+        fetch(`${DEVELOPMENT_HOST}/api/school`)
         .then(result =>{return result.json()})
         .then(value =>{setSchoolInfo(value)});
       }, []

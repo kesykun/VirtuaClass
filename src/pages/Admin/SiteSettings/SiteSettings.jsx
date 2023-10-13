@@ -2,7 +2,10 @@ import './css/SiteSettings.css';
 import { useNavigate } from "react-router-dom";
 import ReactCalendar from 'react-calendar';
 import { useEffect, useState, useContext } from "react";
-import CurrentUserContext from "../../../contexts/currentUserContext";
+import CurrentUserContext from "../../../contexts/CurrentUserContext";
+
+
+const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
 
 const SiteSettings = () => {
     const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
@@ -34,7 +37,7 @@ const SiteSettings = () => {
     // const [temporaryHtmlFaqData, setTemporaryHtmlFaqData] = useState(null);
 
     useEffect(() => {
-        fetch('/api/school')
+        fetch(`${DEVELOPMENT_HOST}/api/school`)
         .then(result =>{return result.json()})
         .then( value =>
             {
@@ -141,7 +144,7 @@ const SiteSettings = () => {
     ];
 
     useEffect(() => {
-        fetch('/api/faqs')
+        fetch(`${DEVELOPMENT_HOST}/api/faqs`)
         .then(result =>{ return result.json() })
         .then( value =>
             {
@@ -179,7 +182,7 @@ const SiteSettings = () => {
                             </td>
                             <td>
                                 <button onClick={async () => {
-                                    await fetch('/api/faqs', {
+                                    await fetch(`${DEVELOPMENT_HOST}/api/faqs`, {
                                         method: 'DELETE',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -221,7 +224,7 @@ const SiteSettings = () => {
         e.preventDefault();
         setIsLoading(true);
         
-        await fetch('/api/school', {
+        await fetch(`${DEVELOPMENT_HOST}/api/school`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -240,7 +243,7 @@ const SiteSettings = () => {
             redirect: "follow"
         })
         for (let i=0; i<faqCount; i++) {
-            await fetch('/api/faqs', {
+            await fetch(`${DEVELOPMENT_HOST}/api/faqs`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -267,7 +270,7 @@ const SiteSettings = () => {
     const [eventInput, setEventInput] = useState('');
 
     useEffect(() => {
-        fetch('/api/events')
+        fetch(`${DEVELOPMENT_HOST}/api/events`)
             .then(result =>{return result.json()})
             .then(value =>{setEvents(value)});
         }, []);
@@ -382,7 +385,7 @@ const SiteSettings = () => {
                                 <button onClick={
                                     () =>{
                                         if (event !== null) {
-                                            fetch('/api/events', {
+                                            fetch(`${DEVELOPMENT_HOST}/api/events`, {
                                                 method: "PUT",
                                                 headers: {
                                                     "Content-Type": "application/json"
@@ -402,7 +405,7 @@ const SiteSettings = () => {
                                 <button onClick={
                                     () =>{
                                         if (event !== null) {
-                                            fetch('/api/events', {
+                                            fetch(`${DEVELOPMENT_HOST}/api/events`, {
                                                 method: "DELETE",
                                                 headers: {
                                                     "Content-Type": "application/json"
@@ -420,7 +423,7 @@ const SiteSettings = () => {
                         : 
                             <button onClick={
                                 () =>{
-                                    fetch('/api/events', {
+                                    fetch(`${DEVELOPMENT_HOST}/api/events`, {
                                         method: "POST",
                                         headers: {
                                             "Content-Type": "application/json"

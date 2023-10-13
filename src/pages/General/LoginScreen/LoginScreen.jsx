@@ -2,11 +2,14 @@ import './css/LoginScreen.css';
 import { useNavigate } from 'react-router-dom';
 import { useState, useContext } from "react";
 import NavBar from '../../../components/NavBar';
-import CurrentUserContext from "../../../contexts/currentUserContext";
+import CurrentUserContext from "../../../contexts/CurrentUserContext";
 import SchoolInfoContext from '../../../contexts/SchoolInfoContext';
 
+const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
+
+
 const LoginScreen = () => {
-    const { currentUser, setCurrentUser } = useContext(CurrentUserContext);
+    const { setCurrentUser } = useContext(CurrentUserContext);
     const { schoolInfo } = useContext(SchoolInfoContext);
 
     const [email, setEmail] = useState("");
@@ -16,7 +19,7 @@ const LoginScreen = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch('/api/accounts');
+        const response = await fetch(`${DEVELOPMENT_HOST}/api/accounts`);
         const json = await response.json();
 
         const matchedAccount = json.filter(item=>item.email === email)[0];

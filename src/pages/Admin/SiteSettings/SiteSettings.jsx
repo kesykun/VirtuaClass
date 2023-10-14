@@ -53,64 +53,64 @@ const SiteSettings = () => {
     // const [question, setQuestion] = useState('');
     // const [answer, setAnswer] = useState('');
     const questionStates = [
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState()
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null)
     ];
     const answerStates = [
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState(),
-        useState()
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null),
+        useState(null)
     ];
     const faqIds = [
         useState('0'),
@@ -143,6 +143,10 @@ const SiteSettings = () => {
         useState('0')
     ];
 
+    const [questionStateValues, setQuestionStateValues] = useState(null);
+    const [answerStateValues, setAnswerStateValues] = useState(null);
+
+
     useEffect(() => {
         fetch(`${DEVELOPMENT_HOST}/api/faqs`)
         .then(result =>{ return result.json() })
@@ -164,58 +168,58 @@ const SiteSettings = () => {
     }, []);
 
     useEffect(() => {
-        // console.log(questionStates[0][0]);
-        // console.log(faqIds);
-        // console.log(`faqCount: ${faqCount}`);
-        // console.log(answerStates);
-        let temporaryHtmlFaqData = [];
-        if(questionStates[0][0] && answerStates[0][0]) {
-            for (let i=0; i<faqCount; i++) {
-                temporaryHtmlFaqData.push(
-                    (
-                        <tr>
-                            <td>
-                                <input type='text' value={ questionStates[i][0] } onChange={(e) => questionStates[i][1](e.target.value)} />
-                            </td>
-                            <td>
-                                <input type='text' value={ answerStates[i][0] } onChange={(e) => answerStates[i][1](e.target.value)} />
-                            </td>
-                            <td>
-                                <button onClick={async () => {
-                                    await fetch(`${DEVELOPMENT_HOST}/api/faqs`, {
-                                        method: 'DELETE',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({ id: faqIds[i][0] }),
-                                        redirect: 'follow'
-                                    }).then(result => result.json()).then(value => {
-                                        // console.log(value);
-                                        window.location.reload();
-                                    });
-                                }}>Delete</button>
-                            </td>
-                        </tr>
-                    )
-                );
-            }
-            setHtmlFaqData(temporaryHtmlFaqData);
-        }
-    }, [flickFaq, questionStates, answerStates, faqCount]);
+        setQuestionStateValues(questionStates.map(item => item[0]));
+        setAnswerStateValues(answerStates.map(item => item[0]));
+    }, []);
 
-    // useEffect(() => {
-    //     if (questionStates[0][0] && answerStates[0][0]) {
-    //         let tempFaqData = [];
-    //         for (let i=0; i<faqCount; i++) {
-    //             tempFaqData.push({
-    //                 id: faqIds[i][0],
-    //                 question: questionStates[i][0],
-    //                 answer: answerStates[i][0]
-    //             });
-    //         }
-    //         setFaqData(tempFaqData);
-    //     }
-    // }, [flickFaq]);
+    useEffect(() => {
+        console.log(`COMPARISON: ${JSON.stringify(questionStates.map(item => item[0])) === JSON.stringify(questionStateValues)}`);
+        // if (questionStateValues !== null) {
+        //     console.log(`VALUES: ${questionStateValues}`);
+        //     console.log(`STATES: ${questionStates.map(item => item[0])}`);
+        // }
+        if (JSON.stringify(questionStates.map(item => item[0])) !== JSON.stringify(questionStateValues)) {
+            // console.log(faqIds);
+            console.log(questionStates[0][0]);
+            // console.log(`faqCount: ${faqCount}`);
+            // console.log(answerStates);
+            let temporaryHtmlFaqData = [];
+            if(questionStates[0][0] && answerStates[0][0]) {
+                for (let i=0; i<faqCount; i++) {
+                    temporaryHtmlFaqData.push(
+                        (
+                            <tr>
+                                <td>
+                                    <input type='text' value={ questionStates[i][0] } onChange={(e) => questionStates[i][1](e.target.value)} />
+                                </td>
+                                <td>
+                                    <input type='text' value={ answerStates[i][0] } onChange={(e) => answerStates[i][1](e.target.value)} />
+                                </td>
+                                <td>
+                                    <button onClick={async () => {
+                                        await fetch(`${DEVELOPMENT_HOST}/api/faqs`, {
+                                            method: 'DELETE',
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({ id: faqIds[i][0] }),
+                                            redirect: 'follow'
+                                        }).then(result => result.json()).then(value => {
+                                            // console.log(value);
+                                            window.location.reload();
+                                        });
+                                    }}>Delete</button>
+                                </td>
+                            </tr>
+                        )
+                    );
+                }
+                setHtmlFaqData(temporaryHtmlFaqData);
+            }
+            setQuestionStateValues(questionStates.map(item => item[0]));
+            setAnswerStateValues(answerStates.map(item => item[0]));
+        }
+    }, [flickFaq, questionStates.map(item => item[0]), answerStates.map(item => item[0]), faqCount]);
 
 
 
@@ -273,7 +277,7 @@ const SiteSettings = () => {
         fetch(`${DEVELOPMENT_HOST}/api/events`)
             .then(result =>{return result.json()})
             .then(value =>{setEvents(value)});
-        }, []);
+    }, []);
 
     useEffect(() => {
         if (event !== null) {

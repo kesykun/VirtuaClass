@@ -29,12 +29,13 @@ const LoginScreen = () => {
         if (matchedAccount) {
             // console.log(matchedAccount.user_id);
             if (matchedAccount.password === password) {
-                const path = `/api/${matchedAccount.account_type}/${matchedAccount.user_id}`;
-                // console.log(`Fetching ${path}`);
+                const path = `${DEVELOPMENT_HOST}/api/${matchedAccount.account_type}/${matchedAccount.user_id}`;
+                console.log(`Fetching ${path}`);
                 fetch(path).then(result => {
                     return result.json();
-                }).then(value =>{
+                }).then(value => {
                     setCurrentUser(value);
+                    // console.log(value);
                     // console.log(value);
                     sessionStorage.setItem('currentUser', JSON.stringify(value));
                     navigate('/admin');

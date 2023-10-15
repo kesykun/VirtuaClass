@@ -10,7 +10,6 @@
 
 # production
 
-
 # misc
 .DS_Store
 .env.local
@@ -26,3 +25,4 @@ yarn-error.log*
 
 # logs
 /logs
+.env

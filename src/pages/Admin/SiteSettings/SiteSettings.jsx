@@ -332,37 +332,37 @@ const SiteSettings = () => {
                         </button>
                         <div className="input-column">
                             <h2>School Name</h2>
-                            <textarea
+                            <input className='input-for-0'
                                 type="text"
                                 onChange={(e) => setSchoolName(e.target.value)}
                                 value={schoolName}
                             />
                             <h2>Mission</h2>
-                            <textarea
+                            <input className='input-for-1'
                                 type="text"
                                 onChange={(e) => setMission(e.target.value)}
                                 value={mission}
                             />
                             <h2>Vision</h2>
-                            <textarea
+                            <input className='input-for-2'
                                 type="text"
                                 onChange={(e) => setVision(e.target.value)}
                                 value={vision}
                             />
                             <h2>Objectives</h2>
-                            <textarea
+                            <input className='input-for-3'
                                 type="text"
                                 onChange={(e) => setObjectives(e.target.value)}
                                 value={objectives}
                             />
                             <h2>Payment Link</h2>
-                            <textarea
+                            <input className='input-for-4'
                                 type="text"
                                 onChange={(e) => setPaymentLink(e.target.value)}
                                 value={paymentLink}
                             />
                             <h2>Contact Information</h2>
-                            <textarea
+                            <input className='input-for-5'
                                 type="text"
                                 onChange={(e) => setContactInformation(e.target.value)}
                                 value={contactInformation}
@@ -384,16 +384,24 @@ const SiteSettings = () => {
 
                     {/* Displays Text Area and Button for Adding Events if event is null for the selected date, else displays the Current Event inside a Text Area of the selected date, Update Button, Delete Button */}
                     {
-                    event !== null ? 
+                    event !== null ?                                                                                                                    
                     <div className="event-list">
                         <h3>Events:</h3>
                         <ul>
-                                <textarea 
-                                    placeholder="Add an event"
-                                    rows="4"
-                                    style={{ width: '100%', height: '80px' }} // Adjust width and height
-                                    value={eventInput}
-                                    onChange={(e) => setEventInput(e.target.value)}/>
+                        <input
+                                type="text"
+                                className="add-event"
+                                placeholder="Add an event"
+                                style={{
+                                    width: '100%',
+                                    height: '40px', // Adjust the height as needed
+                                    backgroundColor: 'white', // Set the background color to white
+                                    // Add other styles as needed
+                                }}
+                                value={eventInput}
+                                onChange={(e) => setEventInput(e.target.value)}
+                                />
+
                                 <button onClick={
                                         () =>{
                                             if (event !== null) {
@@ -466,6 +474,26 @@ const SiteSettings = () => {
                         </div>
                     </form>
                 }
+             <div className="faq-container">
+    <h2 className="faq-header">FAQ Section</h2>
+    {/* FAQ Table */}
+    <div>
+        <table className="faq-table">
+            <tr className='faq-input'>
+                <th className="faq-table-header">Question</th>
+                <th className="faq-table-header">Answer</th>
+                <th className="faq-table-header">Delete</th>
+            </tr>
+            {htmlFaqData !== null ? htmlFaqData : ''}
+        </table>
+        <button onClick={() => {
+            setFaqCount(prev => prev + 1);
+        }} className="add-faq-button">
+            Add New FAQ
+        </button>
+    </div>
+</div>
+
                 </div>
             </div>
 
@@ -473,22 +501,6 @@ const SiteSettings = () => {
 
 
 
-            {/* FAQ Table */}
-            <div>
-                <table>
-                    <tr>
-                        <th>Question</th>
-                        <th>Answer</th>
-                        <th>Delete</th>
-                    </tr>
-                    { htmlFaqData !== null ? htmlFaqData : '' }
-                </table>
-                <button onClick={() => {
-                    setFaqCount(prev => prev + 1);
-                }}>
-                    Add New FAQ
-                </button>
-            </div>
             
         </>
     )

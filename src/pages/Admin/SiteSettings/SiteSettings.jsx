@@ -1,8 +1,10 @@
-import './css/SiteSettings.css';
-import { useNavigate } from "react-router-dom";
+// import './css/SiteSettings.css';
+import './Site.css';
+import { useNavigate } from 'react-router-dom';
 import ReactCalendar from 'react-calendar';
-import { useEffect, useState, useContext } from "react";
-import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import { MdOutlineDeleteForever } from 'react-icons/md';
+import { useEffect, useState, useContext } from 'react';
+import CurrentUserContext from '../../../contexts/CurrentUserContext';
 
 
 const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
@@ -145,6 +147,7 @@ const SiteSettings = () => {
 
     const [questionStateValues, setQuestionStateValues] = useState(null);
     const [answerStateValues, setAnswerStateValues] = useState(null);
+    const [faqCountPreviosState, setFaqCountPreviosState] = useState(0);
 
 
     useEffect(() => {
@@ -170,6 +173,7 @@ const SiteSettings = () => {
     useEffect(() => {
         setQuestionStateValues(questionStates.map(item => item[0]));
         setAnswerStateValues(answerStates.map(item => item[0]));
+        setFaqCountPreviosState(faqCount);
     }, []);
 
     useEffect(() => {
@@ -178,7 +182,7 @@ const SiteSettings = () => {
         //     console.log(`VALUES: ${questionStateValues}`);
         //     console.log(`STATES: ${questionStates.map(item => item[0])}`);
         // }
-        if (JSON.stringify(questionStates.map(item => item[0])) !== JSON.stringify(questionStateValues)) {
+        if (JSON.stringify(questionStates.map(item => item[0])) !== JSON.stringify(questionStateValues) || JSON.stringify(answerStates.map(item => item[0])) !== JSON.stringify(answerStateValues) || faqCountPreviosState !== faqCount) {
             // console.log(faqIds);
             console.log(questionStates[0][0]);
             // console.log(`faqCount: ${faqCount}`);
@@ -190,14 +194,14 @@ const SiteSettings = () => {
                         (
                             <tr>
                                 <td>
-                                    <input type='text' value={ questionStates[i][0] } onChange={(e) => questionStates[i][1](e.target.value)} />
+                                    <input className='faqInputField' type='text' value={ questionStates[i][0] } onChange={(e) => questionStates[i][1](e.target.value)} />
                                 </td>
                                 <td>
-                                    <input type='text' value={ answerStates[i][0] } onChange={(e) => answerStates[i][1](e.target.value)} />
+                                    <input className='faqInputField' type='text' value={ answerStates[i][0] } onChange={(e) => answerStates[i][1](e.target.value)} />
                                 </td>
                                 <td>
-                                    <button onClick={async () => {
-                                        await fetch(`${DEVELOPMENT_HOST}/api/faqs`, {
+                                    <button onClick={() => {
+                                        fetch(`${DEVELOPMENT_HOST}/api/faqs`, {
                                             method: 'DELETE',
                                             headers: {
                                                 'Content-Type': 'application/json'
@@ -208,7 +212,9 @@ const SiteSettings = () => {
                                             // console.log(value);
                                             window.location.reload();
                                         });
-                                    }}>Delete</button>
+                                    }}>
+                                        <MdOutlineDeleteForever />
+                                    </button>
                                 </td>
                             </tr>
                         )
@@ -218,6 +224,7 @@ const SiteSettings = () => {
             }
             setQuestionStateValues(questionStates.map(item => item[0]));
             setAnswerStateValues(answerStates.map(item => item[0]));
+            setFaqCountPreviosState(faqCount);
         }
     }, [flickFaq, questionStates.map(item => item[0]), answerStates.map(item => item[0]), faqCount]);
 
@@ -272,6 +279,8 @@ const SiteSettings = () => {
     const [event, setEvent] = useState(null);
     const [events, setEvents] = useState(null);
     const [eventInput, setEventInput] = useState('');
+    const [newEvent, setNewEvent] = useState(''); // State to capture the new event input
+
 
     useEffect(() => {
         fetch(`${DEVELOPMENT_HOST}/api/events`)
@@ -281,9 +290,9 @@ const SiteSettings = () => {
 
     useEffect(() => {
         if (event !== null) {
-            setEventInput(event);
+            setEventInput(event.event);
         }
-    }, []);
+    }, [event]);
 
     // Function to handle date selection
     const handleDateChange = (date) => {
@@ -304,152 +313,193 @@ const SiteSettings = () => {
 
 
     return (
-        <div>
-            <form className="siteSettingsForm" onSubmit={(e) => {
-                    handleSubmit(e);
-                    console.log('pressed...');
-                }}>
-                <div>
-                    <h3>Site Settings</h3>
-
-                    <label>School Name</label>
-                    <input
-                        type="text"
-                        onChange={(e) => setSchoolName(e.target.value)}
-                        value={schoolName}
-                    />
-                    <label>Mission</label>
-                    <input
-                        type="text"
-                        onChange={(e) => setMission(e.target.value)}
-                        value={mission}
-                    />
-                    <label>Vision</label>
-                    <input
-                        type="text"
-                        onChange={(e) => setVision(e.target.value)}
-                        value={vision}
-                    />
-                    <label>Objectives</label>
-                    <input
-                        type="text"
-                        onChange={(e) => setObjectives(e.target.value)}
-                        value={objectives}
-                    />
-                    <label>Payment Link</label>
-                    <input
-                        type="text"
-                        onChange={(e) => setPaymentLink(e.target.value)}
-                        value={paymentLink}
-                    />
-                    <label>Contact Information</label>
-                    <input
-                        type="text"
-                        onChange={(e) => setContactInformation(e.target.value)}
-                        value={contactInformation}
-                    />
-                    <button disabled={isLoading} style={isLoading ? { opacity: 0.2 }
-                         : { opacity: 1 }}>{ isLoading ? 'Saving...' : 'Save'}</button>
-                </div>
-                
-            </form>
+        <>
             <div>
-                <table>
-                    <tr>
-                        <th>Question</th>
-                        <th>Answer</th>
-                        <th>Delete</th>
-                    </tr>
-                    { htmlFaqData !== null ? htmlFaqData : '' }
-                </table>
-                <button onClick={() => {
-                    setFaqCount(prev => prev + 1);
-                }}>Add New FAQ</button>
+                <header>
+                    <div className="welcome">
+                        Welcome, <span className="admin-box">{ currentUser.firstname } { currentUser.lastname }</span>
+                    </div>
+                </header>
             </div>
-            <div className="calendar-container">
-                <div className="centered-content">
-                    <ReactCalendar onChange={handleDateChange} value={selectedDate} />
+
+            <div className="dashboard">
+                <div className="left-column">
+                    <h1 className="siteSettingsH1">Site Settings</h1>
+                    <form onSubmit={handleSubmit}>
+                        <button disabled={isLoading} style={isLoading ? { opacity: 0.2 } : { opacity: 1 }}
+                                className="left-column-button">
+                            { isLoading ? 'Saving...' : 'Save'}
+                        </button>
+                        <div className="input-column">
+                            <h2>School Name</h2>
+                            <input className='input-for-0'
+                                type="text"
+                                onChange={(e) => setSchoolName(e.target.value)}
+                                value={schoolName}
+                            />
+                            <h2>Mission</h2>
+                            <input className='input-for-1'
+                                type="text"
+                                onChange={(e) => setMission(e.target.value)}
+                                value={mission}
+                            />
+                            <h2>Vision</h2>
+                            <input className='input-for-2'
+                                type="text"
+                                onChange={(e) => setVision(e.target.value)}
+                                value={vision}
+                            />
+                            <h2>Objectives</h2>
+                            <input className='input-for-3'
+                                type="text"
+                                onChange={(e) => setObjectives(e.target.value)}
+                                value={objectives}
+                            />
+                            <h2>Payment Link</h2>
+                            <input className='input-for-4'
+                                type="text"
+                                onChange={(e) => setPaymentLink(e.target.value)}
+                                value={paymentLink}
+                            />
+                            <h2>Contact Information</h2>
+                            <input className='input-for-5'
+                                type="text"
+                                onChange={(e) => setContactInformation(e.target.value)}
+                                value={contactInformation}
+                            />
+                        </div>
+                    </form>
+                    {/* <FAQ /> */}
+                </div>
+                <div className="calendar-container">
+                    <div className='calendar-heading'>
+                    <h2>School Calendar</h2>
+                    </div>
                     <div>
-                    {selectedDate && (
-                        <p>Selected Date: {selectedDate.toDateString()}</p>
-                    )}
+                    <ReactCalendar className="calendar" onChange={handleDateChange} value={selectedDate} />
+                        <div>
+                            { selectedDate !== null ? <p>Selected Date: {selectedDate.toDateString()}</p> : '' }
+                        </div>
+                    </div>
+
+                    {/* Displays Text Area and Button for Adding Events if event is null for the selected date, else displays the Current Event inside a Text Area of the selected date, Update Button, Delete Button */}
                     {
-                        <p>{event !== null ? `Event: ${event.event}` : ''}</p>
-                    }    
-                    </div>
-                    <div>
-                        <label>Event:</label>
+                    event !== null ?                                                                                                                    
+                    <div className="event-list">
+                        <h3>Events:</h3>
+                        <ul>
                         <input
-                            type="text"
-                            onChange={(e) => setEventInput(e.target.value)}
-                            value={eventInput} 
-                        />
-                        {event !== null ? 
-                            <div>
-                                <button onClick={
-                                    () =>{
-                                        if (event !== null) {
-                                            fetch(`${DEVELOPMENT_HOST}/api/events`, {
-                                                method: "PUT",
-                                                headers: {
-                                                    "Content-Type": "application/json"
-                                                },
-                                                body: JSON.stringify({
-                                                        id: event._id,
-                                                        event: eventInput
-                                                    }),
-                                                redirect: "follow"
-                                            }).then(result => {
-                                                // console.log(result);
-                                                window.location.reload();
-                                            });
-                                        }
-                                    }                                    
-                                }>Update Event</button>
-                                <button onClick={
-                                    () =>{
-                                        if (event !== null) {
-                                            fetch(`${DEVELOPMENT_HOST}/api/events`, {
-                                                method: "DELETE",
-                                                headers: {
-                                                    "Content-Type": "application/json"
-                                                },
-                                                body: JSON.stringify({ id: event._id }),
-                                                redirect: "follow"
-                                            }).then(result => {
-                                                // console.log(result);
-                                                window.location.reload();
-                                            })
-                                        }
-                                    }                                    
-                                }>Delete Event</button>
-                            </div>
-                        : 
-                            <button onClick={
-                                () =>{
-                                    fetch(`${DEVELOPMENT_HOST}/api/events`, {
-                                        method: "POST",
-                                        headers: {
-                                            "Content-Type": "application/json"
-                                        },
-                                        body: JSON.stringify(
-                                            {
-                                                date: selectedDate.toDateString(),
-                                                event: eventInput
+                                type="text"
+                                className="eventInputUpdateDeleteField"
+                                style={{
+                                    width: '100%',
+                                    backgroundColor: 'white', // Set the background color to white
+                                    // Add other styles as needed
+                                }}
+                                value={eventInput}
+                                onChange={(e) => setEventInput(e.target.value)}
+                                />
+
+                                <button className="update-button" onClick={
+                                        () =>{
+                                            if (event !== null) {
+                                                fetch(`${DEVELOPMENT_HOST}/api/events`, {
+                                                    method: "PUT",
+                                                    headers: {
+                                                        "Content-Type": "application/json"
+                                                    },
+                                                    body: JSON.stringify({
+                                                            id: event._id,
+                                                            event: eventInput
+                                                        }),
+                                                    redirect: "follow"
+                                                }).then(result => {
+                                                    // console.log(result);
+                                                    window.location.reload();
+                                                });
                                             }
-                                        ),
-                                        redirect: "follow"
-                                    }).then(result => {
-                                        // console.log(result);
-                                        window.location.reload();
-                                    })
-                                }                                    
-                            }>Add Event</button>
-                        }
+                                        }                                    
+                                }>Update Event</button>
+                                <button className="delete-button" onClick={() =>{
+                                    if (event !== null) {
+                                        fetch(`${DEVELOPMENT_HOST}/api/events`, {
+                                            method: "DELETE",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({ id: event._id }),
+                                            redirect: "follow"
+                                        }).then(result => {
+                                            // console.log(result);
+                                            window.location.reload();
+                                        })
+                                    }
+                                }}>Delete Event
+                                </button>
+                        </ul>
                     </div>
+                     : 
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        fetch(`${DEVELOPMENT_HOST}/api/events`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(
+                                {
+                                    date: selectedDate.toDateString(),
+                                    event: newEvent
+                                }
+                            ),
+                            redirect: "follow"
+                        }).then(result => {
+                            // console.log(result);
+                            window.location.reload();
+                        })
+                    }}>
+                        <input
+                            className="eventInputAddField"
+                            type='text'
+                            placeholder="Add an event"
+                            style={{ width: '100%', height: '80px' }} // Adjust width and height
+                            value={newEvent}
+                            onChange={(e) => setNewEvent(e.target.value)}
+                        />
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <button type="submit" className="add-button">Add</button>
+                        </div>
+                    </form>
+                }
+             <div className="faq-container">
+    <h2 className="faq-header">FAQ Section</h2>
+    {/* FAQ Table */}
+    <div>
+        <table className="faq-table">
+            <tr className='faq-input'>
+                <th className="faq-table-header">Question</th>
+                <th className="faq-table-header">Answer</th>
+                <th className="faq-table-header">Delete</th>
+            </tr>
+            {htmlFaqData !== null ? htmlFaqData : ''}
+        </table>
+        <button onClick={() => {
+            setFaqCount(prev => prev + 1);
+        }} className="add-faq-button">
+            Add New FAQ
+        </button>
+    </div>
+</div>
+
                 </div>
             </div>
-        </div>
+
+
+
+
+
+            
+        </>
     )
 }
 

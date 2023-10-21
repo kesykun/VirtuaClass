@@ -3,6 +3,8 @@ import './css/AdminDashboard.css';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import CurrentUserContext from "../../../contexts/CurrentUserContext";
+import "react-calendar/dist/Calendar.css";
+
 
 const DEVELOPMENT_HOST = process.env.REACT_APP_DEVELOPMENT_HOST || '';
 

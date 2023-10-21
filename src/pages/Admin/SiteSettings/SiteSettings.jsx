@@ -194,10 +194,10 @@ const SiteSettings = () => {
                         (
                             <tr>
                                 <td>
-                                    <input type='text' value={ questionStates[i][0] } onChange={(e) => questionStates[i][1](e.target.value)} />
+                                    <input className='faqInputField' type='text' value={ questionStates[i][0] } onChange={(e) => questionStates[i][1](e.target.value)} />
                                 </td>
                                 <td>
-                                    <input type='text' value={ answerStates[i][0] } onChange={(e) => answerStates[i][1](e.target.value)} />
+                                    <input className='faqInputField' type='text' value={ answerStates[i][0] } onChange={(e) => answerStates[i][1](e.target.value)} />
                                 </td>
                                 <td>
                                     <button onClick={() => {
@@ -390,11 +390,9 @@ const SiteSettings = () => {
                         <ul>
                         <input
                                 type="text"
-                                className="add-event"
-                                placeholder="Add an event"
+                                className="eventInputUpdateDeleteField"
                                 style={{
                                     width: '100%',
-                                    height: '40px', // Adjust the height as needed
                                     backgroundColor: 'white', // Set the background color to white
                                     // Add other styles as needed
                                 }}
@@ -402,7 +400,7 @@ const SiteSettings = () => {
                                 onChange={(e) => setEventInput(e.target.value)}
                                 />
 
-                                <button onClick={
+                                <button className="update-button" onClick={
                                         () =>{
                                             if (event !== null) {
                                                 fetch(`${DEVELOPMENT_HOST}/api/events`, {
@@ -422,23 +420,21 @@ const SiteSettings = () => {
                                             }
                                         }                                    
                                 }>Update Event</button>
-                                <button onClick={() =>{
-                                            if (event !== null) {
-                                                fetch(`${DEVELOPMENT_HOST}/api/events`, {
-                                                    method: "DELETE",
-                                                    headers: {
-                                                        "Content-Type": "application/json"
-                                                    },
-                                                    body: JSON.stringify({ id: event._id }),
-                                                    redirect: "follow"
-                                                }).then(result => {
-                                                    // console.log(result);
-                                                    window.location.reload();
-                                                })
-                                            }
-                                        }} 
-                                        className="delete-button">
-                                    DELETE EVENT
+                                <button className="delete-button" onClick={() =>{
+                                    if (event !== null) {
+                                        fetch(`${DEVELOPMENT_HOST}/api/events`, {
+                                            method: "DELETE",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({ id: event._id }),
+                                            redirect: "follow"
+                                        }).then(result => {
+                                            // console.log(result);
+                                            window.location.reload();
+                                        })
+                                    }
+                                }}>Delete Event
                                 </button>
                         </ul>
                     </div>
@@ -462,9 +458,10 @@ const SiteSettings = () => {
                             window.location.reload();
                         })
                     }}>
-                        <textarea
+                        <input
+                            className="eventInputAddField"
+                            type='text'
                             placeholder="Add an event"
-                            rows="4"
                             style={{ width: '100%', height: '80px' }} // Adjust width and height
                             value={newEvent}
                             onChange={(e) => setNewEvent(e.target.value)}

@@ -137,7 +137,10 @@ header {
     font-weight: bold;
     font-size: 24px;
   }
-  
+  .welcome span {
+    font-family: "Sofia Sans", sans-serif;
+  }
+
   .admin-box {
     background-color: #4F709C; 
     color: white; 

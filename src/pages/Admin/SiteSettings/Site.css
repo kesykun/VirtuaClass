@@ -4,6 +4,9 @@
 .dashboard {
   background-color: #213555;
 }
+.admin-box {
+  font-family: 'Sofia Sans Condensed', sans-serif;
+}
 .left-column {
   display: flex;
   flex-direction: column;

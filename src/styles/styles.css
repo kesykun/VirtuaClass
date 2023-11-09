@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Tapestry&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sofia+Sans+Condensed:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
 
 * {
     padding : 0;
@@ -293,4 +294,61 @@ a {
     font-size : 1.4rem;
     font-weight : 600;
     font-family: 'Sofia Sans Condensed', sans-serif;
+}
+
+.section__content > .content__instructor__account {
+    width : 30%;
+    height : 90%;
+}
+
+.section__content > .content__instructor__name {
+    width : 60%;
+    height : 90%;
+}
+
+.content__header {
+    background-color : #4F709C;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.content__header > h1 {
+    color : white;
+    padding : 1rem  0;
+    font-family: 'Inter', sans-serif;
+    font-weight : normal;
+    font-style : italic;
+}
+
+.content__instructor__account > .content__body {
+    height : 80%;
+} 
+
+.content__body {
+    background-color: #D9D9D9;
+    height : inherit;
+    border-radius: 8px;
+}
+
+.content__form {
+    display : flex;
+    margin-top: 20px;
+    align-items : center
+
+}
+.content__form > input {
+    width : 65%;
+    background-color : #D9D9D9;
+    border : 6px solid #4F709C;
+    height : 3rem;
+}
+
+.content__form > button {
+    border-radius: 8px;
+    width : 35%;
+    color : white;
+    background-color : #0D99FF;
+    padding : 1rem 2rem;
+    font-family: 'Inter', sans-serif;
+    font-size : 1.1rem;
 }
